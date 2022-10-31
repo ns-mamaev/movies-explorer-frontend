@@ -12,5 +12,12 @@
 .section-heading__line {
   width: 100%;
   height: 1px;
-  background-color: var(--textcolor-main);
+  background-color: #dadada;
+}
+
+@media screen and (max-width: 450px) {
+  .section-heading {
+    font-size: 18px;
+    margin-bottom: 28px;
+  }
 }
