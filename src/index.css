@@ -1,0 +1,13 @@
+@import url(./vendor/Inter/Inter.css);
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bgcolor-main: #202020;
+  --textcolor-main: #fff;
+  --max-section-width: 1140px;
+}
+
