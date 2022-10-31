@@ -7,6 +7,7 @@ body {
 
 :root {
   --bgcolor-main: #202020;
+  --bgcolor-light: #272727;
   --textcolor-main: #fff;
   --max-section-width: 1140px;
 }

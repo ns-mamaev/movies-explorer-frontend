@@ -1,0 +1,10 @@
+.techs {
+  padding: 110px 0;
+  background-color: var(--bgcolor-light);
+}
+
+.techs__inner {
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
