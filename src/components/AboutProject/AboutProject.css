@@ -1,5 +1,21 @@
 .about-project {
-  padding: 110px 70px;
-  margin: 0 auto;
+  padding: 110px 0;
+}
+
+.about-project__inner {
   max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 70px;
+}
+
+@media screen and (max-width: 768px) {
+  .about-project__inner {
+    padding: 0 50px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .about-project__inner {
+    padding: 0 18px;
+  }
 }
