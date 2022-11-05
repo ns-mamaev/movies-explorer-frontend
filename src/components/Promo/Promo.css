@@ -3,6 +3,27 @@
   background-color: #073042;
 }
 
+.nav-tab {
+  background-color: transparent;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+  padding: 10px 20px;
+  color: var(--textcolor-main);
+  border: 1px solid rgba(255, 255, 255, .6);
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.nav-tab:hover {
+  opacity: .6;
+}
+
+.nav-tab:active {
+  transform: scale(.98);
+}
+
 .promo__inner {
   padding-left: 70px;
   padding-right: 70px;
