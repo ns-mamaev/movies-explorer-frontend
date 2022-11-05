@@ -9,7 +9,7 @@
 }
 
 .about-me__bio {
-  margin: 66px 0 100px;
+  margin-top: 66px;
   display: grid;
   grid-template-columns: auto 270px;
   grid-template-areas:
@@ -89,7 +89,6 @@
   }
 
   .about-me__bio {
-    margin-bottom: 90px;
     grid-template-columns: auto 255px;
   }
 
@@ -138,7 +137,7 @@
   }
 
   .about-me__bio {
-    margin: 60px 0 70px;
+    margin-top: 60px;
   }
 
   .about-me__name {
