@@ -1,11 +1,16 @@
 import MoviesCard from '../MoviesCard/MoviesCard';
 import './MoviesCardList.css';
+import sampleImage from '../../images/movie_poster_1.jpg';
 
 const MoviesCardList = () => {
   return (
-    <section className='movies-card-list'>
-      <ul className='movies-card-list__list'>
-        <MoviesCard title='33 слова о дизайне'/>
+    <section className='movies-cards'>
+      <ul className='movies-cards__list'>
+        <MoviesCard title='33 слова о дизайне' imageSource={sampleImage}/>
+        <MoviesCard title='33 слова о дизайне' imageSource={sampleImage}/>
+        <MoviesCard title='33 слова о дизайне' imageSource={sampleImage}/>
+        <MoviesCard title='33 слова о дизайне' imageSource={sampleImage}/>
+        <MoviesCard title='33 слова о дизайне' imageSource={sampleImage}/>
       </ul>
       <button type='button'>Ещё</button>
     </section>
