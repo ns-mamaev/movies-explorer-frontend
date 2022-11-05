@@ -24,7 +24,7 @@
   justify-self: flex-end;
   margin: 5px 14px 0 0;
   border: none;
-  background: url(../../images/in_favourites_false.svg) center / contain no-repeat;
+  background: center / contain no-repeat;
   cursor: pointer;
 }
 
@@ -34,6 +34,18 @@
 
 .movie-card__action-btn:active {
   transform: scale(.9);
+}
+
+.movie-card__action-btn_type_liked {
+  background-image: url(../../images/action-btn-liked.svg);
+}
+
+.movie-card__action-btn_type_default {
+  background-image: url(../../images/action-btn-default.svg);
+}
+
+.movie-card__action-btn_type_remove {
+  background-image: url(../../images/action-btn-remove.svg);
 }
 
 .movies-card__duration {

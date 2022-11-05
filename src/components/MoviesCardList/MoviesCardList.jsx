@@ -7,10 +7,10 @@ const MoviesCardList = () => {
     <section className='movies-cards'>
       <ul className='movies-cards__list'>
         <MoviesCard title='33 слова о дизайне' imageSource={sampleImage}/>
+        <MoviesCard title='33 слова о дизайне' imageSource={sampleImage} buttonType='liked'/>
         <MoviesCard title='33 слова о дизайне' imageSource={sampleImage}/>
         <MoviesCard title='33 слова о дизайне' imageSource={sampleImage}/>
-        <MoviesCard title='33 слова о дизайне' imageSource={sampleImage}/>
-        <MoviesCard title='33 слова о дизайне' imageSource={sampleImage}/>
+        <MoviesCard title='33 слова о дизайне' imageSource={sampleImage} buttonType='liked'/>
       </ul>
       <button type='button'>Ещё</button>
     </section>
