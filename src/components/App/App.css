@@ -3,4 +3,10 @@
   min-height: 100vh;
   font-family: 'Inter', Arial, Helvetica, sans-serif;
   min-width: 305px;
+  display: flex;  /* прибиваем футер к низу */
+  flex-direction: column;
+}
+
+.main {
+  flex-grow: 1;
 }

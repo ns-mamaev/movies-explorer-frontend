@@ -1,7 +1,9 @@
 .footer {
   padding: 79px 70px 20px;
+  max-width: 1280px;
+  width: 100%;
   margin: 0 auto;
-  max-width: 1140px;
+  box-sizing: border-box;
 }
 
 .footer__info {
