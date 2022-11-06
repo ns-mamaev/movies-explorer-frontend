@@ -1,0 +1,108 @@
+.search-form {
+  border-bottom: 1px solid rgba(170, 170, 170, .2);
+  padding: 70px 0 43px;
+}
+
+.search-form__inner {
+  border: 1.5px solid rgba(170, 170, 170, .2);
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.search-form__input {
+  min-width: 100px;
+  padding: 25px;
+  background-color: unset;
+  border: unset;
+  flex-grow: 1;
+  color: var(--textcolor-main);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 20px;
+}
+
+.search-form__input:focus {
+  outline: none;
+}
+
+.search-form__button {
+  color: var(--textcolor-main);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  text-align: center;
+  border: none;
+  padding: 17px 20px;
+  margin: 10px;
+  border-radius: 5px;
+  min-width: 100px;
+  background-color: var(--bgcolor-buttons);
+  cursor: pointer;
+}
+
+.search-form__button:hover {
+  opacity: .7;
+}
+
+.search-form__button:active {
+  transform: scale(.98);
+}
+
+.search-form__toggle {
+  margin-top: 27px;
+  display: flex;
+  column-gap: 14px;
+  justify-content: flex-start;
+}
+
+.search-form__toggle-label {
+  color: var(--textcolor-main);
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+  cursor: pointer;
+  display: flex;
+  column-gap: 16px;
+}
+
+.search-form__toggle-checkbox-invisible {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.search-form__toggle-checkbox-visible {
+  display: block;
+  background-image: url(../../images/toggler.svg);
+  background-repeat: no-repeat;
+  width: 36px;
+  height: 20px;
+  border-radius: 20px;
+  transition: all .2s ease;
+}
+
+.search-form__toggle-checkbox-visible_state_false {
+  background-color: #313131;
+  background-position: 2px center;
+}
+
+.search-form__toggle-checkbox-visible_state_true {
+  background-color: var(--bgcolor-action);
+  background-position: calc(100% - 2px) center;
+}
+
+@media screen and (max-width: 450px) {
+  .search-form__input {
+    font-size: 16px;
+    line-height: 1;
+    padding: 20px 12px;
+  }
+
+  .search-form__button {
+    margin: 6px;
+  }
+}
