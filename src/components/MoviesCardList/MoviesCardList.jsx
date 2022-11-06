@@ -4,16 +4,16 @@ import sampleImage from '../../images/movie_poster_1.jpg';
 
 const MoviesCardList = () => {
   return (
-    <section className='movies-cards'>
-      <ul className='movies-cards__list'>
+    <>
+      <ul className='movies-cards'>
         <MoviesCard title='33 слова о дизайне' imageSource={sampleImage}/>
         <MoviesCard title='33 слова о дизайне' imageSource={sampleImage} buttonType='liked'/>
         <MoviesCard title='33 слова о дизайне' imageSource={sampleImage}/>
         <MoviesCard title='33 слова о дизайне' imageSource={sampleImage}/>
         <MoviesCard title='33 слова о дизайне' imageSource={sampleImage} buttonType='liked'/>
       </ul>
-      <button type='button'>Ещё</button>
-    </section>
+      <button type='button' className='movies-cards__load-btn'>Ещё</button>
+    </>
   );
 };
 
