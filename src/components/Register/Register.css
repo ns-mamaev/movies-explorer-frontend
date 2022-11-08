@@ -1,0 +1,79 @@
+.register {
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+  align-items: center;
+}
+
+.register__inner {
+  max-width: 396px;
+  min-height: 560px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.register__title {
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 30px;
+  color: var(--textcolor-main);
+  margin: 40px 0;
+}
+
+.register__logo {
+  width: 38px;
+  height: 38px;
+  background: url(../../images/logo-min.svg) center / cover no-repeat;
+  order: -1;
+}
+
+.register__form-caption {
+  display: flex;
+  margin-top: 16px;
+  column-gap: 6px;
+  align-items: baseline;
+  justify-content: center;
+  font-size: 14px;
+  line-height: 17px;
+  font-weight: 400;
+}
+
+.register__form-question {
+  color: #8b8b8b;
+  padding: 0;
+  margin: 0;
+}
+
+.register__login-link {
+  color: var(--bgcolor-buttons);
+  text-decoration: none;
+}
+
+.register__login-link:hover {
+  opacity: .7;
+}
+
+@media screen and (max-width: 450px) {
+  .register {
+    align-items: stretch;
+  }
+
+  .register__inner {
+    margin: 56px 30px 30px;
+    align-items: center;
+    flex-grow: 1;
+  }
+
+  .register__title {
+    margin: 50px 0 80px;
+    text-align: center;
+  }
+
+  .register__form-caption {
+    margin-top: 14px;
+    font-size: 12px;
+    line-height: 15px;
+  }
+}
