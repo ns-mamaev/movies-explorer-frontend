@@ -1,6 +1,7 @@
 .search-form {
   border-bottom: 1px solid rgba(170, 170, 170, .2);
   padding: 70px 0 43px;
+  margin-bottom: 10px;
 }
 
 .search-form__inner {
@@ -51,9 +52,9 @@
 }
 
 .search-form__toggle {
-  margin-top: 27px;
+  /* На случай, если будет больше чекбоксов */
+  margin-top: 26px;
   display: flex;
-  column-gap: 14px;
   justify-content: flex-start;
 }
 
@@ -64,7 +65,8 @@
   line-height: 18px;
   cursor: pointer;
   display: flex;
-  column-gap: 16px;
+  align-items: center;
+  column-gap: 14px;
 }
 
 .search-form__toggle-checkbox-invisible {
@@ -77,25 +79,48 @@
 
 .search-form__toggle-checkbox-visible {
   display: block;
-  background-image: url(../../images/toggler.svg);
-  background-repeat: no-repeat;
   width: 36px;
   height: 20px;
   border-radius: 20px;
+  transition: background-color .2s ease;
+  background-color: #343434;
+  position: relative;
+}
+
+.search-form__toggle-checkbox-visible::after {
+  content: '';
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #A0A0A0;
+  position: absolute;
+  top: 2px;
+  left: 2px;
   transition: all .2s ease;
 }
 
-.search-form__toggle-checkbox-visible_state_false {
-  background-color: #313131;
-  background-position: 2px center;
+.search-form__toggle-checkbox-visible_checked {
+  background-color: var(--bgcolor-action);
 }
 
-.search-form__toggle-checkbox-visible_state_true {
-  background-color: var(--bgcolor-action);
-  background-position: calc(100% - 2px) center;
+.search-form__toggle-checkbox-visible_checked::after {
+  background-color: #fff;
+  left: 18px;
+}
+
+@media screen and (max-width: 768px) {
+  .search-form {
+    padding-bottom: 51px;
+  }
 }
 
 @media screen and (max-width: 450px) {
+  .search-form {
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-bottom: 63px;
+  }
+
   .search-form__input {
     font-size: 16px;
     line-height: 1;
@@ -104,5 +129,14 @@
 
   .search-form__button {
     margin: 6px;
+  }
+
+  .search-form__toggle {
+    margin-top: 30px;
+  }
+
+  .search-form__toggle-label {
+    font-size: 11px;
+    column-gap: 13px;
   }
 }

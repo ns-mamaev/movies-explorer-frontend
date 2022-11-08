@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './SearchForm.css';
 
-function SearchForm () {
+function SearchForm() {
 
   const [value, setValue] = useState('');
   const [shortFilmsToggle, setShortFilmsToggle] = useState(false);
@@ -38,8 +38,8 @@ function SearchForm () {
         </button>
       </div>
       <div className='search-form__toggle'>
-      <label className='search-form__toggle-label' htmlFor='short-films'>
-        <input
+        <label className='search-form__toggle-label' htmlFor='short-films'>
+          <input
             className='search-form__toggle-checkbox-invisible'
             type='checkbox'
             name='short-films'
@@ -47,10 +47,9 @@ function SearchForm () {
             checked={shortFilmsToggle}
             onChange={onToggle}
           />
-        <span className={`search-form__toggle-checkbox-visible search-form__toggle-checkbox-visible_state_${shortFilmsToggle}`} />
-        Короткометражки
-      </label>
-      <input type='checkbox' />
+          <span className={`search-form__toggle-checkbox-visible ${shortFilmsToggle && 'search-form__toggle-checkbox-visible_checked' }`} />
+          Короткометражки
+        </label>
       </div>
     </form>
   );
