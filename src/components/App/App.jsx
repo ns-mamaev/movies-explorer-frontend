@@ -1,3 +1,5 @@
+
+import { Route, Routes } from 'react-router-dom';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
@@ -7,12 +9,14 @@ import './App.css';
 const App = () => {
   return (
     <div className="page">
-      <Header />
+      {/* <Header />
       <main className='main'>
-        {/* <Main /> */}
-        <Movies />
+        <Routes>
+          <Route path='/' element={<Main />} />
+          <Route path='/movies' element={<Movies />} />
+        </Routes>
       </main>
-      <Footer />
+      <Footer /> */}
     </div>
   );
 }
