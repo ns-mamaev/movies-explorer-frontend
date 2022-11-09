@@ -1,15 +1,14 @@
-import './Movies.css';
+import './SavedMovies.css';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SearchForm from '../SearchForm/SearchForm';
 
-const Movies = () => {
+const SavedMovies = () => {
   return (
-    <main className='movies'>
+    <main className='saved-movies'>
       <SearchForm />
       <MoviesCardList />
-      <button type='button' className='movies__load-btn'>Ещё</button>
     </main>
   );
 };
 
-export default Movies;
+export default SavedMovies;

@@ -5,6 +5,31 @@
   box-sizing: border-box;
 }
 
+.movies__load-btn {
+  margin: 50px auto 80px;
+  display: block;
+  min-width: 320px;
+  max-width: 100%;
+  background-color: #2f2f2f;
+  border-radius: 6px;
+  color: var(--textcolor-main);
+  text-align: center;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  padding: 11px 60px 9px;
+  cursor: pointer;
+  border: none;
+}
+
+.movies__load-btn:hover {
+  opacity: .6;
+}
+
+.movies__load-btn:active {
+  transform: scale(.98);
+}
+
 @media screen and (max-width: 768px) {
   .movies {
     padding: 0 30px;
@@ -14,5 +39,9 @@
 @media screen and (max-width: 450px) {
   .movies {
     padding: 0 10px;
+  }
+
+  .movies__load-btn {
+    min-width: 240px;
   }
 }

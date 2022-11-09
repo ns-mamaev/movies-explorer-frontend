@@ -7,8 +7,9 @@ import Landing from '../Landing/Landing';
 import Movies from '../Movies/Movies';
 import PageNotFound from '../PageNotFound/PageNotFound';
 import Register from '../Register/Register';
-import './App.css';
 import { innerPages } from '../../utills/constants';
+import SavedMovies from '../SavedMovies/SavedMovies';
+import './App.css';
 
 
 const App = () => {
@@ -23,6 +24,7 @@ const App = () => {
         <Route path='/signin' element={<Login />} />
         <Route path='/signup' element={<Register />} />
         <Route path='/movies' element={<Movies />} />
+        <Route path='/saved-movies' element={<SavedMovies />} />
         <Route path='/' element={<Landing />} />
         <Route path='*' element={<PageNotFound />} />
       </Routes>

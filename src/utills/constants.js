@@ -1,1 +1,1 @@
-export const innerPages = ['/', '/movies'];
+export const innerPages = ['/', '/movies', '/saved-movies'];
