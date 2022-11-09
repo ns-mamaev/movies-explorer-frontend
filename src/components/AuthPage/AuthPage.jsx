@@ -26,7 +26,7 @@ function AuthPage({
     };
 
   return (
-    <section className='auth-page'>
+    <main className='auth-page'>
       <div className='auth-page__inner'>
         <Logo />
         <h1 className='auth-page__heading'>{heading}</h1>
@@ -41,7 +41,7 @@ function AuthPage({
           <Link className='auth-page__link' to={texts.linkPath}>{texts.linkText}</Link>
         </div>
       </div>
-    </section>
+    </main>
   );
 }
 
