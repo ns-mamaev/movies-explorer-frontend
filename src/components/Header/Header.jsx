@@ -1,9 +1,12 @@
+import { useLocation } from 'react-router-dom';
 import Logo from '../Logo/Logo';
 import './Header.css';
 
 const Header = () => {
+  const location = useLocation().pathname;
+
   return (
-    <header className='header header_place_langing'>
+    <header className={`header ${location === '/' ? 'header_place_landing' : ''}`}>
       <Logo />
       <nav className='navigation'>
         <ul className='navigation__links'>
