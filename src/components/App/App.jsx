@@ -11,12 +11,15 @@ import './App.css';
 const App = () => {
   return (
     <div className="page">
+      {/* <main className='main'> */}
       <Routes>
         <Route path='/signin' element={<Login />} />
         <Route path='/signup' element={<Register />} />
         <Route path='/movies' element={<Movies />} />
         <Route path='/' element={<Main />} />
       </Routes>
+      {/* </main> */}
+
       {/* <Header />
       <Footer /> */}
 
