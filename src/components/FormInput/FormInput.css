@@ -3,6 +3,12 @@
   flex-direction: column;
 }
 
+.form-input_variant_min {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  border-bottom: 1px solid #424242;
+}
+
 .form-input__title {
   font-weight: 400;
   font-size: 10px;
@@ -23,6 +29,10 @@
   color: var(--textcolor-main);
 }
 
+.form-input__input_variant_min {
+  background-color: transparent;
+}
+
 .form-input__input:focus {
   outline: 1px solid #8b8b8b;
 }
@@ -34,4 +44,8 @@
   font-size: 10px;
   margin-top: 10px;
   min-height: 10px;
+}
+
+.form-input__error-message_variant_min {
+  grid-column: 1 / 3;
 }
