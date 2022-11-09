@@ -27,8 +27,6 @@
 .promo__inner {
   padding-left: 70px;
   padding-right: 70px;
-  margin: 0 auto;
-  max-width: var(--max-section-width);
   position: relative;
   box-sizing: content-box;
   display: flex;

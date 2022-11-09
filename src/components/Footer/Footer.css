@@ -1,6 +1,6 @@
 .footer {
   padding: 79px 70px 20px;
-  max-width: 1280px;
+  max-width: var(--max-section-width);
   width: 100%;
   margin: 0 auto;
   box-sizing: border-box;

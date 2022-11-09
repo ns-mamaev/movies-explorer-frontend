@@ -3,18 +3,18 @@ import Promo from '../Promo/Promo';
 import Techs from '../Techs/Techs';
 import AboutMe from '../AboutMe/AboutMe';
 import Portfolio from '../Portfolio/Portfolio';
-import './Main.css'
+import './Landing.css'
 
-const Main = () => {
+const Landing = () => {
   return (
-    <>
+    <main className='landing'>
       <Promo />
       <AboutProject />
       <Techs />
       <AboutMe />
       <Portfolio />
-    </>
+    </main>
   )
 };
 
-export default Main;
+export default Landing;

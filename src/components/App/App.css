@@ -5,6 +5,7 @@
   min-width: 305px;
   display: flex;  /* прибиваем футер к низу */
   flex-direction: column;
+  align-items: center;
 }
 
 .main {

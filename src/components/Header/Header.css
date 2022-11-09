@@ -1,15 +1,11 @@
 .header {
-  padding: 18px 0;
-}
-
-.header__inner {
-  padding-left: 70px;
-  padding-right: 70px;
-  margin: 0 auto;
-  max-width: 1140px;
+  padding: 18px 70px;
+  max-width: var(--max-section-width);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .header_place_langing {
@@ -48,14 +44,14 @@
 }
 
 @media screen and (max-width: 768px) {
-  .header__inner {
+  .header {
     padding-left: 30px;
     padding-right: 30px;
   }
 }
 
 @media screen and (max-width: 425px) {
-  .header-inner {
+  .header {
     padding-left: 14px;
     padding-right: 14px;
   }
