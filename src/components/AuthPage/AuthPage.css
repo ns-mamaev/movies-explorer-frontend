@@ -1,25 +1,15 @@
 .auth-page {
   display: flex;
   justify-content: center;
-  flex-grow: 1;
   align-items: center;
 }
 
 .auth-page__inner {
   max-width: 396px;
   min-height: 560px;
-  width: 100%;
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
-}
-
-.auth-page__form{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   width: 100%;
-  flex-grow: 1;
 }
 
 .auth-page__heading {
@@ -28,6 +18,14 @@
   font-weight: 500;
   font-size: 24px;
   line-height: 29px;
+}
+
+.auth-page__form{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  flex-grow: 1;
 }
 
 .auth-page__form-fields {
@@ -64,13 +62,13 @@
 
 @media screen and (max-width: 450px) {
   .auth-page {
+    /* растягивает страницу на высоту экрана */
     align-items: stretch;
   }
 
   .auth-page__inner {
     margin: 56px 30px 30px;
     align-items: center;
-    flex-grow: 1;
   }
 
   .auth-page__button {

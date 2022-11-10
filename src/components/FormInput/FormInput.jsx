@@ -14,7 +14,7 @@ function FormInput({ title, name, variant, ...restProps }) {
       />
       <span
         className={`form-input__error-message form-input__error-message_variant_${variant}`}
-      >Ошиибка</span>
+      ></span>
     </div>
   )
 }
