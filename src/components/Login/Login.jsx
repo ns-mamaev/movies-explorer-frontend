@@ -7,8 +7,8 @@ function Login() {
       type='login'
       heading='Рады видеть!'
     >
-      <FormInput name='email' title='E-mail' type='email' />
-      <FormInput name='password' title='Пароль' type='password' />
+      <FormInput variant='max' name='email' title='E-mail' type='email' />
+      <FormInput variant='max' name='password' title='Пароль' type='password' />
     </AuthPage>
   );
 }
