@@ -1,11 +1,12 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import FormInput from '../FormInput/FormInput';
 import SubmitButton from '../SubmitButton/SubmitButton';
 import './Profile.css'
 
 const Profile = () => {
-
   const [isEditMode, setIsEditMode] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <main className='profile'>
@@ -21,7 +22,7 @@ const Profile = () => {
         {!isEditMode && (
           <div className='profile__buttons'>
             <button className='profile__button profile__button_type_standart' type='button' onClick={() => setIsEditMode(true)}>Редактировать</button>
-            <button className='profile__button profile__button_type_danger' type='button'>Выйти из аккаунта</button>
+            <button className='profile__button profile__button_type_danger' type='button' onClick={() => navigate('/')}>Выйти из аккаунта</button>
           </div>
         )}
       </div>

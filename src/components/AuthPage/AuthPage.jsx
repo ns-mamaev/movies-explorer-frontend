@@ -7,9 +7,11 @@ function AuthPage({
   children,
   heading,
   type,
+  onSubmit,
 }) {
-  const onSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
+    onSubmit();
   }
 
   const texts = type === 'register'
@@ -30,7 +32,7 @@ function AuthPage({
       <div className='auth-page__inner'>
         <Logo />
         <h1 className='auth-page__heading'>{heading}</h1>
-        <form className='auth-page__form' name={type} onSubmit={onSubmit}>
+        <form className='auth-page__form' name={type} onSubmit={handleSubmit}>
           <fieldset className='auth-page__form-fields'>
             {children}
           </fieldset>
