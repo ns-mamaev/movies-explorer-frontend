@@ -8,7 +8,7 @@ import Landing from '../Landing/Landing';
 import Movies from '../Movies/Movies';
 import PageNotFound from '../PageNotFound/PageNotFound';
 import Register from '../Register/Register';
-import { innerPages } from '../../utills/constants';
+import { headerPages, footerPages } from '../../utills/constants';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
 import './App.css';
@@ -22,7 +22,8 @@ const App = () => {
   const location = useLocation().pathname;
   const navigate = useNavigate();
 
-  const isInnerPage = innerPages.includes(location);
+  const isPageWithHeader = headerPages.includes(location);
+  const isPageWithFooter = footerPages.includes(location);
 
   // временное решение для входа на сайт
   const handleAuth = () => {
@@ -38,7 +39,7 @@ const App = () => {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
-        {isInnerPage && <Header />}
+        {isPageWithHeader && <Header />}
         <Routes>
           <Route path='/signin' element={<Login onSubmit={handleAuth} />} />
           <Route path='/signup' element={<Register onSubmit={handleAuth} />} />
@@ -48,7 +49,7 @@ const App = () => {
           <Route path='/' element={<Landing />} />
           <Route path='*' element={<PageNotFound />} />
         </Routes>
-        {isInnerPage && <Footer />}
+        {isPageWithFooter && <Footer />}
       </div>
     </CurrentUserContext.Provider>
   );
