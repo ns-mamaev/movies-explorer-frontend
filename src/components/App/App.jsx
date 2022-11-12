@@ -1,5 +1,6 @@
 
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { useState } from 'react';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import Login from '../Login/Login';
@@ -11,27 +12,45 @@ import { innerPages } from '../../utills/constants';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
 import './App.css';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 
 const App = () => {
+
+  const [currentUser, setCurrentUser] = useState(null);
+
   const location = useLocation().pathname;
+  const navigate = useNavigate();
 
   const isInnerPage = innerPages.includes(location);
 
+  // временное решение для входа на сайт
+  const handleAuth = () => {
+    setCurrentUser({ name: 'Пользователь', email: 'test@ya.ru' });
+    navigate('/saved-movies');
+  }
+// временное решение для выхода с сайта
+  const handleLogout = () => {
+    setCurrentUser(null);
+    navigate('/');
+  }
+
   return (
-    <div className="page">
-      {isInnerPage && <Header />}
-      <Routes>
-        <Route path='/signin' element={<Login />} />
-        <Route path='/signup' element={<Register />} />
-        <Route path='/profile' element={<Profile />} />
-        <Route path='/movies' element={<Movies />} />
-        <Route path='/saved-movies' element={<SavedMovies />} />
-        <Route path='/' element={<Landing />} />
-        <Route path='*' element={<PageNotFound />} />
-      </Routes>
-      {isInnerPage && <Footer />}
-    </div>
+    <CurrentUserContext.Provider value={currentUser}>
+      <div className="page">
+        {isInnerPage && <Header />}
+        <Routes>
+          <Route path='/signin' element={<Login onSubmit={handleAuth} />} />
+          <Route path='/signup' element={<Register onSubmit={handleAuth} />} />
+          <Route path='/profile' element={<Profile onLogout={handleLogout} />} />
+          <Route path='/movies' element={<Movies />} />
+          <Route path='/saved-movies' element={<SavedMovies />} />
+          <Route path='/' element={<Landing />} />
+          <Route path='*' element={<PageNotFound />} />
+        </Routes>
+        {isInnerPage && <Footer />}
+      </div>
+    </CurrentUserContext.Provider>
   );
 }
 
