@@ -7,8 +7,3 @@
   flex-direction: column;
   align-items: center;
 }
-
-main {
-  flex-grow: 1;
-  width: 100%;
-}
