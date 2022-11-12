@@ -1,18 +1,35 @@
-import { Link } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import './Navigation.css';
 
 const Navigation = ({ visible }) => {
+
+  const setLinkClass = (navData) => navData.isActive
+    ? 'navigation__link navigation__link_active'
+    : 'navigation__link';
+
   return (
-    <div className={`navigation ${visible && 'navigation_view_mobile_visible'}`}>
-      <nav className={`navigation__inner ${visible && 'navigation__inner_view_mobile-visible'}`}>
+    <div className={`navigation ${visible && 'navigation_visible'}`}>
+      <nav className={`navigation__inner ${visible && 'navigation__inner_visible'}`}>
         <ul className='navigation__links'>
-          <li><Link className='navigation__link' to='/'>Главная</Link></li>
-          <li><Link className='navigation__link' to='/movies'>Фильмы</Link></li>
-          <li><Link className='navigation__link' to='/saved-movies'>Сохраненные фильмы</Link></li>
+          <li className='navigation__links-item navigation__links-item_type_only-mobile'>
+            <NavLink className={setLinkClass} to='/'>
+              Главная
+            </NavLink>
+          </li>
+          <li className='navigation__links-item'>
+            <NavLink className={setLinkClass} to='/movies'>
+              Фильмы
+            </NavLink>
+          </li>
+          <li className='navigation__links-item'>
+            <NavLink className={setLinkClass} to='/saved-movies'>
+              Сохраненные фильмы
+            </NavLink>
+          </li>
         </ul>
-        <Link className='navigation__link' to='/profile'>
+        <Link className='navigation__link navigation__link_type_with-icon' to='/profile'>
           Аккаунт
-          <div className='navigation__link-icon navigation__link-icon_type_profile' />
+          <div className='navigation__link-icon navigation__link-icon_content_profile' />
         </Link>
       </nav>
     </div>

@@ -18,8 +18,6 @@ const Header = () => {
     setBurgerOpened(state => !state);
   };
 
-  console.log(currentUser)
-
   return (
     <header className={`header ${isLocationLanding && 'header_place_landing'}`}>
       <Logo />
