@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import Logo from '../Logo/Logo';
 import SubmitButton from '../SubmitButton/SubmitButton';
 import './AuthPage.css';
 
@@ -30,7 +29,7 @@ function AuthPage({
   return (
     <main className='auth-page'>
       <div className='auth-page__inner'>
-        <Logo />
+        <div className='auth-page__logo' />
         <h1 className='auth-page__heading'>{heading}</h1>
         <form className='auth-page__form' name={type} onSubmit={handleSubmit}>
           <fieldset className='auth-page__form-fields'>

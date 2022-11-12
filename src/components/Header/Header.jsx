@@ -1,7 +1,6 @@
 import { useState, useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import Logo from '../Logo/Logo';
 import Navigation from '../Navigation/Navigation';
 import './Header.css';
 
@@ -18,9 +17,13 @@ const Header = () => {
     setIsBurgerOpened(state => !state);
   };
 
+  const closeBurger = () => {
+    setIsBurgerOpened(false);
+  }
+
   return (
     <header className={`header ${isLocationLanding && 'header_place_landing'}`}>
-      <Logo />
+      <Link className='header__logo' to='/' title='На главную' />
       {currentUser &&
         (<button
           className={`header__burger ${isBurgerOpened ? 'header__burger_opended' : ''}`}
@@ -30,7 +33,7 @@ const Header = () => {
       }
       {
         currentUser
-          ? <Navigation visible={isBurgerOpened} />
+          ? <Navigation visible={isBurgerOpened} onClose={closeBurger} />
           : (
             <nav className='header__auth'>
               <ul className='header__auth-links'>

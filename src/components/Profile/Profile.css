@@ -19,7 +19,7 @@
   text-align: center;
   color: var(--textcolor-main);
   margin: 0;
-  margin-bottom: 123px;
+  margin-bottom: 109px;
 }
 
 .profile__form {
@@ -61,6 +61,12 @@
 .profile__button_type_danger {
   color: var(--error-color);
   font-weight: 500;
+}
+
+@media screen and (max-width: 768px) {
+  .profile__heading {
+    margin-bottom: 82px;
+  }
 }
 
 @media screen and (max-width: 450px) {

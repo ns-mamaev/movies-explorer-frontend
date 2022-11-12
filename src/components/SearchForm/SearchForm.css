@@ -129,6 +129,8 @@
 
   .search-form__button {
     margin: 6px;
+    padding: 13px 10px;
+    min-width: 80px;
   }
 
   .search-form__toggle {

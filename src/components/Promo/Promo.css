@@ -3,7 +3,7 @@
   background-color: #073042;
 }
 
-.nav-tab {
+.promo__nav-tab {
   background-color: transparent;
   font-weight: 500;
   font-size: 12px;
@@ -14,13 +14,14 @@
   border: 1px solid rgba(255, 255, 255, .6);
   border-radius: 3px;
   cursor: pointer;
+  text-decoration: none;
 }
 
-.nav-tab:hover {
-  opacity: .6;
+.promo__nav-tab:hover {
+  opacity: .7;
 }
 
-.nav-tab:active {
+.promo__nav-tab:active {
   transform: scale(.98);
 }
 

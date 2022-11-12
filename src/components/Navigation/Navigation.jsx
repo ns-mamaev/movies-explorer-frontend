@@ -1,14 +1,20 @@
 import { NavLink, Link } from 'react-router-dom';
 import './Navigation.css';
 
-const Navigation = ({ visible }) => {
+const Navigation = ({ visible, onClose }) => {
 
   const setLinkClass = (navData) => navData.isActive
     ? 'navigation__link navigation__link_active'
     : 'navigation__link';
 
+  function handleCloseByOverlay (e) {
+    if (e.target.classList.contains('navigation_visible')) {
+      onClose();
+    }
+  };
+
   return (
-    <div className={`navigation ${visible && 'navigation_visible'}`}>
+    <div className={`navigation ${visible && 'navigation_visible'}`} onClick={handleCloseByOverlay} >
       <nav className={`navigation__inner ${visible && 'navigation__inner_visible'}`}>
         <ul className='navigation__links'>
           <li className='navigation__links-item navigation__links-item_type_only-mobile'>

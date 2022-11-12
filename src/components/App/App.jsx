@@ -27,7 +27,7 @@ const App = () => {
 
   // временное решение для входа на сайт
   const handleAuth = () => {
-    setCurrentUser({ name: 'Пользователь', email: 'test@ya.ru' });
+    setCurrentUser({ name: 'Виталий', email: 'pochta@yandex.ru' });
     navigate('/saved-movies');
   }
 // временное решение для выхода с сайта
