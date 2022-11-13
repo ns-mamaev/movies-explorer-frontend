@@ -10,7 +10,7 @@ function Login({ onSubmit }) {
       onSubmit={onSubmit}
     >
       <FormInput variant='max' name='email' title='E-mail' type='email' />
-      <FormInput variant='max' name='password' title='Пароль' type='password' />
+      <FormInput variant='max' name='password' title='Пароль' type='password' errorMessage='Что-то пошло не так...'/>
     </AuthPage>
   );
 }

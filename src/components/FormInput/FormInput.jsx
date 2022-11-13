@@ -1,6 +1,6 @@
 import './FormInput.css';
 
-function FormInput({ title, name, variant, ...restProps }) {
+function FormInput({ title, name, variant, errorMessage, ...restProps }) {
   return (
     <div className={`form-input form-input_variant_${variant}`}>
       <label
@@ -14,7 +14,7 @@ function FormInput({ title, name, variant, ...restProps }) {
       />
       <span
         className={`form-input__error-message form-input__error-message_variant_${variant}`}
-      ></span>
+      >{errorMessage}</span>
     </div>
   )
 }

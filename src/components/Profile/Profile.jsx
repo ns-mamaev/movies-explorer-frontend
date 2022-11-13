@@ -1,5 +1,4 @@
 import { useState , useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import FormInput from '../FormInput/FormInput';
 import SubmitButton from '../SubmitButton/SubmitButton';
@@ -7,7 +6,6 @@ import './Profile.css'
 
 const Profile = ({ onLogout }) => {
   const [isEditMode, setIsEditMode] = useState(false);
-  const navigate = useNavigate();
   const currentUser = useContext(CurrentUserContext);
 
   return (
