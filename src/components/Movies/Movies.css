@@ -7,7 +7,7 @@
 }
 
 .movies__load-btn {
-  margin: 50px auto 80px;
+  margin: 50px auto 90px;
   display: block;
   min-width: 320px;
   max-width: 100%;
@@ -44,5 +44,6 @@
 
   .movies__load-btn {
     min-width: 240px;
+    margin-bottom: 100px;
   }
 }

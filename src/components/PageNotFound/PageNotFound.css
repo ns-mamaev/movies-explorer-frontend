@@ -7,8 +7,7 @@
 }
 
 .page-not-found__banner {
-  /* верхний отступ больше - для центрирования по вертикали */
-  margin: 201px 0 184px;
+  margin: 184px 0 184px;
 }
 
 .page-not-found__title {
