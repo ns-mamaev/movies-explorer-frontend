@@ -12,13 +12,17 @@
   list-style: none;
   color: var(--textcolor-main);
   display: flex;
-  column-gap: 40px;
+  justify-content: space-between;
 }
+
+.about-project__article {
+  width: calc((100% - 40px) / 2);
+}
+
 .about-project__article-title {
   margin: 0 0 26px;
   font-weight: 400;
   line-height: 24px;
-  letter-spacing: -0.04em;
 }
 
 .about-project__article-text {
@@ -74,20 +78,28 @@
   .about-project {
     padding: 90px 0;
   }
+
   .about-project__inner {
     padding: 0 50px;
   }
+
   .about-project__articles {
-    column-gap: 30px;
     margin-bottom: 93px;
   }
+
+  .about-project__article {
+    width: calc((100% - 30px) / 2);
+  }
+
   .about-project__article-title {
     margin-bottom: 22px;
   }
+
   .about-project__article-text {
     font-size: 12px;
     line-height: 18px;
   }
+
   .about-project__step_order_first {
     width: 140px;
   }
@@ -97,33 +109,43 @@
   .about-project {
     padding: 70px 0;
   }
+
   .about-project__inner {
     padding: 0 18px;
   }
+
   .about-project__articles {
     margin: 60px 0;
     flex-direction: column;
     row-gap: 56px;
-    margin-bottom: 93px;
   }
+
+  .about-project__article {
+    width: 100%;
+  }
+
   .about-project__article-title {
     font-size: 18px;
     line-height: 22px;
     margin-bottom: 16px;
   }
+
   .about-project__article-text {
     font-size: 11px;
     line-height: 16px;
   }
+
   .about-project__step_order_first {
     width: 100px;
   }
+
   .about-project__step-title {
     margin-bottom: 10px;
     font-size: 11px;
     line-height: 13px;
     padding: 11px 0;
   }
+
   .about-project__step-description {
     font-size: 11px;
     line-height: 13px;

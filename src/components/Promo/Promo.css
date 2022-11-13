@@ -9,7 +9,7 @@
   font-size: 12px;
   line-height: 16px;
   text-align: center;
-  padding: 10px 20px;
+  padding: 9px 19px;
   color: var(--textcolor-main);
   border: 1px solid rgba(255, 255, 255, .6);
   border-radius: 3px;
@@ -105,9 +105,8 @@
   }
   .promo__title {
     margin-bottom: 24px;
-    font-size: 30px;
+    font-size: 28px;  /* в макете 30px, но с таким значением не pixelPerfect*/
     line-height: 38px;
-    letter-spacing: -0.04em;
   }
   .promo__subtitle {
     margin-bottom: 80px;

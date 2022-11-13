@@ -1,5 +1,5 @@
 .about-me {
-  padding: 110px 0 125px;
+  padding: 110px 0 100px;
 }
 
 .about-me__inner {
@@ -130,6 +130,10 @@
 }
 
 @media screen and (max-width: 450px) {
+  .about-me {
+    padding: 70px 0;
+  }
+
   .about-me__inner {
     padding: 0 14px;
   }
