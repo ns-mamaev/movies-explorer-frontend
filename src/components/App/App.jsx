@@ -13,8 +13,6 @@ import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
 import './App.css';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-
 
 const App = () => {
 
@@ -26,12 +24,12 @@ const App = () => {
   const isPageWithHeader = headerPages.includes(location);
   const isPageWithFooter = footerPages.includes(location);
 
-  // временное решение для входа на сайт
+  // временное решение для эмуляции входа на сайт
   const handleAuth = () => {
     setCurrentUser({ name: 'Виталий', email: 'pochta@yandex.ru' });
     navigate('/saved-movies');
   }
-// временное решение для выхода с сайта
+// временное решение для эмуляции выхода с сайта
   const handleLogout = () => {
     setCurrentUser(null);
     navigate('/');

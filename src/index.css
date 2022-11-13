@@ -1,8 +1,9 @@
-@import url(./vendor/Inter/Inter.css);
+@import url(./vendor/fonts/fonts.css);
 
 body {
   margin: 0;
   padding: 0;
+  -webkit-tap-highlight-color: transparent;
 }
 
 :root {
@@ -14,4 +15,3 @@ body {
   --bgcolor-buttons: #4285F4;
   --error-color: #ee3465;
 }
-
