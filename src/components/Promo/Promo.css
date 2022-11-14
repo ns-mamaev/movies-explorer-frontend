@@ -67,7 +67,15 @@
   top: 0;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1080px) {
+  .promo__title {
+    max-width: 480px;
+    font-size: 40px;
+    line-height: 50px;
+  }
+}
+
+@media screen and (max-width: 880px) {
   .promo {
     padding: 140px 0 76px;
   }
@@ -80,8 +88,6 @@
     margin-bottom: 22px;
     max-width: 100%;
     text-align: center;
-    font-size: 40px;
-    line-height: 50px;
   }
   .promo__subtitle {
     margin-bottom: 92px;

@@ -13,6 +13,7 @@ import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
 import './App.css';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 const App = () => {
 
@@ -29,7 +30,7 @@ const App = () => {
     setCurrentUser({ name: 'Виталий', email: 'pochta@yandex.ru' });
     navigate('/saved-movies');
   }
-// временное решение для эмуляции выхода с сайта
+  // временное решение для эмуляции выхода с сайта
   const handleLogout = () => {
     setCurrentUser(null);
     navigate('/');
@@ -40,17 +41,17 @@ const App = () => {
       <div className="page">
         {isPageWithHeader && <Header />}
         <Routes>
+          <Route path='/' element={<Landing />} />
           <Route path='/signin' element={<Login onSubmit={handleAuth} />} />
           <Route path='/signup' element={<Register onSubmit={handleAuth} />} />
           <Route path='/profile' element={<Profile onLogout={handleLogout} />} />
           <Route path='/movies' element={<Movies />} />
           <Route path='/saved-movies' element={<SavedMovies />} />
-          <Route path='/' element={<Landing />} />
           <Route path='*' element={<PageNotFound />} />
         </Routes>
         {isPageWithFooter && <Footer />}
       </div>
-    </CurrentUserContext.Provider>
+    </CurrentUserContext.Provider >
   );
 }
 
