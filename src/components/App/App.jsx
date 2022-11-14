@@ -44,10 +44,11 @@ const App = () => {
           <Route path='/' element={<Landing />} />
           <Route path='/signin' element={<Login onSubmit={handleAuth} />} />
           <Route path='/signup' element={<Register onSubmit={handleAuth} />} />
-          <Route path='/profile' element={<Profile onLogout={handleLogout} />} />
-          <Route path='/movies' element={<Movies />} />
-          <Route path='/saved-movies' element={<SavedMovies />} />
-          <Route path='*' element={<PageNotFound />} />
+
+          <Route path='/profile' element={<ProtectedRoute component={Profile} onLogout={handleLogout} />} />
+          <Route path='/movies' element={<ProtectedRoute componen={Movies} />} />
+          <Route path='/saved-movies' element={<ProtectedRoute component={SavedMovies} />} />
+          <Route path='*' element={<ProtectedRoute component={PageNotFound} />} />
         </Routes>
         {isPageWithFooter && <Footer />}
       </div>
