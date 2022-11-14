@@ -32,7 +32,7 @@
   box-sizing: content-box;
   display: flex;
   flex-direction: column;
-  align-items: flex-start ;
+  align-items: flex-start;
 }
 
 .promo__title {
@@ -54,7 +54,7 @@
   font-size: 13px;
   line-height: 16px;
   opacity: .5;
-  max-width: 310px ;
+  max-width: 310px;
   z-index: 2;
 }
 
@@ -79,21 +79,23 @@
   .promo {
     padding: 140px 0 76px;
   }
+
   .promo__inner {
     align-items: center;
-    padding-left: 44px;
-    padding-right: 44px;
   }
+
   .promo__title {
     margin-bottom: 22px;
     max-width: 100%;
     text-align: center;
   }
+
   .promo__subtitle {
     margin-bottom: 92px;
     text-align: center;
     max-width: 260px;
   }
+
   .promo__logo {
     position: static;
     order: -1;
@@ -101,22 +103,35 @@
   }
 }
 
+@media screen and (max-width: 800px) {
+  .promo__inner {
+    align-items: center;
+    padding-left: 44px;
+    padding-right: 44px;
+  }
+}
+
 @media screen and (max-width: 450px) {
   .promo {
     padding: 70px 0 30px;
   }
+
   .promo__inner {
     padding-left: 10px;
     padding-right: 10px;
   }
+
   .promo__title {
     margin-bottom: 24px;
-    font-size: 28px;  /* в макете 30px, но с таким значением не pixelPerfect*/
+    font-size: 28px;
+    /* в макете 30px, но с таким значением не pixelPerfect*/
     line-height: 38px;
   }
+
   .promo__subtitle {
     margin-bottom: 80px;
   }
+
   .promo__logo {
     width: 210px;
     height: 206px;

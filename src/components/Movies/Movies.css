@@ -31,7 +31,7 @@
   transform: scale(.98);
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 800px) {
   .movies {
     padding: 0 30px;
   }

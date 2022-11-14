@@ -72,7 +72,7 @@
   grid-area: photo;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 800px) {
   .about-me {
     padding: 90px 0;
   }

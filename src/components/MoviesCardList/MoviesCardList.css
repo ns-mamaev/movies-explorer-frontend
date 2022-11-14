@@ -5,17 +5,17 @@
   width: 100%;
   display: grid;
   justify-content: center;
-  grid-template-columns: repeat(auto-fill, 364px);
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 30px 24px;
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1180px) {
   .movies-cards {
     grid-template-columns: repeat(2, minmax(300px, 364px));
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 800px) {
   .movies-cards {
     gap: 36px 30px;
   }
@@ -23,7 +23,7 @@
 
 @media screen and (max-width: 720px) {
   .movies-cards {
-    grid-template-columns: minmax(300px, 364px);
+    grid-template-columns: minmax(250px, 400px);
   }
 }
 

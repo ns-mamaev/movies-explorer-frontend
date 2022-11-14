@@ -63,7 +63,7 @@
   background-image: url(../../images/profile-icon.svg);
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 800px) {
   .navigation {
     position: fixed;
     top: 0;
