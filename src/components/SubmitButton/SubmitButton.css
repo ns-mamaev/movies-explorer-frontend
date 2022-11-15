@@ -19,6 +19,19 @@
   transform: scale(.99, .98);
 }
 
+.submit-button:disabled {
+  background-color: transparent;
+  cursor: not-allowed;
+  outline: 1px solid #8b8b8b;
+  color: #8b8b8b;
+  opacity: .5;
+  box-shadow: 0 0 10px #8b8b8b
+}
+
+.submit-button:disabled:active {
+  transform: none;
+}
+
 @media screen and (max-width: 450px) {
   .submit-button {
     padding: 15px;

@@ -46,7 +46,7 @@ const App = () => {
           <Route path='/signup' element={<Register onSubmit={handleAuth} />} />
 
           <Route path='/profile' element={<ProtectedRoute component={Profile} onLogout={handleLogout} />} />
-          <Route path='/movies' element={<ProtectedRoute componen={Movies} />} />
+          <Route path='/movies' element={<ProtectedRoute component={Movies} />} />
           <Route path='/saved-movies' element={<ProtectedRoute component={SavedMovies} />} />
           <Route path='*' element={<ProtectedRoute component={PageNotFound} />} />
         </Routes>

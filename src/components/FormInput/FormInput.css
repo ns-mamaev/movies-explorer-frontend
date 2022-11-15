@@ -64,6 +64,14 @@
   font-size: 15px;
 }
 
+.form-input__input_variant_max-with-error {
+  outline: 1px solid var(--error-color);
+}
+
+.form-input__input_variant_max-with-error:focus {
+  outline: 1px solid var(--error-color);
+}
+
 .form-input__error-message {
   color: var(--error-color);
   font-weight: 400;

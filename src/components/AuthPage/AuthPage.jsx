@@ -7,6 +7,7 @@ function AuthPage({
   heading,
   type,
   onSubmit,
+  isValid,
 }) {
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,7 +36,7 @@ function AuthPage({
           <fieldset className='auth-page__form-fields'>
             {children}
           </fieldset>
-          <SubmitButton>{texts.buttonText}</SubmitButton>
+          <SubmitButton disabled={!isValid}>{texts.buttonText}</SubmitButton>
         </form>
         <div className='auth-page__caption'>
           <p className='auth-page__caption-text'>{texts.formCaption}</p>
