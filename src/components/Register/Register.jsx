@@ -1,8 +1,9 @@
 import useFormWithValidation from '../../utills/hooks/useFormWithValidation';
+
 import AuthPage from '../AuthPage/AuthPage';
 import FormInput from '../FormInput/FormInput';
 
-function Register({ onSubmit }) {
+function Register({ onSubmit, error, inLoading }) {
 
   const {
     values,
@@ -11,13 +12,17 @@ function Register({ onSubmit }) {
     onChange,
   } = useFormWithValidation();
 
+  // оборачиваю еще в 1 функцию чтобы передать values, которые недоступны в App
+  const handleSubmit = () => onSubmit(values);
 
   return (
     <AuthPage
       type='register'
       heading='Добро пожаловать!'
-      onSubmit={onSubmit}
       isValid={isValid}
+      onSubmit={handleSubmit}
+      error={error}
+      inLoading={inLoading}
     >
       <FormInput
         value={values.name}

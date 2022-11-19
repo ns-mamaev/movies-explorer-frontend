@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import useFormWithValidation from '../../utills/hooks/useFormWithValidation';
+import mainApi from '../../utills/MainApi';
 import AuthPage from '../AuthPage/AuthPage';
 import FormInput from '../FormInput/FormInput';
 
-function Login({ onSubmit }) {
+function Login({ onSubmit, error, inLoading }) {
 
   const {
     values,
@@ -12,12 +13,17 @@ function Login({ onSubmit }) {
     onChange,
   } = useFormWithValidation();
 
+  // оборачиваю еще в 1 функцию чтобы передать values, которые недоступны в App
+  const handleSubmit = () => onSubmit(values);
+
   return (
     <AuthPage
       type='login'
       heading='Рады видеть!'
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit}
       isValid={isValid}
+      error={error}
+      inLoading={inLoading}
     >
       <FormInput
         value={values.email}

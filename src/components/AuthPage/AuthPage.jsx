@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import SubmitButton from '../SubmitButton/SubmitButton';
 import './AuthPage.css';
@@ -8,6 +9,8 @@ function AuthPage({
   type,
   onSubmit,
   isValid,
+  inLoading,
+  error,
 }) {
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -36,7 +39,8 @@ function AuthPage({
           <fieldset className='auth-page__form-fields'>
             {children}
           </fieldset>
-          <SubmitButton disabled={!isValid}>{texts.buttonText}</SubmitButton>
+          <p className='auth-page__error-message' style={{ color: 'red' }}>{error}</p>
+          <SubmitButton disabled={!isValid || inLoading}>{texts.buttonText}</SubmitButton>
         </form>
         <div className='auth-page__caption'>
           <p className='auth-page__caption-text'>{texts.formCaption}</p>
