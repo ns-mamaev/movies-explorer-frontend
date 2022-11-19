@@ -20,7 +20,11 @@ import moviesApi from '../../utills/MoviesApi';
 const App = () => {
 
   const [currentUser, setCurrentUser] = useState(null);
+  const [loggedIn, setLoggedIn] = useState(false);
+
   const [moviesStore, setMoviesStore] = useState([]);
+  const [savedMovies, setSavedMovies] = useState([]);
+
   const [inRequest, setInRequest] = useState(false);
   const [serverError, setServerError] = useState('');
   const [moviesLoading, setMoviesLoading] = useState(false);
@@ -36,6 +40,7 @@ const App = () => {
     try {
       await mainApi.register(JSON.stringify({ name, email, password }))
       const user = await mainApi.login(JSON.stringify({ email, password }))
+      setLoggedIn(true);
       setCurrentUser(user)
       navigate('/movies');
     } catch (err) {
@@ -49,6 +54,7 @@ const App = () => {
     setInRequest(true);
     try {
       const user = await mainApi.login(JSON.stringify(userData))
+      setLoggedIn(true);
       setCurrentUser(user);
       navigate('/movies');
     } catch (err) {
@@ -63,6 +69,7 @@ const App = () => {
     try {
       const user = await mainApi.getOwnProfile()
       if (user.email) {
+        setLoggedIn(true);
         setCurrentUser(user);
         navigate('/movies')
       }
@@ -75,6 +82,7 @@ const App = () => {
   const handleLogout = async () => {
     try {
       await mainApi.logout();
+      setLoggedIn(false);
       setCurrentUser(null)
       navigate('/signin');
     } catch (err) {
@@ -100,21 +108,57 @@ const App = () => {
     getUser();
   }, []);
 
-  // фильмы
+  // ****************************** MOVIES *******************************************************
 
   const getMovies = async () => {
-    setMoviesLoading(true);
     try {
       const movies = await moviesApi.getFilms();
+      const savedMovies = await mainApi.getSavedMovies();
       setMoviesStore(movies);
+      setSavedMovies(savedMovies);
     } catch (err) {
       console.log(err);
     }
   };
 
+  const saveMovie = async (id) => {
+    try {
+      console.log(id)
+      const movie = moviesStore.find(item => item.id === id);
+      const savedMovie = await mainApi.saveMovie({
+        country: movie.country,
+        director: movie.director,
+        duration: movie.duration,
+        year: movie.year,
+        description: movie.description,
+        image: 'https://api.nomoreparties.co' + movie.image.url,
+        trailerLink: movie.trailerLink,
+        thumbnail: 'https://api.nomoreparties.co' + movie.image.url,
+        movieId: movie.id,
+        nameRU: movie.nameRU,
+        nameEN: movie.nameEN,
+      });
+      setSavedMovies(movies => [...movies, savedMovie])
+    } catch(err) {
+      throw err;
+    }
+  };
+
+
+  const removeMovie = async (id) => {
+    try {
+      await mainApi.removeMovie(id);
+      setSavedMovies(movies => [...movies.filter((mov) => mov._id !== id )]);
+    } catch(err) {
+      console.log(err);
+    }
+  }
+
   useEffect(() => {
-    getMovies();
-  }, [])
+    if (loggedIn) {
+      getMovies();
+    }
+  }, [loggedIn])
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -159,6 +203,8 @@ const App = () => {
               <ProtectedRoute
                 component={Movies}
                 movies={moviesStore}
+                onSaveMovie={saveMovie}
+                onRemoveMovie={removeMovie}
               />
             }
           />

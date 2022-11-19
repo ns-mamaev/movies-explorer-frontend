@@ -24,24 +24,36 @@ class MainApi {
     return this._handleResponse(res);
   }
 
-  async register(data) {
-    return this._request('/signup', 'POST', data);
+  async register(userData) {
+    return this._request('/signup', 'POST', userData);
   }
 
-  async login(data) {
-    return this._request('/signin', 'POST', data);
+  async login(userData) {
+    return this._request('/signin', 'POST', userData);
   }
 
   async logout() {
-    return this._request('/signout')
+    return this._request('/signout');
   }
 
   async getOwnProfile() {
-    return this._request('/users/me')
+    return this._request('/users/me');
   }
 
-  async updateOwnProfile(data) {
-    return this._request('/users/me', 'PATCH', data)
+  async updateOwnProfile(userInfo) {
+    return this._request('/users/me', 'PATCH', userInfo);
+  }
+
+  async getSavedMovies() {
+    return this._request('/movies');
+  }
+
+  async saveMovie(movie) {
+    return this._request('/movies', 'POST', JSON.stringify(movie));
+  }
+
+  async removeMovie(movieId) {
+    return this._request(`/movies/${movieId}`, 'DELETE');
   }
 }
 
