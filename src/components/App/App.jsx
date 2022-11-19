@@ -29,24 +29,16 @@ const App = () => {
   const isPageWithHeader = headerPages.includes(location);
   const isPageWithFooter = footerPages.includes(location);
 
-  // // временное решение для эмуляции входа на сайт
-  // const handleAuth = () => {
-  //   setCurrentUser({ name: 'Виталий', email: 'pochta@yandex.ru' });
-  //   navigate('/saved-movies');
-  // }
-  // // временное решение для эмуляции выхода с сайта
-  // const handleLogout = () => {
-  //   setCurrentUser(null);
-  //   navigate('/');
-  // }
-
-  const handleRegister = async (userData) => {
+  const handleRegister = async ({ name, email, password }) => {
     setInRequest(true);
     try {
-      const res = await mainApi.register(JSON.stringify(userData))
-      console.log(res)
+      await mainApi.register(JSON.stringify({ name, email, password }))
+      const user = await mainApi.login(JSON.stringify({ email, password }))
+      setCurrentUser(user)
+      navigate('/movies');
     } catch(err) {
       setServerError(err.message)
+      setTimeout(() => setServerError(''), 3000)
     }
     setInRequest(false);
   }
@@ -54,14 +46,16 @@ const App = () => {
   const handleLogin = async (userData) => {
     setInRequest(true);
     try {
-      const res = await mainApi.login(JSON.stringify(userData))
-      console.log(res)
+      const user = await mainApi.login(JSON.stringify(userData))
+      setCurrentUser(user);
+      navigate('/movies');
     } catch(err) {
       setServerError(err.message)
+      //показываю ошибку 3 секунды
+      setTimeout(() => setServerError(''), 3000)
     }
     setInRequest(false);
   }
-
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -90,7 +84,8 @@ const App = () => {
           />
 
           <Route path='/profile' element={<ProtectedRoute component={Profile} />} />
-          <Route path='/movies' element={<ProtectedRoute component={Movies} />} />
+          {/* <Route path='/movies' element={<ProtectedRoute component={Movies} />} /> */}
+          <Route path='/movies' element={<Movies />} />
           <Route path='/saved-movies' element={<ProtectedRoute component={SavedMovies} />} />
           <Route path='*' element={<ProtectedRoute component={PageNotFound} />} />
         </Routes>
