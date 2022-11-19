@@ -15,13 +15,15 @@ import './App.css';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import mainApi from '../../utills/MainApi';
+import moviesApi from '../../utills/MoviesApi';
 
 const App = () => {
 
   const [currentUser, setCurrentUser] = useState(null);
-
+  const [moviesStore, setMoviesStore] = useState([]);
   const [inRequest, setInRequest] = useState(false);
   const [serverError, setServerError] = useState('');
+  const [moviesLoading, setMoviesLoading] = useState(false);
 
   const location = useLocation().pathname;
   const navigate = useNavigate();
@@ -75,7 +77,7 @@ const App = () => {
       await mainApi.logout();
       setCurrentUser(null)
       navigate('/signin');
-    } catch(err) {
+    } catch (err) {
       setServerError(err);
       setTimeout(() => setServerError(''), 3000);
     }
@@ -97,6 +99,22 @@ const App = () => {
   useEffect(() => {
     getUser();
   }, []);
+
+  // фильмы
+
+  const getMovies = async () => {
+    setMoviesLoading(true);
+    try {
+      const movies = await moviesApi.getFilms();
+      setMoviesStore(movies);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getMovies();
+  }, [])
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -135,7 +153,15 @@ const App = () => {
               />
             }
           />
-          <Route path='/movies' element={<ProtectedRoute component={Movies} />} />
+          <Route
+            path='/movies'
+            element={
+              <ProtectedRoute
+                component={Movies}
+                movies={moviesStore}
+              />
+            }
+          />
           <Route path='/movies' element={<Movies />} />
           <Route path='/saved-movies' element={<ProtectedRoute component={SavedMovies} />} />
           <Route path='*' element={<ProtectedRoute component={PageNotFound} />} />

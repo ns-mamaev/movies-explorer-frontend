@@ -4,7 +4,7 @@ import SearchForm from '../SearchForm/SearchForm';
 import { useState, useEffect } from 'react';
 import Preloader from '../Preloader/Preloader';
 
-const Movies = () => {
+const Movies = ({ movies }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -16,7 +16,7 @@ const Movies = () => {
       <SearchForm />
       {isLoading ? <Preloader /> : (
         <>
-          <MoviesCardList />
+          <MoviesCardList movies={movies} />
           <button type='button' className='movies__load-btn'>Ещё</button>
         </>
       )}
