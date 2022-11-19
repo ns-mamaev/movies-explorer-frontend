@@ -39,10 +39,14 @@ class MainApi {
   async getOwnProfile() {
     return this._request('/users/me')
   }
+
+  async updateOwnProfile(data) {
+    return this._request('/users/me', 'PATCH', data)
+  }
 }
 
 const mainApi = new MainApi({
-  baseUrl: 'http://84.201.137.14',
+  baseUrl: 'http://localhost:3100',
   headers: {
     'Content-Type': 'application/json',
   },

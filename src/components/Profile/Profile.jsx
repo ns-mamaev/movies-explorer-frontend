@@ -5,13 +5,15 @@ import FormInput from '../FormInput/FormInput';
 import SubmitButton from '../SubmitButton/SubmitButton';
 import './Profile.css'
 
-const Profile = ({ onLogout }) => {
+const Profile = ({ onSubmit, onLogout, error, inLoading }) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const currentUser = useContext(CurrentUserContext);
 
-  const onSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setIsEditMode(false);
+    onSubmit(values)
+      .then(() => setIsEditMode(false))
+
   };
 
   const {
@@ -30,7 +32,7 @@ const Profile = ({ onLogout }) => {
     <main className='profile'>
       <div className='profile__inner'>
         <h1 className='profile__heading'>Привет, {currentUser?.name}!</h1>
-        <form className='profile__form' onSubmit={onSubmit}>
+        <form className='profile__form' onSubmit={handleSubmit}>
           <fieldset className='profile__form-fields'>
             <FormInput
               name='name'
@@ -56,8 +58,9 @@ const Profile = ({ onLogout }) => {
               required
             />
           </fieldset>
-          {isEditMode && <SubmitButton disabled={!isValid}>Сохранить</SubmitButton>}
+          {isEditMode && <SubmitButton disabled={!isValid || inLoading}>Сохранить</SubmitButton>}
         </form>
+        <p className='auth-page__error-message' style={{ color: 'red' }}>{error}</p>
         {!isEditMode && (
           <div className='profile__buttons'>
             <button className='profile__button profile__button_type_standart' type='button' onClick={() => setIsEditMode(true)}>Редактировать</button>

@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
@@ -36,7 +36,7 @@ const App = () => {
       const user = await mainApi.login(JSON.stringify({ email, password }))
       setCurrentUser(user)
       navigate('/movies');
-    } catch(err) {
+    } catch (err) {
       setServerError(err.message)
       setTimeout(() => setServerError(''), 3000)
     }
@@ -49,13 +49,54 @@ const App = () => {
       const user = await mainApi.login(JSON.stringify(userData))
       setCurrentUser(user);
       navigate('/movies');
-    } catch(err) {
+    } catch (err) {
       setServerError(err.message)
       //показываю ошибку 3 секунды
       setTimeout(() => setServerError(''), 3000)
     }
     setInRequest(false);
   }
+
+  const getUser = async () => {
+    try {
+      const user = await mainApi.getOwnProfile()
+      if (user.email) {
+        setCurrentUser(user);
+        navigate('/movies')
+      }
+    } catch (err) {
+      setServerError(err.message);
+      setTimeout(() => setServerError(''));
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await mainApi.logout();
+      setCurrentUser(null)
+      navigate('/signin');
+    } catch(err) {
+      setServerError(err);
+      setTimeout(() => setServerError(''), 3000);
+    }
+  };
+
+  const updateUserInfo = async (userData) => {
+    setInRequest(true);
+    try {
+      const user = await mainApi.updateOwnProfile(JSON.stringify(userData))
+      setCurrentUser(user);
+    } catch (err) {
+      setServerError(err.message)
+      //показываю ошибку 3 секунды
+      setTimeout(() => setServerError(''), 3000)
+    }
+    setInRequest(false);
+  }
+
+  useEffect(() => {
+    getUser();
+  }, []);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -82,9 +123,19 @@ const App = () => {
               />
             }
           />
-
-          <Route path='/profile' element={<ProtectedRoute component={Profile} />} />
-          {/* <Route path='/movies' element={<ProtectedRoute component={Movies} />} /> */}
+          <Route
+            path='/profile'
+            element={
+              <ProtectedRoute
+                component={Profile}
+                onSubmit={updateUserInfo}
+                onLogout={handleLogout}
+                error={serverError}
+                inLoading={inRequest}
+              />
+            }
+          />
+          <Route path='/movies' element={<ProtectedRoute component={Movies} />} />
           <Route path='/movies' element={<Movies />} />
           <Route path='/saved-movies' element={<ProtectedRoute component={SavedMovies} />} />
           <Route path='*' element={<ProtectedRoute component={PageNotFound} />} />

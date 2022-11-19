@@ -1,6 +1,4 @@
-import { useEffect } from 'react';
 import useFormWithValidation from '../../utills/hooks/useFormWithValidation';
-import mainApi from '../../utills/MainApi';
 import AuthPage from '../AuthPage/AuthPage';
 import FormInput from '../FormInput/FormInput';
 
