@@ -11,7 +11,6 @@ const MoviesCard = ({
   onSaveMovie,
   onRemoveMovie,
   type = 'default',
-  id,
 }) => {
 
   const [saved, setSaved] = useState(false);
@@ -36,7 +35,7 @@ const MoviesCard = ({
     switch (type) {
       case 'liked':
       case 'remove':
-        handleRemove(id);
+        handleRemove(movieId);
         break;
       case 'default':
         handleSave(movieId);

@@ -7,10 +7,6 @@ import Preloader from '../Preloader/Preloader';
 const Movies = ({ movies, onSaveMovie, onRemoveMovie, onSearch }) => {
   const [isLoading, setIsLoading] = useState(false);
 
-  // useEffect(() => {
-  //   setTimeout(() => setIsLoading(false), 500);
-  // }, []);
-
   return (
     <main className='movies'>
       <SearchForm

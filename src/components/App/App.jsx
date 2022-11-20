@@ -48,6 +48,18 @@ const App = () => {
     }
   }
 
+  const showLikedMovies = (arr) => {
+    const filmsWithLikes = arr.map(movie => {
+      const match = savedMovies.find(({ movieId }) => movieId === movie.movieId);
+      return match ? { ...movie, type: 'liked' } : { ...movie, type: 'default' }
+    });
+    setFindedMovies(filmsWithLikes);
+  }
+
+  useEffect(() => {
+    showLikedMovies(findedMovies);
+  }, [savedMovies.length])
+
   const searchMovies = async (queryText, isShortFilmToggle = false) => {
     let movies;
     if (moviesStore.length === 0) {
@@ -55,17 +67,16 @@ const App = () => {
     } else {
       movies = moviesStore;
     }
+    const filteredMovies = movies
+      .filter(({ nameRU, nameEN, duration }) => {
+        const textToMatch = (nameRU + nameEN).toLowerCase();
+        const normalizedQuery = queryText.toLowerCase();
 
-    const filteredMovies = movies.filter(({ nameRU, nameEN, duration }) => {
-      const textToMatch = (nameRU + nameEN).toLowerCase();
-      const normalizedQuery = queryText.toLowerCase();
-
-      const toggle = isShortFilmToggle ? duration <= 40 : true;
-      return toggle && textToMatch.includes(normalizedQuery);
-    });
-    setFindedMovies(filteredMovies);
+        const toggle = isShortFilmToggle ? duration <= 40 : true;
+        return toggle && textToMatch.includes(normalizedQuery);
+      })
+    showLikedMovies(filteredMovies);
   }
-
 
   // *******************************************************************************************
 
@@ -165,8 +176,9 @@ const App = () => {
 
   const removeMovie = async (id) => {
     try {
-      await mainApi.removeMovie(id);
-      setSavedMovies(movies => [...movies.filter((mov) => mov._id !== id)]);
+      const removedMovie = savedMovies.find(movie => movie.movieId === id)
+      await mainApi.removeMovie(removedMovie._id);
+      setSavedMovies(movies => [...movies.filter((mov) => mov.movieId !== id)]);
     } catch (err) {
       console.log(err);
     }
