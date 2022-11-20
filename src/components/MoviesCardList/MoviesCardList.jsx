@@ -4,21 +4,25 @@ import sampleImage from '../../images/movie_poster_1.jpg';
 
 const MoviesCardList = ({ movies, onSaveMovie, onRemoveMovie }) => {
   const moviesComponents = movies.map(({
-    id,
+    movieId,
     nameRU,
     duration,
     trailerLink,
-    image: { url }
+    image,
+    type,
+    _id: id,
   }) => (
     <MoviesCard
       title={nameRU}
-      imageSource={`https://api.nomoreparties.co/${url}`}
+      imageSource={image}
       duration={duration}
       trailerLink={trailerLink}
       onSaveMovie={onSaveMovie}
       onRemoveMovie={onRemoveMovie}
-      movieId={id}
-      key={id}
+      movieId={movieId}
+      key={movieId}
+      type={type}
+      id={id}
     />
   ));
 

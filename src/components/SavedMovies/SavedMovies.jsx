@@ -2,11 +2,14 @@ import './SavedMovies.css';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SearchForm from '../SearchForm/SearchForm';
 
-const SavedMovies = () => {
+const SavedMovies = ({ movies, onRemoveMovie }) => {
   return (
     <main className='saved-movies'>
       <SearchForm />
-      <MoviesCardList />
+      <MoviesCardList
+        movies={movies}
+        onRemoveMovie={onRemoveMovie}
+      />
     </main>
   );
 };

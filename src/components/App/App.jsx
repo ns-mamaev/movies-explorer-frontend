@@ -112,10 +112,10 @@ const App = () => {
 
   const getMovies = async () => {
     try {
-      const movies = await moviesApi.getFilms();
       const savedMovies = await mainApi.getSavedMovies();
-      setMoviesStore(movies);
       setSavedMovies(savedMovies);
+      const movies = await moviesApi.getFilms();
+      setMoviesStore(movies);
     } catch (err) {
       console.log(err);
     }
@@ -123,35 +123,26 @@ const App = () => {
 
   const saveMovie = async (id) => {
     try {
-      console.log(id)
-      const movie = moviesStore.find(item => item.id === id);
-      const savedMovie = await mainApi.saveMovie({
-        country: movie.country,
-        director: movie.director,
-        duration: movie.duration,
-        year: movie.year,
-        description: movie.description,
-        image: 'https://api.nomoreparties.co' + movie.image.url,
-        trailerLink: movie.trailerLink,
-        thumbnail: 'https://api.nomoreparties.co' + movie.image.url,
-        movieId: movie.id,
-        nameRU: movie.nameRU,
-        nameEN: movie.nameEN,
-      });
+      const movie = moviesStore.find(item => item.movieId === id);
+      console.log(movie)
+      const savedMovie = await mainApi.saveMovie(movie);
       setSavedMovies(movies => [...movies, savedMovie])
-    } catch(err) {
+    } catch (err) {
       throw err;
     }
   };
 
-
   const removeMovie = async (id) => {
     try {
       await mainApi.removeMovie(id);
-      setSavedMovies(movies => [...movies.filter((mov) => mov._id !== id )]);
-    } catch(err) {
+      setSavedMovies(movies => [...movies.filter((mov) => mov._id !== id)]);
+    } catch (err) {
       console.log(err);
     }
+  }
+
+  const findSavedMovies = () => {
+    moviesStore()
   }
 
   useEffect(() => {
@@ -208,8 +199,16 @@ const App = () => {
               />
             }
           />
-          <Route path='/movies' element={<Movies />} />
-          <Route path='/saved-movies' element={<ProtectedRoute component={SavedMovies} />} />
+          <Route
+            path='/saved-movies'
+            element={
+              <ProtectedRoute
+                component={SavedMovies}
+                movies={savedMovies.map(movie => ({ ...movie, type: 'remove' }))}
+                onRemoveMovie={removeMovie}
+              />
+            }
+          />
           <Route path='*' element={<ProtectedRoute component={PageNotFound} />} />
         </Routes>
         {isPageWithFooter && <Footer />}

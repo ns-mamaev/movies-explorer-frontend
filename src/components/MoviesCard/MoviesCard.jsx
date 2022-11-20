@@ -10,6 +10,8 @@ const MoviesCard = ({
   trailerLink,
   onSaveMovie,
   onRemoveMovie,
+  type = 'default',
+  id,
 }) => {
 
   const [saved, setSaved] = useState(false);
@@ -26,7 +28,22 @@ const MoviesCard = ({
   }
 
   const handleRemove = (id) => {
-    setSaved(false);
+    onRemoveMovie(id)
+      .then(() => setSaved(false))
+  }
+
+  const onButtonClick = () => {
+    switch (type) {
+      case 'liked':
+      case 'remove':
+        handleRemove(id);
+        break;
+      case 'default':
+        handleSave(movieId);
+        break;
+      default:
+        throw new Error('Тип кнопки не задан')
+    }
   }
 
   return (
@@ -35,8 +52,8 @@ const MoviesCard = ({
       <span className='movies-card__duration'>{normalizedDuration}</span>
       <button
         type='button'
-        onClick={ saved ? () => handleRemove(movieId) : () => handleSave(movieId) }
-        className={`movie-card__action-btn movie-card__action-btn_type_${saved ? 'liked' : 'default'}`}
+        onClick={onButtonClick}
+        className={`movie-card__action-btn movie-card__action-btn_type_${type}`}
       />
       <a className='movies-card__poster-wrapper' href={trailerLink} target='_blank' rel='noreferrer'>
         <img className='movies-card__poster' src={imageSource} alt={title} />
