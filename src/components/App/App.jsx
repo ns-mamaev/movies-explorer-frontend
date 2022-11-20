@@ -17,13 +17,14 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import mainApi from '../../utills/MainApi';
 import moviesApi from '../../utills/MoviesApi';
 
-const App = () => {
+function App () {
 
   const [currentUser, setCurrentUser] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
 
   const [moviesStore, setMoviesStore] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
+  const [filteredSavedMovies, setFilteredSavedMovies] = useState([]);
   const [findedMovies, setFindedMovies] = useState([]);
 
   const [inRequest, setInRequest] = useState(false);
@@ -36,8 +37,8 @@ const App = () => {
   const isPageWithHeader = headerPages.includes(location);
   const isPageWithFooter = footerPages.includes(location);
 
-  // ********************* search **************************************************************
 
+  // получение фильмов с beatfilms
   const getBeatfilmMovies = async () => {
     try {
       const movies = await moviesApi.getFilms();
@@ -48,22 +49,41 @@ const App = () => {
     }
   }
 
+  // добавление в массив поля с типом фильма (лайкнут или нет)
   const showLikedMovies = (arr) => {
     const filmsWithLikes = arr.map(movie => {
       const match = savedMovies.find(({ movieId }) => movieId === movie.movieId);
       return match ? { ...movie, type: 'liked' } : { ...movie, type: 'default' }
     });
-    localStorage.setItem('findedMovies', JSON.stringify(filmsWithLikes))
     setFindedMovies(filmsWithLikes);
   }
 
+  // перерисовка карточек при лайке / дизлайке
   useEffect(() => {
     if (savedMovies.length > 0) {
       showLikedMovies(findedMovies);
     }
   }, [savedMovies.length])
 
-  const searchMovies = async (queryText, isShortFilmToggle = false) => {
+  // фильтрация фильмов по строке поиска и чекбоксу
+  const filterMovies = (movies, queryText, isShortFilmToggle) => {
+    return movies.filter(({ nameRU, nameEN, duration }) => {
+      const textToMatch = (nameRU + nameEN).toLowerCase();
+      const normalizedQuery = queryText.toLowerCase();
+
+      const toggle = isShortFilmToggle ? duration <= 40 : true;
+      return toggle && textToMatch.includes(normalizedQuery);
+    })
+  };
+
+  // поиск по сохраненным фильмам (предварительно загруженным с mainApi)
+  const searchSavedMovies = (queryText, isShortFilmToggle) => {
+    const filteredMovies = filterMovies(savedMovies, queryText, isShortFilmToggle);
+    setFilteredSavedMovies(filteredMovies);
+  }
+
+  // поиск фильмов в данных beatfilms
+  const searchMovies = async (queryText, isShortFilmToggle) => {
     localStorage.setItem('queryText', queryText);
     localStorage.setItem('shortFilmsToggle', isShortFilmToggle);
     let movies;
@@ -72,22 +92,21 @@ const App = () => {
     } else {
       movies = moviesStore;
     }
-    const filteredMovies = movies
-      .filter(({ nameRU, nameEN, duration }) => {
-        const textToMatch = (nameRU + nameEN).toLowerCase();
-        const normalizedQuery = queryText.toLowerCase();
-
-        const toggle = isShortFilmToggle ? duration <= 40 : true;
-        return toggle && textToMatch.includes(normalizedQuery);
-      })
+    const filteredMovies = filterMovies(movies, queryText, isShortFilmToggle);
     showLikedMovies(filteredMovies);
-    console.log(findedMovies)
+    console.log(filterMovies);
+    localStorage.setItem('findedMovies', JSON.stringify(filteredMovies));
   }
 
-  // восстановить данные последнего поиска при монтировании
+  // восстановление данных последнего поиска при монтировании
 
   useEffect(() => {
-    setFindedMovies(JSON.parse(localStorage.getItem('findedMovies')));
+    const savedSearch = localStorage.getItem('findedMovies');
+    if (savedSearch) {
+      const parsedData = JSON.parse(savedSearch);
+      setFindedMovies(parsedData);
+      setMoviesStore(parsedData);
+    }
   }, []);
 
   // *******************************************************************************************
@@ -171,28 +190,31 @@ const App = () => {
     try {
       const savedMovies = await mainApi.getSavedMovies();
       setSavedMovies(savedMovies);
+      setFilteredSavedMovies(savedMovies);
     } catch (err) {
-      console.log(err);
     }
   };
 
   const saveMovie = async (id) => {
+    console.log('save')
     try {
       const movie = moviesStore.find(item => item.movieId === id);
       const savedMovie = await mainApi.saveMovie(movie);
       setSavedMovies(movies => [...movies, savedMovie])
+      setFilteredSavedMovies(movies => [...movies, savedMovie]);
     } catch (err) {
       throw err;
     }
   };
 
   const removeMovie = async (id) => {
+    console.log('remove')
     try {
       const removedMovie = savedMovies.find(movie => movie.movieId === id)
       await mainApi.removeMovie(removedMovie._id);
       setSavedMovies(movies => [...movies.filter((mov) => mov.movieId !== id)]);
+      setFilteredSavedMovies(movies => [...movies.filter((mov) => mov.movieId !== id)])
     } catch (err) {
-      console.log(err);
     }
   }
 
@@ -256,8 +278,9 @@ const App = () => {
             element={
               <ProtectedRoute
                 component={SavedMovies}
-                movies={savedMovies.map(movie => ({ ...movie, type: 'remove' }))}
+                movies={filteredSavedMovies.map(movie => ({ ...movie, type: 'remove' }))}
                 onRemoveMovie={removeMovie}
+                onSearch={searchSavedMovies}
               />
             }
           />

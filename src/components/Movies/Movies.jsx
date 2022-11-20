@@ -32,6 +32,8 @@ const Movies = ({ movies, onSaveMovie, onRemoveMovie, onSearch }) => {
         onChange={onChange}
         onToggle={onToggle}
         isToggle={shortFilmsToggle}
+        minLength='3'
+        required
       />
       {isLoading ? <Preloader /> : (
         <>

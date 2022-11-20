@@ -7,11 +7,11 @@ function SearchForm({
   onChange,
   onToggle,
   isToggle,
+  ...restProps
 }) {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log('submit');
     onSearch(value, isToggle)
   };
 
@@ -22,12 +22,10 @@ function SearchForm({
           type='text'
           name='filmSearch'
           placeholder='Фильм'
-          required
-          minLength='2'
-          maxLength='300'
           className='search-form__input'
           value={value}
           onChange={onChange}
+          {...restProps}
         />
         <button
           type='submit'
