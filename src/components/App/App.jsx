@@ -24,6 +24,7 @@ const App = () => {
 
   const [moviesStore, setMoviesStore] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
+  const [findedMovies, setFindedMovies] = useState([]);
 
   const [inRequest, setInRequest] = useState(false);
   const [serverError, setServerError] = useState('');
@@ -34,6 +35,32 @@ const App = () => {
 
   const isPageWithHeader = headerPages.includes(location);
   const isPageWithFooter = footerPages.includes(location);
+
+  // ********************* search **************************************************************
+
+  const initMoviesStore = async () => {
+    try {
+      const movies = await moviesApi.getFilms();
+      setMoviesStore(movies)
+    } catch(err) {
+      console.log(err)
+    }
+  };
+
+  const searchMovies = (queryText, isShortFilmToggle = false) => {
+    if (moviesStore.length === 0) {
+      initMoviesStore()
+    }
+    const filteredMovies = moviesStore.filter(({ nameRU, nameEN, duration }) => {
+      console.log(nameRU, nameEN, duration)
+      // const toggleRes = isShortFilmToggle ? duration <= 40 : true;
+      return true;
+      // return toggleRes && ( nameRU.includes(queryText) || nameEN.includes(queryText) );
+    });
+    setFindedMovies(filteredMovies);
+  };
+
+  // *******************************************************************************************
 
   const handleRegister = async ({ name, email, password }) => {
     setInRequest(true);
@@ -114,8 +141,6 @@ const App = () => {
     try {
       const savedMovies = await mainApi.getSavedMovies();
       setSavedMovies(savedMovies);
-      const movies = await moviesApi.getFilms();
-      setMoviesStore(movies);
     } catch (err) {
       console.log(err);
     }
@@ -124,7 +149,6 @@ const App = () => {
   const saveMovie = async (id) => {
     try {
       const movie = moviesStore.find(item => item.movieId === id);
-      console.log(movie)
       const savedMovie = await mainApi.saveMovie(movie);
       setSavedMovies(movies => [...movies, savedMovie])
     } catch (err) {
@@ -193,9 +217,10 @@ const App = () => {
             element={
               <ProtectedRoute
                 component={Movies}
-                movies={moviesStore}
+                movies={findedMovies}
                 onSaveMovie={saveMovie}
                 onRemoveMovie={removeMovie}
+                onSearch={searchMovies}
               />
             }
           />

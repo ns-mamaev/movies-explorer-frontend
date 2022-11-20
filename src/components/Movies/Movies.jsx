@@ -4,16 +4,18 @@ import SearchForm from '../SearchForm/SearchForm';
 import { useState, useEffect } from 'react';
 import Preloader from '../Preloader/Preloader';
 
-const Movies = ({ movies, onSaveMovie, onRemoveMovie }) => {
-  const [isLoading, setIsLoading] = useState(true);
+const Movies = ({ movies, onSaveMovie, onRemoveMovie, onSearch }) => {
+  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    setTimeout(() => setIsLoading(false), 500);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => setIsLoading(false), 500);
+  // }, []);
 
   return (
     <main className='movies'>
-      <SearchForm />
+      <SearchForm
+        onSearch={onSearch}
+      />
       {isLoading ? <Preloader /> : (
         <>
           <MoviesCardList

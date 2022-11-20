@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import './SearchForm.css';
 
-function SearchForm() {
+function SearchForm({ onSearch }) {
 
   const [value, setValue] = useState('');
   const [shortFilmsToggle, setShortFilmsToggle] = useState(false);
 
   const onSubmit = (e) => {
     e.preventDefault();
-    setValue('');
     console.log('submit');
+    onSearch(value, shortFilmsToggle)
   };
 
   const onToggle = () => {
@@ -24,7 +24,7 @@ function SearchForm() {
           name='film-search'
           placeholder='Фильм'
           required
-          minLength='3'
+          minLength='2'
           maxLength='300'
           className='search-form__input'
           value={value}
