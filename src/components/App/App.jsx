@@ -51,14 +51,13 @@ function App () {
 
   // добавление в массив поля с типом фильма (лайкнут или нет)
   const showLikedMovies = (arr) => {
-    const filmsWithLikes = arr.map(movie => {
+    return arr.map(movie => {
       const match = savedMovies.find(({ movieId }) => movieId === movie.movieId);
       return match ? { ...movie, type: 'liked' } : { ...movie, type: 'default' }
     });
-    setFindedMovies(filmsWithLikes);
   }
 
-  // перерисовка карточек при лайке / дизлайке
+  // перерисовка карточек при лайке / дизлайке !! ненадежная проверка на кол-во, может не перерисовываться
   useEffect(() => {
     if (savedMovies.length > 0) {
       showLikedMovies(findedMovies);
@@ -93,8 +92,7 @@ function App () {
       movies = moviesStore;
     }
     const filteredMovies = filterMovies(movies, queryText, isShortFilmToggle);
-    showLikedMovies(filteredMovies);
-    console.log(filterMovies);
+    setFindedMovies(filteredMovies);
     localStorage.setItem('findedMovies', JSON.stringify(filteredMovies));
   }
 
@@ -105,7 +103,6 @@ function App () {
     if (savedSearch) {
       const parsedData = JSON.parse(savedSearch);
       setFindedMovies(parsedData);
-      setMoviesStore(parsedData);
     }
   }, []);
 
@@ -197,8 +194,9 @@ function App () {
 
   const saveMovie = async (id) => {
     console.log('save')
+    console.log(savedMovies, id)
     try {
-      const movie = moviesStore.find(item => item.movieId === id);
+      const movie = findedMovies.find(item => item.movieId === id);
       const savedMovie = await mainApi.saveMovie(movie);
       setSavedMovies(movies => [...movies, savedMovie])
       setFilteredSavedMovies(movies => [...movies, savedMovie]);
@@ -209,6 +207,7 @@ function App () {
 
   const removeMovie = async (id) => {
     console.log('remove')
+    console.log(savedMovies)
     try {
       const removedMovie = savedMovies.find(movie => movie.movieId === id)
       await mainApi.removeMovie(removedMovie._id);
@@ -266,7 +265,7 @@ function App () {
             element={
               <ProtectedRoute
                 component={Movies}
-                movies={findedMovies}
+                movies={showLikedMovies(findedMovies)}
                 onSaveMovie={saveMovie}
                 onRemoveMovie={removeMovie}
                 onSearch={searchMovies}
