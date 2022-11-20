@@ -53,11 +53,14 @@ const App = () => {
       const match = savedMovies.find(({ movieId }) => movieId === movie.movieId);
       return match ? { ...movie, type: 'liked' } : { ...movie, type: 'default' }
     });
+    localStorage.setItem('findedMovies', JSON.stringify(filmsWithLikes))
     setFindedMovies(filmsWithLikes);
   }
 
   useEffect(() => {
-    showLikedMovies(findedMovies);
+    if (savedMovies.length > 0) {
+      showLikedMovies(findedMovies);
+    }
   }, [savedMovies.length])
 
   const searchMovies = async (queryText, isShortFilmToggle = false) => {
@@ -78,13 +81,13 @@ const App = () => {
         return toggle && textToMatch.includes(normalizedQuery);
       })
     showLikedMovies(filteredMovies);
+    console.log(findedMovies)
   }
+
+  // восстановить данные последнего поиска при монтировании
 
   useEffect(() => {
     setFindedMovies(JSON.parse(localStorage.getItem('findedMovies')));
-    return () => {
-      localStorage.setItem('findedMovies', JSON.stringify(findedMovies));
-    }
   }, []);
 
   // *******************************************************************************************

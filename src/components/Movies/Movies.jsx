@@ -20,7 +20,8 @@ const Movies = ({ movies, onSaveMovie, onRemoveMovie, onSearch }) => {
 
   useEffect(() => {
     setValue(localStorage.getItem('queryText'));
-    setShortFilmsToggle(Boolean(localStorage.getItem('shortFilmsToggle')))
+    // parse - для преобразования строки типа 'false' в Boolean
+    setShortFilmsToggle(JSON.parse(localStorage.getItem('shortFilmsToggle')))
   }, []);
 
   return (
