@@ -1,19 +1,18 @@
 import { useState } from 'react';
 import './SearchForm.css';
 
-function SearchForm({ onSearch }) {
-
-  const [value, setValue] = useState('');
-  const [shortFilmsToggle, setShortFilmsToggle] = useState(false);
+function SearchForm({
+  onSearch,
+  value,
+  onChange,
+  onToggle,
+  isToggle,
+}) {
 
   const onSubmit = (e) => {
     e.preventDefault();
     console.log('submit');
-    onSearch(value, shortFilmsToggle)
-  };
-
-  const onToggle = () => {
-    setShortFilmsToggle(v => !v)
+    onSearch(value, isToggle)
   };
 
   return (
@@ -21,14 +20,14 @@ function SearchForm({ onSearch }) {
       <div className='search-form__inner'>
         <input
           type='text'
-          name='film-search'
+          name='filmSearch'
           placeholder='Фильм'
           required
           minLength='2'
           maxLength='300'
           className='search-form__input'
           value={value}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={onChange}
         />
         <button
           type='submit'
@@ -44,10 +43,10 @@ function SearchForm({ onSearch }) {
             type='checkbox'
             name='short-films'
             id='short-films'
-            checked={shortFilmsToggle}
+            checked={isToggle}
             onChange={onToggle}
           />
-          <span className={`search-form__toggle-checkbox-visible ${shortFilmsToggle && 'search-form__toggle-checkbox-visible_checked' }`} />
+          <span className={`search-form__toggle-checkbox-visible ${isToggle && 'search-form__toggle-checkbox-visible_checked'}`} />
           Короткометражки
         </label>
       </div>

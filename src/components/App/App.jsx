@@ -61,6 +61,8 @@ const App = () => {
   }, [savedMovies.length])
 
   const searchMovies = async (queryText, isShortFilmToggle = false) => {
+    localStorage.setItem('queryText', queryText);
+    localStorage.setItem('shortFilmsToggle', isShortFilmToggle);
     let movies;
     if (moviesStore.length === 0) {
       movies = await getBeatfilmMovies();
@@ -77,6 +79,13 @@ const App = () => {
       })
     showLikedMovies(filteredMovies);
   }
+
+  useEffect(() => {
+    setFindedMovies(JSON.parse(localStorage.getItem('findedMovies')));
+    return () => {
+      localStorage.setItem('findedMovies', JSON.stringify(findedMovies));
+    }
+  }, []);
 
   // *******************************************************************************************
 

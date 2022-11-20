@@ -6,8 +6,8 @@ function useFormWithValidation() {
   const [isValid, setIsValid] = useState(false);
 
   const onChange = (e) => {
-    const target = e.target;
-    const { name, value } = target; 
+    const target = e.target
+    const { name, value } = target;
 
     setValues(values => ({ ...values, [name]: value }))
     setErrors(errors => ({ ...errors, [name]: target.validationMessage }))
