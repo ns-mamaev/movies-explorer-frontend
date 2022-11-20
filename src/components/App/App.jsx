@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Footer from '../Footer/Footer';
@@ -16,20 +15,25 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import mainApi from '../../utills/MainApi';
 import moviesApi from '../../utills/MoviesApi';
+import Preloader from '../Preloader/Preloader';
 
-function App () {
+function App() {
 
   const [currentUser, setCurrentUser] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
 
+  // стейт для скрытия прелоадером процесса аутентификации
+  const [appLoading, setAppLoading] = useState(true);
+
+  // общий список фильмов от beatFilms
   const [moviesStore, setMoviesStore] = useState([]);
+  // сохраненные фильмы с mainApi
   const [savedMovies, setSavedMovies] = useState([]);
   const [filteredSavedMovies, setFilteredSavedMovies] = useState([]);
   const [findedMovies, setFindedMovies] = useState([]);
 
   const [inRequest, setInRequest] = useState(false);
   const [serverError, setServerError] = useState('');
-  const [moviesLoading, setMoviesLoading] = useState(false);
 
   const location = useLocation().pathname;
   const navigate = useNavigate();
@@ -40,12 +44,15 @@ function App () {
 
   // получение фильмов с beatfilms
   const getBeatfilmMovies = async () => {
+    setInRequest(true)
     try {
       const movies = await moviesApi.getFilms();
       setMoviesStore(movies)
+      setInRequest(false);
       return movies;
     } catch (err) {
       console.log(err)
+      setInRequest(false);
     }
   }
 
@@ -138,6 +145,7 @@ function App () {
     setInRequest(false);
   }
 
+  // аутентификация при монтировании приложения
   const getUser = async () => {
     try {
       const user = await mainApi.getOwnProfile()
@@ -150,8 +158,10 @@ function App () {
       setServerError(err.message);
       setTimeout(() => setServerError(''));
     }
+    setAppLoading(false);
   };
 
+  // выход из профиля
   const handleLogout = async () => {
     try {
       await mainApi.logout();
@@ -164,6 +174,7 @@ function App () {
     }
   };
 
+  // обновление профиля
   const updateUserInfo = async (userData) => {
     setInRequest(true);
     try {
@@ -177,21 +188,25 @@ function App () {
     setInRequest(false);
   }
 
+  // аутентификация при монтировании приложения
   useEffect(() => {
     getUser();
   }, []);
 
   // ****************************** MOVIES *******************************************************
 
+  // получение фильмов пользователя с mainApi
   const geSavedMovies = async () => {
     try {
       const savedMovies = await mainApi.getSavedMovies();
       setSavedMovies(savedMovies);
       setFilteredSavedMovies(savedMovies);
     } catch (err) {
+      console.log(err);
     }
   };
 
+  // сохранение фильма на mainApi
   const saveMovie = async (id) => {
     console.log('save')
     console.log(savedMovies, id)
@@ -205,6 +220,7 @@ function App () {
     }
   };
 
+  // удаление фильма с mainApi
   const removeMovie = async (id) => {
     console.log('remove')
     console.log(savedMovies)
@@ -217,6 +233,7 @@ function App () {
     }
   }
 
+  // получение фильмов пользователя при монтировании
   useEffect(() => {
     if (loggedIn) {
       geSavedMovies();
@@ -226,66 +243,72 @@ function App () {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
-        {isPageWithHeader && <Header />}
-        <Routes>
-          <Route path='/' element={<Landing />} />
-          <Route
-            path='/signin'
-            element={
-              <Login
-                onSubmit={handleLogin}
-                error={serverError}
-                inLoading={inRequest}
-              />}
-          />
-          <Route
-            path='/signup'
-            element={
-              <Register
-                onSubmit={handleRegister}
-                error={serverError}
-                inLoading={inRequest}
+        {appLoading ? <Preloader /> : (
+          <>
+            {isPageWithHeader && <Header />}
+            <Routes>
+              <Route path='/' element={<Landing />} />
+              <Route
+                path='/signin'
+                element={
+                  <Login
+                    onSubmit={handleLogin}
+                    error={serverError}
+                    inLoading={inRequest}
+                  />}
               />
-            }
-          />
-          <Route
-            path='/profile'
-            element={
-              <ProtectedRoute
-                component={Profile}
-                onSubmit={updateUserInfo}
-                onLogout={handleLogout}
-                error={serverError}
-                inLoading={inRequest}
+              <Route
+                path='/signup'
+                element={
+                  <Register
+                    onSubmit={handleRegister}
+                    error={serverError}
+                    inLoading={inRequest}
+                  />
+                }
               />
-            }
-          />
-          <Route
-            path='/movies'
-            element={
-              <ProtectedRoute
-                component={Movies}
-                movies={showLikedMovies(findedMovies)}
-                onSaveMovie={saveMovie}
-                onRemoveMovie={removeMovie}
-                onSearch={searchMovies}
+              <Route
+                path='/profile'
+                element={
+                  <ProtectedRoute
+                    component={Profile}
+                    onSubmit={updateUserInfo}
+                    onLogout={handleLogout}
+                    error={serverError}
+                    inLoading={inRequest}
+                  />
+                }
               />
-            }
-          />
-          <Route
-            path='/saved-movies'
-            element={
-              <ProtectedRoute
-                component={SavedMovies}
-                movies={filteredSavedMovies.map(movie => ({ ...movie, type: 'remove' }))}
-                onRemoveMovie={removeMovie}
-                onSearch={searchSavedMovies}
+              <Route
+                path='/movies'
+                element={
+                  <ProtectedRoute
+                    component={Movies}
+                    movies={showLikedMovies(findedMovies)}
+                    onSaveMovie={saveMovie}
+                    onRemoveMovie={removeMovie}
+                    onSearch={searchMovies}
+                    inRequest={inRequest}
+                  />
+                }
               />
-            }
-          />
-          <Route path='*' element={<ProtectedRoute component={PageNotFound} />} />
-        </Routes>
-        {isPageWithFooter && <Footer />}
+              <Route
+                path='/saved-movies'
+                element={
+                  <ProtectedRoute
+                    component={SavedMovies}
+                    movies={filteredSavedMovies.map(movie => ({ ...movie, type: 'remove' }))}
+                    onRemoveMovie={removeMovie}
+                    onSearch={searchSavedMovies}
+                    inRequest={inRequest}
+                  />
+                }
+              />
+              <Route path='*' element={<ProtectedRoute component={PageNotFound} />} />
+            </Routes>
+            {isPageWithFooter && <Footer />}
+          </>
+        )}
       </div>
     </CurrentUserContext.Provider >
   );

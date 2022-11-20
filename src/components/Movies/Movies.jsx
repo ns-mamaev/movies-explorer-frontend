@@ -4,9 +4,7 @@ import SearchForm from '../SearchForm/SearchForm';
 import Preloader from '../Preloader/Preloader';
 import './Movies.css';
 
-const Movies = ({ movies, onSaveMovie, onRemoveMovie, onSearch }) => {
-  const [isLoading, setIsLoading] = useState(false);
-
+const Movies = ({ movies, onSaveMovie, onRemoveMovie, onSearch, inRequest }) => {
   const [value, setValue] = useState('');
   const [shortFilmsToggle, setShortFilmsToggle] = useState(false);
 
@@ -19,9 +17,12 @@ const Movies = ({ movies, onSaveMovie, onRemoveMovie, onSearch }) => {
   }
 
   useEffect(() => {
-    setValue(localStorage.getItem('queryText'));
+    const queryText = localStorage.getItem('queryText');
+    const toggle = localStorage.getItem('shortFilmsToggle');
+
+    queryText && setValue(queryText);
     // parse - для преобразования строки типа 'false' в Boolean
-    setShortFilmsToggle(JSON.parse(localStorage.getItem('shortFilmsToggle')))
+    toggle && setShortFilmsToggle(JSON.parse(toggle))
   }, []);
 
   return (
@@ -35,7 +36,7 @@ const Movies = ({ movies, onSaveMovie, onRemoveMovie, onSearch }) => {
         minLength='3'
         required
       />
-      {isLoading ? <Preloader /> : (
+      {inRequest ? <Preloader /> : (
         <>
           <MoviesCardList
             movies={movies}

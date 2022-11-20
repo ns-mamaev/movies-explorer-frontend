@@ -1,6 +1,5 @@
 import MoviesCard from '../MoviesCard/MoviesCard';
 import './MoviesCardList.css';
-import sampleImage from '../../images/movie_poster_1.jpg';
 
 const MoviesCardList = ({ movies, onSaveMovie, onRemoveMovie }) => {
   const moviesComponents = movies.map(({
@@ -32,10 +31,5 @@ const MoviesCardList = ({ movies, onSaveMovie, onRemoveMovie }) => {
     </ul>
   );
 };
-
-{/* <MoviesCard title='33 слова о дизайне' imageSource={sampleImage} buttonType='liked' />
-<MoviesCard title='33 слова о дизайне' imageSource={sampleImage} buttonType='remove' />
-<MoviesCard title='33 слова о дизайне' imageSource={sampleImage} />
-<MoviesCard title='33 слова о дизайне' imageSource={sampleImage} buttonType='liked' />*/}
 
 export default MoviesCardList;

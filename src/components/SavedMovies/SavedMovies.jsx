@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SearchForm from '../SearchForm/SearchForm';
+import Preloader from '../Preloader/Preloader';
 import './SavedMovies.css';
 
-const SavedMovies = ({ movies, onRemoveMovie, onSearch }) => {
+const SavedMovies = ({ movies, onRemoveMovie, onSearch, inRequest }) => {
   const [value, setValue] = useState('');
   const [shortFilmsToggle, setShortFilmsToggle] = useState(false);
 
@@ -24,10 +25,13 @@ const SavedMovies = ({ movies, onRemoveMovie, onSearch }) => {
         onToggle={onToggle}
         isToggle={shortFilmsToggle}
       />
-      <MoviesCardList
-        movies={movies}
-        onRemoveMovie={onRemoveMovie}
-      />
+      {inRequest ? <Preloader /> : (
+        <MoviesCardList
+          movies={movies}
+          onRemoveMovie={onRemoveMovie}
+        />
+      )}
+
     </main>
   );
 };
