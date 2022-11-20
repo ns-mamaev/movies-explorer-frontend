@@ -38,27 +38,34 @@ const App = () => {
 
   // ********************* search **************************************************************
 
-  const initMoviesStore = async () => {
+  const getBeatfilmMovies = async () => {
     try {
       const movies = await moviesApi.getFilms();
       setMoviesStore(movies)
-    } catch(err) {
+      return movies;
+    } catch (err) {
       console.log(err)
     }
-  };
+  }
 
-  const searchMovies = (queryText, isShortFilmToggle = false) => {
+  const searchMovies = async (queryText, isShortFilmToggle = false) => {
+    let movies;
     if (moviesStore.length === 0) {
-      initMoviesStore()
+      movies = await getBeatfilmMovies();
+    } else {
+      movies = moviesStore;
     }
-    const filteredMovies = moviesStore.filter(({ nameRU, nameEN, duration }) => {
-      console.log(nameRU, nameEN, duration)
-      // const toggleRes = isShortFilmToggle ? duration <= 40 : true;
-      return true;
-      // return toggleRes && ( nameRU.includes(queryText) || nameEN.includes(queryText) );
+
+    const filteredMovies = movies.filter(({ nameRU, nameEN, duration }) => {
+      const textToMatch = (nameRU + nameEN).toLowerCase();
+      const normalizedQuery = queryText.toLowerCase();
+
+      const toggle = isShortFilmToggle ? duration <= 40 : true;
+      return toggle && textToMatch.includes(normalizedQuery);
     });
     setFindedMovies(filteredMovies);
-  };
+  }
+
 
   // *******************************************************************************************
 
@@ -137,7 +144,7 @@ const App = () => {
 
   // ****************************** MOVIES *******************************************************
 
-  const getMovies = async () => {
+  const geSavedMovies = async () => {
     try {
       const savedMovies = await mainApi.getSavedMovies();
       setSavedMovies(savedMovies);
@@ -165,13 +172,9 @@ const App = () => {
     }
   }
 
-  const findSavedMovies = () => {
-    moviesStore()
-  }
-
   useEffect(() => {
     if (loggedIn) {
-      getMovies();
+      geSavedMovies();
     }
   }, [loggedIn])
 
