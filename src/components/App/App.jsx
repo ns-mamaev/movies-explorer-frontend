@@ -72,6 +72,19 @@ function App() {
     return () => window.removeEventListener('resize', debouncedCalculateQty);
   }, []);
 
+  // изменение начального кол-ва карточек при новом поиске или resize
+  useEffect(() => {
+    const shownMovies = findedMovies.slice(0, cardsQty.initial);
+    setShownFindedMovies(shownMovies);
+  }, [findedMovies, cardsQty])
+
+  const loadMoreMovies = () => {
+    const sliceStart = shownFindedMovies.length;
+    const sliceEnd = sliceStart + cardsQty.additional;
+    const additionalMovies = findedMovies.slice(sliceStart, sliceEnd);
+    setShownFindedMovies([...shownFindedMovies, ...additionalMovies]);
+  }
+
   // получение фильмов с beatfilms
   const getBeatfilmMovies = async () => {
     setInRequest(true)
@@ -94,10 +107,10 @@ function App() {
     });
   }
 
-  // перерисовка карточек при лайке / дизлайке !! ненадежная проверка на кол-во, может не перерисовываться
+  // перерисовка карточек при лайке / дизлайке
   useEffect(() => {
     if (savedMovies.length > 0) {
-      showLikedMovies(findedMovies);
+      showLikedMovies(shownFindedMovies);
     }
   }, [savedMovies.length])
 
@@ -319,6 +332,8 @@ function App() {
                     onRemoveMovie={removeMovie}
                     onSearch={searchMovies}
                     inRequest={inRequest}
+                    onLoadMore={loadMoreMovies}
+                    hasLoadMore={shownFindedMovies.length === findedMovies.length}
                   />
                 }
               />

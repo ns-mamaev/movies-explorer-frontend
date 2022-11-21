@@ -4,7 +4,15 @@ import SearchForm from '../SearchForm/SearchForm';
 import Preloader from '../Preloader/Preloader';
 import './Movies.css';
 
-const Movies = ({ movies, onSaveMovie, onRemoveMovie, onSearch, inRequest }) => {
+const Movies = ({
+  movies,
+  onSaveMovie,
+  onRemoveMovie,
+  onSearch,
+  inRequest,
+  onLoadMore,
+  hasLoadMore,
+}) => {
   const [value, setValue] = useState('');
   const [shortFilmsToggle, setShortFilmsToggle] = useState(false);
 
@@ -33,8 +41,8 @@ const Movies = ({ movies, onSaveMovie, onRemoveMovie, onSearch, inRequest }) => 
         onChange={onChange}
         onToggle={onToggle}
         isToggle={shortFilmsToggle}
-        // minLength='3'
-        // required
+      // minLength='3'
+      // required
       />
       {inRequest ? <Preloader /> : (
         <>
@@ -43,7 +51,13 @@ const Movies = ({ movies, onSaveMovie, onRemoveMovie, onSearch, inRequest }) => 
             onSaveMovie={onSaveMovie}
             onRemoveMovie={onRemoveMovie}
           />
-          <button type='button' className='movies__load-btn'>Ещё</button>
+          {
+            !hasLoadMore && (
+              <button type='button' onClick={onLoadMore} className='movies__load-btn'>
+                Ещё
+              </button>
+            )
+          }
         </>
       )}
     </main>
