@@ -257,8 +257,6 @@ function App() {
 
   // сохранение фильма на mainApi
   const saveMovie = async (id) => {
-    console.log('save')
-    console.log(savedMovies, id)
     try {
       const movie = findedMovies.find(item => item.movieId === id);
       const savedMovie = await mainApi.saveMovie(movie);
@@ -271,8 +269,6 @@ function App() {
 
   // удаление фильма с mainApi
   const removeMovie = async (id) => {
-    console.log('remove')
-    console.log(savedMovies)
     try {
       const removedMovie = savedMovies.find(movie => movie.movieId === id)
       await mainApi.removeMovie(removedMovie._id);
