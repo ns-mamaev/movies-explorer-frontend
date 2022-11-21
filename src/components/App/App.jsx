@@ -72,15 +72,21 @@ function App() {
     return () => window.removeEventListener('resize', debouncedCalculateQty);
   }, []);
 
-  // изменение начального кол-ва карточек при новом поиске или resize
+  // изменение начального кол-ва карточек при новом поиске
   useEffect(() => {
-    const shownMovies = findedMovies.slice(0, cardsQty.initial);
+    let shownMovies = findedMovies.slice(0, cardsQty.initial);
     setShownFindedMovies(shownMovies);
-  }, [findedMovies, cardsQty])
+  }, [findedMovies])
 
   const loadMoreMovies = () => {
     const sliceStart = shownFindedMovies.length;
-    const sliceEnd = sliceStart + cardsQty.additional;
+    const { initial, additional, row } = cardsQty;
+
+    // догружаю больше карточек, если из-за ресайза образовались "пустоты"
+    const incompleteRow = (Math.abs(sliceStart - initial)) % row;
+    const additionalMoviesQty = incompleteRow && (row - incompleteRow)
+
+    const sliceEnd = sliceStart + additional + additionalMoviesQty;
     const additionalMovies = findedMovies.slice(sliceStart, sliceEnd);
     setShownFindedMovies([...shownFindedMovies, ...additionalMovies]);
   }
