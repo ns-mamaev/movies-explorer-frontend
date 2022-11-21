@@ -25,7 +25,7 @@ class MainApi {
   }
 
   async register(userData) {
-    return this._request('/signup', 'POST', userData);
+    return this._request('/signup', 'POST', userData); // исправить
   }
 
   async login(userData) {

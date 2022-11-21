@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
@@ -7,15 +7,16 @@ import Landing from '../Landing/Landing';
 import Movies from '../Movies/Movies';
 import PageNotFound from '../PageNotFound/PageNotFound';
 import Register from '../Register/Register';
-import { headerPages, footerPages } from '../../utills/constants';
+import { headerPages, footerPages, DESKTOP_CARDS_QTY, TABLET_CARDS_QTY, MOBILE_CARDS_QTY } from '../../utills/constants';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
-import './App.css';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import mainApi from '../../utills/MainApi';
 import moviesApi from '../../utills/MoviesApi';
 import Preloader from '../Preloader/Preloader';
+import { debounce } from '../../utills/utills';
+import './App.css';
 
 function App() {
 
@@ -27,10 +28,14 @@ function App() {
 
   // общий список фильмов от beatFilms
   const [moviesStore, setMoviesStore] = useState([]);
+  // отфильтрованный список beatFilms
+  const [findedMovies, setFindedMovies] = useState([]);
+  // обрезанный отфильтрованный список beatFilms
+  const [shownFindedMovies, setShownFindedMovies] = useState([]);
+
   // сохраненные фильмы с mainApi
   const [savedMovies, setSavedMovies] = useState([]);
   const [filteredSavedMovies, setFilteredSavedMovies] = useState([]);
-  const [findedMovies, setFindedMovies] = useState([]);
 
   const [inRequest, setInRequest] = useState(false);
   const [serverError, setServerError] = useState('');
@@ -41,6 +46,31 @@ function App() {
   const isPageWithHeader = headerPages.includes(location);
   const isPageWithFooter = footerPages.includes(location);
 
+  const [cardsQty, setCardsQty] = useState({});
+
+  // расчет кол-ва отображаемых и подгружаемых карточек на основании ширины страницы
+  const calculateCardsQty = () => {
+    const pageWidth = document.documentElement.clientWidth;
+    if (pageWidth > 1180) {
+      setCardsQty(DESKTOP_CARDS_QTY);
+      return
+    }
+    if (pageWidth > 720) {
+      setCardsQty(TABLET_CARDS_QTY);
+      return
+    }
+    setCardsQty(MOBILE_CARDS_QTY);
+  };
+
+  // то же, с отложенным исполнением
+  const debouncedCalculateQty = debounce(calculateCardsQty, 200);
+
+  // расчет кол-ва карточек при монтировании и каждом resize
+  useEffect(() => {
+    calculateCardsQty();
+    window.addEventListener('resize', debouncedCalculateQty);
+    return () => window.removeEventListener('resize', debouncedCalculateQty);
+  }, []);
 
   // получение фильмов с beatfilms
   const getBeatfilmMovies = async () => {
@@ -284,7 +314,7 @@ function App() {
                 element={
                   <ProtectedRoute
                     component={Movies}
-                    movies={showLikedMovies(findedMovies)}
+                    movies={showLikedMovies(shownFindedMovies)}
                     onSaveMovie={saveMovie}
                     onRemoveMovie={removeMovie}
                     onSearch={searchMovies}
