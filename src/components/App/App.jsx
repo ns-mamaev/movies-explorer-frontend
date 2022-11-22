@@ -139,8 +139,8 @@ function App() {
 
   // поиск фильмов в данных beatfilms
   const searchMovies = async (queryText, isShortFilmToggle) => {
-    localStorage.setItem('queryText', queryText);
-    localStorage.setItem('shortFilmsToggle', isShortFilmToggle);
+    // localStorage.setItem('queryText', queryText);
+    // localStorage.setItem('shortFilmsToggle', isShortFilmToggle);
     let movies;
     if (moviesStore.length === 0) {
       movies = await getBeatfilmMovies();
@@ -149,7 +149,7 @@ function App() {
     }
     const filteredMovies = filterMovies(movies, queryText, isShortFilmToggle);
     setFindedMovies(filteredMovies);
-    localStorage.setItem('findedMovies', JSON.stringify(filteredMovies));
+    // localStorage.setItem('findedMovies', JSON.stringify(filteredMovies));
   }
 
   // восстановление данных последнего поиска при монтировании

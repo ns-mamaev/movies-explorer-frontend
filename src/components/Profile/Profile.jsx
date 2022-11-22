@@ -1,20 +1,13 @@
-import { useState , useContext, useEffect } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import useFormWithValidation from '../../utills/hooks/useFormWithValidation';
 import FormInput from '../FormInput/FormInput';
-import SubmitButton from '../SubmitButton/SubmitButton';
 import './Profile.css'
 
 const Profile = ({ onSubmit, onLogout, error, inLoading }) => {
-  const [isEditMode, setIsEditMode] = useState(false);
+  const [isUserInfoChanged, setIsUserInfoChanged] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const currentUser = useContext(CurrentUserContext);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit(values)
-      .then(() => setIsEditMode(false))
-
-  };
 
   const {
     values,
@@ -24,6 +17,21 @@ const Profile = ({ onSubmit, onLogout, error, inLoading }) => {
     resetForm,
   } = useFormWithValidation();
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit(values);
+  };
+
+  // проверим изменились ли данные пользователя
+  useEffect(() => {
+    if (values.name !== currentUser.name || values.email !== currentUser.email) {
+      setIsUserInfoChanged(true);
+    } else {
+      setIsUserInfoChanged(false);
+    }
+  }, [values?.name, values?.email]);
+
+  // подстановка данных профиля при монтировании
   useEffect(() => {
     resetForm({ name: currentUser?.name, email: currentUser?.email });
   }, [currentUser])
@@ -38,7 +46,6 @@ const Profile = ({ onSubmit, onLogout, error, inLoading }) => {
               name='name'
               title='Имя'
               type='text'
-              disabled={!isEditMode}
               value={values.name}
               error={errors.name}
               onChange={onChange}
@@ -50,7 +57,6 @@ const Profile = ({ onSubmit, onLogout, error, inLoading }) => {
               name='email'
               title='E-mail'
               type='email'
-              disabled={!isEditMode}
               value={values.email}
               error={errors.email}
               onChange={onChange}
@@ -58,15 +64,18 @@ const Profile = ({ onSubmit, onLogout, error, inLoading }) => {
               required
             />
           </fieldset>
-          {isEditMode && <SubmitButton disabled={!isValid || inLoading}>Сохранить</SubmitButton>}
-        </form>
-        <p className='auth-page__error-message' style={{ color: 'red' }}>{error}</p>
-        {!isEditMode && (
           <div className='profile__buttons'>
-            <button className='profile__button profile__button_type_standart' type='button' onClick={() => setIsEditMode(true)}>Редактировать</button>
+            <p className='auth-page__error-message' style={{ color: 'red' }}>{errorMessage}</p>
+            <button
+              className='profile__button profile__button_type_standart'
+              type='submit'
+              disabled={!isValid || !isUserInfoChanged}
+            >
+              Редактировать
+            </button>
             <button className='profile__button profile__button_type_danger' type='button' onClick={onLogout}>Выйти из аккаунта</button>
           </div>
-        )}
+        </form>
       </div>
     </main>
   )

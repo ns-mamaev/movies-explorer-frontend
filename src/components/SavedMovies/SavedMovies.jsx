@@ -16,6 +16,8 @@ const SavedMovies = ({ movies, onRemoveMovie, onSearch, inRequest }) => {
     setShortFilmsToggle(v => !v);
   }
 
+  const hasMovies = movies.length;
+
   return (
     <main className='saved-movies'>
       <SearchForm
@@ -25,11 +27,18 @@ const SavedMovies = ({ movies, onRemoveMovie, onSearch, inRequest }) => {
         onToggle={onToggle}
         isToggle={shortFilmsToggle}
       />
-      {inRequest ? <Preloader /> : (
+      {inRequest && <Preloader />}
+      {!inRequest && hasMovies && (
         <MoviesCardList
           movies={movies}
           onRemoveMovie={onRemoveMovie}
         />
+      )}
+      {!inRequest && !hasMovies && (
+        <div className=''>
+          <h2>Пока сохраненных фильмов нет</h2>
+          <p>Воспользуйтесь разделом "Фильмы" чтобы искать и добавлять их на эту страницу</p>
+        </div>
       )}
 
     </main>

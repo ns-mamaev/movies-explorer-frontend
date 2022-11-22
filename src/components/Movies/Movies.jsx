@@ -24,6 +24,7 @@ const Movies = ({
     setShortFilmsToggle(v => !v);
   }
 
+  // загрузка состояния формы из localStorage
   useEffect(() => {
     const queryText = localStorage.getItem('queryText');
     const toggle = localStorage.getItem('shortFilmsToggle');
