@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SearchForm from '../SearchForm/SearchForm';
 import Preloader from '../Preloader/Preloader';
 import './SavedMovies.css';
 
-const SavedMovies = ({ movies, onRemoveMovie, onSearch, inRequest }) => {
+const SavedMovies = ({ movies, onRemoveMovie, onSearch, inRequest, onToggle }) => {
   const [value, setValue] = useState('');
   const [shortFilmsToggle, setShortFilmsToggle] = useState(false);
 
@@ -12,11 +12,16 @@ const SavedMovies = ({ movies, onRemoveMovie, onSearch, inRequest }) => {
     setValue(e.target.value);
   }
 
-  const onToggle = () => {
+  const handleToggle = () => {
     setShortFilmsToggle(v => !v);
   }
 
   const hasMovies = movies.length;
+
+  // фильтрация фильмов при изменении переключателя
+  useEffect(() => {
+    onToggle(value, shortFilmsToggle);
+  }, [shortFilmsToggle])
 
   return (
     <main className='saved-movies'>
@@ -24,7 +29,7 @@ const SavedMovies = ({ movies, onRemoveMovie, onSearch, inRequest }) => {
         onSearch={onSearch}
         value={value}
         onChange={onChange}
-        onToggle={onToggle}
+        onToggle={handleToggle}
         isToggle={shortFilmsToggle}
       />
       {inRequest && <Preloader />}

@@ -12,6 +12,7 @@ const Movies = ({
   inRequest,
   onLoadMore,
   hasLoadMore,
+  onToggle,
 }) => {
   const [value, setValue] = useState('');
   const [shortFilmsToggle, setShortFilmsToggle] = useState(false);
@@ -20,9 +21,14 @@ const Movies = ({
     setValue(e.target.value);
   }
 
-  const onToggle = () => {
+  const handleToggle = () => {
     setShortFilmsToggle(v => !v);
   }
+
+  // фильтрация фильмов при изменении переключателя
+  useEffect(() => {
+    onToggle(value, shortFilmsToggle);
+  }, [shortFilmsToggle])
 
   // загрузка состояния формы из localStorage
   useEffect(() => {
@@ -40,10 +46,10 @@ const Movies = ({
         onSearch={onSearch}
         value={value}
         onChange={onChange}
-        onToggle={onToggle}
+        onToggle={handleToggle}
         isToggle={shortFilmsToggle}
-      // minLength='3'
-      // required
+        minLength='2'
+        required
       />
       {inRequest ? <Preloader /> : (
         <>

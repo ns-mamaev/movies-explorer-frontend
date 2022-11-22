@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
@@ -132,6 +132,20 @@ function App() {
     })
   };
 
+  // фильтрация фильмов при изменении переключателя в Movies
+  const handleToggleMovies = (queryText, isShortFilmToggle) => {
+    if (moviesStore.length === 0) return;
+    const filteredMovies = filterMovies(moviesStore, queryText, isShortFilmToggle);
+    setFindedMovies(filteredMovies);
+  };
+
+  // фильтрация фильмов при изменении переключателя в SavedMovies
+  const handleToggleSavedMovies = (queryText, isShortFilmToggle) => {
+    if (savedMovies.length === 0) return;
+    const filteredMovies = filterMovies(savedMovies, queryText, isShortFilmToggle);
+    setFilteredSavedMovies(filteredMovies);
+  };
+
   // поиск по сохраненным фильмам (предварительно загруженным с mainApi)
   const searchSavedMovies = (queryText, isShortFilmToggle) => {
     const filteredMovies = filterMovies(savedMovies, queryText, isShortFilmToggle);
@@ -140,8 +154,8 @@ function App() {
 
   // поиск фильмов в данных beatfilms
   const searchMovies = async (queryText, isShortFilmToggle) => {
-    // localStorage.setItem('queryText', queryText);
-    // localStorage.setItem('shortFilmsToggle', isShortFilmToggle);
+    localStorage.setItem('queryText', queryText);
+    localStorage.setItem('shortFilmsToggle', isShortFilmToggle);
     let movies;
     if (moviesStore.length === 0) {
       movies = await getBeatfilmMovies();
@@ -150,7 +164,7 @@ function App() {
     }
     const filteredMovies = filterMovies(movies, queryText, isShortFilmToggle);
     setFindedMovies(filteredMovies);
-    // localStorage.setItem('findedMovies', JSON.stringify(filteredMovies));
+    localStorage.setItem('findedMovies', JSON.stringify(filteredMovies));
   }
 
   // восстановление данных последнего поиска при монтировании
@@ -339,6 +353,7 @@ function App() {
                     inRequest={inRequest}
                     onLoadMore={loadMoreMovies}
                     hasLoadMore={shownFindedMovies.length === findedMovies.length}
+                    onToggle={handleToggleMovies}
                   />
                 }
               />
@@ -351,6 +366,7 @@ function App() {
                     onRemoveMovie={removeMovie}
                     onSearch={searchSavedMovies}
                     inRequest={inRequest}
+                    onToggle={handleToggleSavedMovies}
                   />
                 }
               />
