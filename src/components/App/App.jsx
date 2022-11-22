@@ -7,7 +7,7 @@ import Landing from '../Landing/Landing';
 import Movies from '../Movies/Movies';
 import PageNotFound from '../PageNotFound/PageNotFound';
 import Register from '../Register/Register';
-import { headerPages, footerPages, DESKTOP_CARDS_QTY, TABLET_CARDS_QTY, MOBILE_CARDS_QTY } from '../../utills/constants';
+import { headerPages, footerPages, DESKTOP_CARDS_QTY, TABLET_CARDS_QTY, MOBILE_CARDS_QTY, SUCCESS_EDIT_PROFILE_TEXT } from '../../utills/constants';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
@@ -39,6 +39,7 @@ function App() {
 
   const [inRequest, setInRequest] = useState(false);
   const [serverError, setServerError] = useState('');
+  const [infoMessage, setInfoMessage] = useState('');
 
   const location = useLocation().pathname;
   const navigate = useNavigate();
@@ -229,8 +230,11 @@ function App() {
     try {
       const user = await mainApi.updateOwnProfile(JSON.stringify(userData))
       setCurrentUser(user);
+      setInfoMessage(SUCCESS_EDIT_PROFILE_TEXT);
+      //показываю ошибку 3 секунды
+      setTimeout(() => setInfoMessage(''), 3000)
     } catch (err) {
-      setServerError(err.message)
+      setServerError(err.message);
       //показываю ошибку 3 секунды
       setTimeout(() => setServerError(''), 3000)
     }
@@ -241,8 +245,6 @@ function App() {
   useEffect(() => {
     getUser();
   }, []);
-
-  // ****************************** MOVIES *******************************************************
 
   // получение фильмов пользователя с mainApi
   const geSavedMovies = async () => {
@@ -321,6 +323,7 @@ function App() {
                     onLogout={handleLogout}
                     error={serverError}
                     inLoading={inRequest}
+                    infoMessage={infoMessage}
                   />
                 }
               />

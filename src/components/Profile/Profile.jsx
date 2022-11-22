@@ -4,9 +4,8 @@ import useFormWithValidation from '../../utills/hooks/useFormWithValidation';
 import FormInput from '../FormInput/FormInput';
 import './Profile.css'
 
-const Profile = ({ onSubmit, onLogout, error, inLoading }) => {
+const Profile = ({ onSubmit, onLogout, error, infoMessage, inLoading }) => {
   const [isUserInfoChanged, setIsUserInfoChanged] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
   const currentUser = useContext(CurrentUserContext);
 
   const {
@@ -19,7 +18,7 @@ const Profile = ({ onSubmit, onLogout, error, inLoading }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(values);
+    onSubmit(values)
   };
 
   // проверим изменились ли данные пользователя
@@ -65,11 +64,13 @@ const Profile = ({ onSubmit, onLogout, error, inLoading }) => {
             />
           </fieldset>
           <div className='profile__buttons'>
-            <p className='auth-page__error-message' style={{ color: 'red' }}>{errorMessage}</p>
+            <p className={`profile__message ${error && 'profile__message_type_error'}`}>
+              {infoMessage || error}
+            </p>
             <button
               className='profile__button profile__button_type_standart'
               type='submit'
-              disabled={!isValid || !isUserInfoChanged}
+              disabled={!isValid || !isUserInfoChanged || inLoading}
             >
               Редактировать
             </button>
