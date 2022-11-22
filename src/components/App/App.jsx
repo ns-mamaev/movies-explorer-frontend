@@ -23,6 +23,8 @@ function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
 
+  const [isFirstSearch, setIsFirstSearch] = useState(true);
+
   // стейт для скрытия прелоадером процесса аутентификации
   const [appLoading, setAppLoading] = useState(true);
 
@@ -30,6 +32,8 @@ function App() {
   const [moviesStore, setMoviesStore] = useState([]);
   // отфильтрованный список beatFilms
   const [findedMovies, setFindedMovies] = useState([]);
+  // список с учетом положения тоггла
+  const [findedMoviesFilteredByToggle, setFindedMoviesFilteredByToggle] = useState([]);
   // обрезанный отфильтрованный список beatFilms
   const [shownFindedMovies, setShownFindedMovies] = useState([]);
 
@@ -75,9 +79,9 @@ function App() {
 
   // изменение начального кол-ва карточек при новом поиске
   useEffect(() => {
-    let shownMovies = findedMovies.slice(0, cardsQty.initial);
+    let shownMovies = findedMoviesFilteredByToggle.slice(0, cardsQty.initial);
     setShownFindedMovies(shownMovies);
-  }, [findedMovies])
+  }, [findedMoviesFilteredByToggle])
 
   const loadMoreMovies = () => {
     const sliceStart = shownFindedMovies.length;
@@ -134,9 +138,9 @@ function App() {
 
   // фильтрация фильмов при изменении переключателя в Movies
   const handleToggleMovies = (queryText, isShortFilmToggle) => {
-    if (moviesStore.length === 0) return;
-    const filteredMovies = filterMovies(moviesStore, queryText, isShortFilmToggle);
-    setFindedMovies(filteredMovies);
+    if (findedMovies.length === 0) return;
+    const filteredMovies = filterMovies(findedMovies, queryText, isShortFilmToggle);
+    setFindedMoviesFilteredByToggle(filteredMovies);
   };
 
   // фильтрация фильмов при изменении переключателя в SavedMovies
@@ -154,6 +158,7 @@ function App() {
 
   // поиск фильмов в данных beatfilms
   const searchMovies = async (queryText, isShortFilmToggle) => {
+    setIsFirstSearch(false);
     localStorage.setItem('queryText', queryText);
     localStorage.setItem('shortFilmsToggle', isShortFilmToggle);
     let movies;
@@ -164,6 +169,7 @@ function App() {
     }
     const filteredMovies = filterMovies(movies, queryText, isShortFilmToggle);
     setFindedMovies(filteredMovies);
+    setFindedMoviesFilteredByToggle(filteredMovies);
     localStorage.setItem('findedMovies', JSON.stringify(filteredMovies));
   }
 
@@ -225,16 +231,30 @@ function App() {
     setAppLoading(false);
   };
 
-  // выход из профиля
+  // выход из профиля, очистка стейтов и localStorage
   const handleLogout = async () => {
     try {
       await mainApi.logout();
       setLoggedIn(false);
-      setCurrentUser(null)
+      setCurrentUser(null);
+      setIsFirstSearch(true);
+
+      setMoviesStore([]);
+      setFindedMovies([]);
+      setShownFindedMovies([]);
+      setFindedMoviesFilteredByToggle([]);
+
+      setSavedMovies([]);
+      setFilteredSavedMovies([])
+
+      localStorage.removeItem('queryText');
+      localStorage.removeItem('shortFilmsToggle');
+      localStorage.removeItem('savedShortFilmsToggle');
+      localStorage.removeItem('findedMovies');
+
       navigate('/signin');
     } catch (err) {
-      setServerError(err);
-      setTimeout(() => setServerError(''), 3000);
+      console.log(err.message);
     }
   };
 
@@ -279,7 +299,7 @@ function App() {
       setSavedMovies(movies => [...movies, savedMovie])
       setFilteredSavedMovies(movies => [...movies, savedMovie]);
     } catch (err) {
-      throw err;
+      console.log(err);
     }
   };
 
@@ -291,6 +311,7 @@ function App() {
       setSavedMovies(movies => [...movies.filter((mov) => mov.movieId !== id)]);
       setFilteredSavedMovies(movies => [...movies.filter((mov) => mov.movieId !== id)])
     } catch (err) {
+      console.log(err);
     }
   }
 
@@ -354,6 +375,7 @@ function App() {
                     onLoadMore={loadMoreMovies}
                     hasLoadMore={shownFindedMovies.length === findedMovies.length}
                     onToggle={handleToggleMovies}
+                    isFirstSearch={isFirstSearch}
                   />
                 }
               />
@@ -367,6 +389,7 @@ function App() {
                     onSearch={searchSavedMovies}
                     inRequest={inRequest}
                     onToggle={handleToggleSavedMovies}
+                    hasSavedFilms={savedMovies.length}
                   />
                 }
               />

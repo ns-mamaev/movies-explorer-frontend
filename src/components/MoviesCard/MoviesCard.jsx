@@ -13,8 +13,6 @@ const MoviesCard = ({
   type = 'default',
 }) => {
 
-  const [saved, setSaved] = useState(false);
-
   const normalizedDuration = useMemo(() => {
     const minutes = duration % 60;
     const hours = (duration - minutes) / 60;
@@ -23,12 +21,10 @@ const MoviesCard = ({
 
   const handleSave = (id) => {
     onSaveMovie(id)
-      .then(() => setSaved(true));
   }
 
   const handleRemove = (id) => {
     onRemoveMovie(id)
-      .then(() => setSaved(false))
   }
 
   const onButtonClick = () => {

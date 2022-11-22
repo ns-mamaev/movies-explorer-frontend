@@ -64,9 +64,9 @@ const Profile = ({ onSubmit, onLogout, error, infoMessage, inLoading }) => {
             />
           </fieldset>
           <div className='profile__buttons'>
-            <p className={`profile__message ${error && 'profile__message_type_error'}`}>
+            <span className={`profile__message ${error && 'profile__message_type_error'}`}>
               {infoMessage || error}
-            </p>
+            </span>
             <button
               className='profile__button profile__button_type_standart'
               type='submit'

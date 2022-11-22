@@ -38,8 +38,10 @@ function AuthPage({
           <fieldset className='auth-page__form-fields'>
             {children}
           </fieldset>
-          <p className='auth-page__error-message' style={{ color: 'red' }}>{error}</p>
+        <div className='auth-page__button-wrapper'>
+          <span className='auth-page__error-message'>{error}</span>
           <SubmitButton disabled={!isValid || inLoading}>{texts.buttonText}</SubmitButton>
+        </div>
         </form>
         <div className='auth-page__caption'>
           <p className='auth-page__caption-text'>{texts.formCaption}</p>
