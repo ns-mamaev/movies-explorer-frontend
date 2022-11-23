@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from 'react';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import { EMAIL_HTML_PATTERN } from '../../utills/constants';
 import useFormWithValidation from '../../utills/hooks/useFormWithValidation';
 import FormInput from '../FormInput/FormInput';
 import './Profile.css'
@@ -56,6 +57,7 @@ const Profile = ({ onSubmit, onLogout, error, infoMessage, inLoading }) => {
               name='email'
               title='E-mail'
               type='email'
+              pattern={EMAIL_HTML_PATTERN}
               value={values.email}
               error={errors.email}
               onChange={onChange}

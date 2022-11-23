@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import ProtectedRoutes from '../ProtectedRoutes/ProtectedRoutes';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import Login from '../Login/Login';
@@ -7,15 +8,21 @@ import Landing from '../Landing/Landing';
 import Movies from '../Movies/Movies';
 import PageNotFound from '../PageNotFound/PageNotFound';
 import Register from '../Register/Register';
-import { headerPages, footerPages, DESKTOP_CARDS_QTY, TABLET_CARDS_QTY, MOBILE_CARDS_QTY, SUCCESS_EDIT_PROFILE_TEXT } from '../../utills/constants';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
-import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import Preloader from '../Preloader/Preloader';
 import mainApi from '../../utills/MainApi';
 import moviesApi from '../../utills/MoviesApi';
-import Preloader from '../Preloader/Preloader';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { debounce } from '../../utills/utills';
+import {
+  headerPages,
+  footerPages,
+  DESKTOP_CARDS_QTY,
+  TABLET_CARDS_QTY,
+  MOBILE_CARDS_QTY,
+  SUCCESS_EDIT_PROFILE_TEXT,
+} from '../../utills/constants';
 import './App.css';
 
 function App() {
@@ -23,11 +30,10 @@ function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
 
+  // для показа приветственного сообщения в Movies
   const [isFirstSearch, setIsFirstSearch] = useState(true);
-
   // стейт для скрытия прелоадером процесса аутентификации
   const [appLoading, setAppLoading] = useState(true);
-
   // общий список фильмов от beatFilms
   const [moviesStore, setMoviesStore] = useState([]);
   // отфильтрованный список beatFilms
@@ -39,10 +45,14 @@ function App() {
 
   // сохраненные фильмы с mainApi
   const [savedMovies, setSavedMovies] = useState([]);
+  // отфильтрованные фильмы с mainApi
   const [filteredSavedMovies, setFilteredSavedMovies] = useState([]);
 
+  // блокирование кнопок в момент запроса
   const [inRequest, setInRequest] = useState(false);
+  // текст ошибки, возвращенный сервером
   const [serverError, setServerError] = useState('');
+  // текст сообщения при успешном выполнении операции сервером
   const [infoMessage, setInfoMessage] = useState('');
 
   const location = useLocation().pathname;
@@ -51,6 +61,7 @@ function App() {
   const isPageWithHeader = headerPages.includes(location);
   const isPageWithFooter = footerPages.includes(location);
 
+  // кол-во отображаемых и догружаемых по кнопке карточек
   const [cardsQty, setCardsQty] = useState({});
 
   // расчет кол-ва отображаемых и подгружаемых карточек на основании ширины страницы
@@ -167,9 +178,10 @@ function App() {
     } else {
       movies = moviesStore;
     }
-    const filteredMovies = filterMovies(movies, queryText, isShortFilmToggle);
+    const filteredMovies = filterMovies(movies, queryText);
     setFindedMovies(filteredMovies);
-    setFindedMoviesFilteredByToggle(filteredMovies);
+    const filteredMoviesWithToggle = filterMovies(filteredMovies, queryText, isShortFilmToggle);
+    setFindedMoviesFilteredByToggle(filteredMoviesWithToggle);
     localStorage.setItem('findedMovies', JSON.stringify(filteredMovies));
   }
 
@@ -182,8 +194,6 @@ function App() {
       setFindedMovies(parsedData);
     }
   }, []);
-
-  // *******************************************************************************************
 
   const handleRegister = async ({ name, email, password }) => {
     setInRequest(true);
@@ -373,7 +383,7 @@ function App() {
                     onSearch={searchMovies}
                     inRequest={inRequest}
                     onLoadMore={loadMoreMovies}
-                    hasLoadMore={shownFindedMovies.length === findedMovies.length}
+                    hasLoadMore={shownFindedMovies.length === findedMoviesFilteredByToggle.length}
                     onToggle={handleToggleMovies}
                     isFirstSearch={isFirstSearch}
                   />
