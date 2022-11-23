@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-import { EMAIL_HTML_PATTERN } from '../../utills/constants';
 import useFormWithValidation from '../../utills/hooks/useFormWithValidation';
 
 import AuthPage from '../AuthPage/AuthPage';
@@ -45,7 +43,6 @@ function Register({ onSubmit, error, inLoading }) {
         name='email'
         title='E-mail'
         type='email'
-        pattern={EMAIL_HTML_PATTERN}
         required
       />
       <FormInput

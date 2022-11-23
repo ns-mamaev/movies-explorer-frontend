@@ -232,14 +232,18 @@ function App() {
       if (user.email) {
         setLoggedIn(true);
         setCurrentUser(user);
-        navigate('/movies')
       }
     } catch (err) {
       setServerError(err.message);
-      setTimeout(() => setServerError(''));
+      setTimeout(() => setServerError(''), 3000);
     }
     setAppLoading(false);
   };
+
+  // аутентификация при монтировании приложения
+  useEffect(() => {
+    getUser();
+  }, []);
 
   // выход из профиля, очистка стейтов и localStorage
   const handleLogout = async () => {
@@ -284,11 +288,6 @@ function App() {
     }
     setInRequest(false);
   }
-
-  // аутентификация при монтировании приложения
-  useEffect(() => {
-    getUser();
-  }, []);
 
   // получение фильмов пользователя с mainApi
   const geSavedMovies = async () => {
@@ -359,51 +358,50 @@ function App() {
                   />
                 }
               />
-              <Route
-                path='/profile'
-                element={
-                  <ProtectedRoute
-                    component={Profile}
-                    onSubmit={updateUserInfo}
-                    onLogout={handleLogout}
-                    error={serverError}
-                    inLoading={inRequest}
-                    infoMessage={infoMessage}
-                  />
-                }
-              />
-              <Route
-                path='/movies'
-                element={
-                  <ProtectedRoute
-                    component={Movies}
-                    movies={showLikedMovies(shownFindedMovies)}
-                    onSaveMovie={saveMovie}
-                    onRemoveMovie={removeMovie}
-                    onSearch={searchMovies}
-                    inRequest={inRequest}
-                    onLoadMore={loadMoreMovies}
-                    hasLoadMore={shownFindedMovies.length === findedMoviesFilteredByToggle.length}
-                    onToggle={handleToggleMovies}
-                    isFirstSearch={isFirstSearch}
-                  />
-                }
-              />
-              <Route
-                path='/saved-movies'
-                element={
-                  <ProtectedRoute
-                    component={SavedMovies}
-                    movies={filteredSavedMovies.map(movie => ({ ...movie, type: 'remove' }))}
-                    onRemoveMovie={removeMovie}
-                    onSearch={searchSavedMovies}
-                    inRequest={inRequest}
-                    onToggle={handleToggleSavedMovies}
-                    hasSavedFilms={savedMovies.length}
-                  />
-                }
-              />
-              <Route path='*' element={<ProtectedRoute component={PageNotFound} />} />
+              <Route element={<ProtectedRoutes loggedIn={loggedIn} path={'/signin'} />} >
+                <Route
+                  path='/profile'
+                  element={
+                    <Profile
+                      onSubmit={updateUserInfo}
+                      onLogout={handleLogout}
+                      error={serverError}
+                      inLoading={inRequest}
+                      infoMessage={infoMessage}
+                    />
+                  }
+                />
+                <Route
+                  path='/movies'
+                  element={
+                    <Movies
+                      movies={showLikedMovies(shownFindedMovies)}
+                      onSaveMovie={saveMovie}
+                      onRemoveMovie={removeMovie}
+                      onSearch={searchMovies}
+                      inRequest={inRequest}
+                      onLoadMore={loadMoreMovies}
+                      hasLoadMore={shownFindedMovies.length === findedMoviesFilteredByToggle.length}
+                      onToggle={handleToggleMovies}
+                      isFirstSearch={isFirstSearch}
+                    />
+                  }
+                />
+                <Route
+                  path='/saved-movies'
+                  element={
+                    <SavedMovies
+                      movies={filteredSavedMovies.map(movie => ({ ...movie, type: 'remove' }))}
+                      onRemoveMovie={removeMovie}
+                      onSearch={searchSavedMovies}
+                      inRequest={inRequest}
+                      onToggle={handleToggleSavedMovies}
+                      hasSavedFilms={savedMovies.length}
+                    />
+                  }
+                />
+                <Route path='*' element={<PageNotFound />} />
+              </Route>
             </Routes>
             {isPageWithFooter && <Footer />}
           </>
