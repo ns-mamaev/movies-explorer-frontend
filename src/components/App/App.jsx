@@ -25,6 +25,7 @@ import {
   MOBILE_CARDS_QTY,
   SUCCESS_EDIT_PROFILE_TEXT,
   UNAUTHORIZED_ERROR_CODE,
+  TOKEN_MISSMATCH_TEXT,
 } from '../../utills/constants';
 import './App.css';
 
@@ -32,8 +33,8 @@ function App() {
 
   const [currentUser, setCurrentUser] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
-  // true - при получении 401 от сервера
-  const [tokenMismatch, setTokenMismatch] = useState(false);
+  // для системных сообщений в попапе
+  const [popupErrorMessage, setPopupErrorMessage] = useState('');
 
   // для показа приветственного сообщения в Movies
   const [isFirstSearch, setIsFirstSearch] = useState(true);
@@ -266,7 +267,6 @@ function App() {
     setLoggedIn(false);
     setCurrentUser(null);
     setIsFirstSearch(true);
-    setTokenMismatch(false);
 
     setMoviesStore([]);
     setFindedMovies([]);
@@ -280,6 +280,7 @@ function App() {
     localStorage.removeItem('shortFilmsToggle');
     localStorage.removeItem('savedShortFilmsToggle');
     localStorage.removeItem('findedMovies');
+    sessionStorage.removeItem('moviesStorage');
 
     navigate('/');
   }
@@ -294,17 +295,13 @@ function App() {
     }
   };
 
-  // отслеживание "потери" токена
-  useEffect(() => {
-    if (tokenMismatch) {
-      clearSession();
-    }
-  }, [tokenMismatch])
-
   // универсальная обработка ошибкок для запросов
   const handleRequestError = (err) => {
     if (err.status === UNAUTHORIZED_ERROR_CODE) {
-      setTokenMismatch(true);
+      clearSession();
+      setPopupErrorMessage(TOKEN_MISSMATCH_TEXT);
+      console.log(TOKEN_MISSMATCH_TEXT);
+      setTimeout(() => setPopupErrorMessage(''), 3000)
     }
     setServerError(err.message);
     //показываю ошибку 3 секунды
@@ -443,6 +440,9 @@ function App() {
               </Route>
             </Routes>
             {isPageWithFooter && <Footer />}
+            <div className={`error-popup ${popupErrorMessage && 'error-popup_visible'}`}>
+              {popupErrorMessage}
+            </div>
           </>
         )}
       </div>
