@@ -35,6 +35,7 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   // для системных сообщений в попапе
   const [popupErrorMessage, setPopupErrorMessage] = useState('');
+  const [popupErrorOpen, setPopupErrorOpen] = useState(false);
 
   // для показа приветственного сообщения в Movies
   const [isFirstSearch, setIsFirstSearch] = useState(true);
@@ -299,9 +300,12 @@ function App() {
   const handleRequestError = (err) => {
     if (err.status === UNAUTHORIZED_ERROR_CODE) {
       clearSession();
+      setPopupErrorOpen(true);
       setPopupErrorMessage(TOKEN_MISSMATCH_TEXT);
       console.log(TOKEN_MISSMATCH_TEXT);
-      setTimeout(() => setPopupErrorMessage(''), 3000)
+      setTimeout(() => setPopupErrorOpen(false), 3000)
+      // разное время таймаутов для анимации плавного закрытия
+      setTimeout(() => setPopupErrorMessage(''), 4000)
     }
     setServerError(err.message);
     //показываю ошибку 3 секунды
@@ -440,7 +444,7 @@ function App() {
               </Route>
             </Routes>
             {isPageWithFooter && <Footer />}
-            <div className={`error-popup ${popupErrorMessage && 'error-popup_visible'}`}>
+            <div className={`error-popup ${popupErrorOpen && 'error-popup_visible'}`}>
               {popupErrorMessage}
             </div>
           </>
