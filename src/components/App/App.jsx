@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import ProtectedRoutes from '../ProtectedRoutes/ProtectedRoutes';
+import ConditionalRoutes from '../ConditionalRoutes/CoditionalRoutes';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import Login from '../Login/Login';
@@ -277,7 +277,7 @@ function App() {
       localStorage.removeItem('savedShortFilmsToggle');
       localStorage.removeItem('findedMovies');
 
-      navigate('/signin');
+      navigate('/');
     } catch (err) {
       console.log(err.message);
     }
@@ -350,26 +350,28 @@ function App() {
             {isPageWithHeader && <Header />}
             <Routes>
               <Route path='/' element={<Landing />} />
-              <Route
-                path='/signin'
-                element={
-                  <Login
-                    onSubmit={handleLogin}
-                    error={serverError}
-                    inLoading={inRequest}
-                  />}
-              />
-              <Route
-                path='/signup'
-                element={
-                  <Register
-                    onSubmit={handleRegister}
-                    error={serverError}
-                    inLoading={inRequest}
-                  />
-                }
-              />
-              <Route element={<ProtectedRoutes loggedIn={loggedIn} path={'/signin'} />} >
+              <Route element={<ConditionalRoutes condition={!loggedIn} redirectPath='/movies' />}>
+                <Route
+                  path='/signin'
+                  element={
+                    <Login
+                      onSubmit={handleLogin}
+                      error={serverError}
+                      inLoading={inRequest}
+                    />}
+                />
+                <Route
+                  path='/signup'
+                  element={
+                    <Register
+                      onSubmit={handleRegister}
+                      error={serverError}
+                      inLoading={inRequest}
+                    />
+                  }
+                />
+              </Route>
+              <Route element={<ConditionalRoutes condition={loggedIn} redirectPath='/' />} >
                 <Route
                   path='/profile'
                   element={
