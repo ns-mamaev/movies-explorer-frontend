@@ -28,6 +28,14 @@
   background: url(../../images/logo-min.svg) center / contain no-repeat;
 }
 
+.auth-page__logo:hover {
+  opacity: .7;
+}
+
+.auth-page__logo:active {
+  transform: scale(.9);
+}
+
 .auth-page__form{
   display: flex;
   flex-direction: column;
