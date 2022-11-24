@@ -1,8 +1,9 @@
 class MainApi {
-  constructor({ baseUrl, headers, credentials }) {
+  constructor({ baseUrl, headers, credentials, unauthorizedCode }) {
     this._baseUrl = baseUrl;
     this._headers = headers;
     this._credentials = credentials;
+    this._unauthorizedCode = unauthorizedCode;
   }
 
   async _handleResponse(res) {
@@ -10,6 +11,9 @@ class MainApi {
       return res.json();
     }
     const err = await res.json();
+    if (res.status === this._unauthorizedCode) {
+      err.status = this._unauthorizedCode;
+    }
     return Promise.reject(err);
   }
 
@@ -63,6 +67,7 @@ const mainApi = new MainApi({
     'Content-Type': 'application/json',
   },
   credentials: 'include',
+  unauthorizedCode: 401,
 });
 
 export default mainApi;

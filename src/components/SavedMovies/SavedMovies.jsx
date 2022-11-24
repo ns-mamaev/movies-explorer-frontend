@@ -22,6 +22,10 @@ const SavedMovies = ({
     setValue(e.target.value);
   }
 
+  const onSubmit = () => {
+    onSearch(value, shortFilmsToggle);
+  }
+
   const handleToggle = () => {
     localStorage.setItem('savedShortFilmsToggle', shortFilmsToggle)
     setShortFilmsToggle(v => !v);
@@ -50,7 +54,7 @@ const SavedMovies = ({
   return (
     <main className='saved-movies'>
       <SearchForm
-        onSearch={onSearch}
+        onSubmit={onSubmit}
         value={value}
         onChange={onChange}
         onToggle={handleToggle}

@@ -24,6 +24,7 @@ import {
   TABLET_CARDS_QTY,
   MOBILE_CARDS_QTY,
   SUCCESS_EDIT_PROFILE_TEXT,
+  UNAUTHORIZED_ERROR_CODE,
 } from '../../utills/constants';
 import './App.css';
 
@@ -31,6 +32,8 @@ function App() {
 
   const [currentUser, setCurrentUser] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
+  // true - при получении 401 от сервера
+  const [tokenMismatch, setTokenMismatch] = useState(false);
 
   // для показа приветственного сообщения в Movies
   const [isFirstSearch, setIsFirstSearch] = useState(true);
@@ -258,31 +261,54 @@ function App() {
     getUser();
   }, []);
 
+  // завершение сеанса пользователя
+  const clearSession = () => {
+    setLoggedIn(false);
+    setCurrentUser(null);
+    setIsFirstSearch(true);
+    setTokenMismatch(false);
+
+    setMoviesStore([]);
+    setFindedMovies([]);
+    setShownFindedMovies([]);
+    setFindedMoviesFilteredByToggle([]);
+
+    setSavedMovies([]);
+    setFilteredSavedMovies([])
+
+    localStorage.removeItem('queryText');
+    localStorage.removeItem('shortFilmsToggle');
+    localStorage.removeItem('savedShortFilmsToggle');
+    localStorage.removeItem('findedMovies');
+
+    navigate('/');
+  }
+
   // выход из профиля, очистка стейтов и localStorage
   const handleLogout = async () => {
     try {
       await mainApi.logout();
-      setLoggedIn(false);
-      setCurrentUser(null);
-      setIsFirstSearch(true);
-
-      setMoviesStore([]);
-      setFindedMovies([]);
-      setShownFindedMovies([]);
-      setFindedMoviesFilteredByToggle([]);
-
-      setSavedMovies([]);
-      setFilteredSavedMovies([])
-
-      localStorage.removeItem('queryText');
-      localStorage.removeItem('shortFilmsToggle');
-      localStorage.removeItem('savedShortFilmsToggle');
-      localStorage.removeItem('findedMovies');
-
-      navigate('/');
+      clearSession();
     } catch (err) {
       console.log(err.message);
     }
+  };
+
+  // отслеживание "потери" токена
+  useEffect(() => {
+    if (tokenMismatch) {
+      clearSession();
+    }
+  }, [tokenMismatch])
+
+  // универсальная обработка ошибкок для запросов
+  const handleRequestError = (err) => {
+    if (err.status === UNAUTHORIZED_ERROR_CODE) {
+      setTokenMismatch(true);
+    }
+    setServerError(err.message);
+    //показываю ошибку 3 секунды
+    setTimeout(() => setServerError(''), 3000)
   };
 
   // обновление профиля
@@ -295,9 +321,7 @@ function App() {
       //показываю ошибку 3 секунды
       setTimeout(() => setInfoMessage(''), 3000)
     } catch (err) {
-      setServerError(err.message);
-      //показываю ошибку 3 секунды
-      setTimeout(() => setServerError(''), 3000)
+      handleRequestError(err);
     }
     setInRequest(false);
   }
@@ -309,7 +333,7 @@ function App() {
       setSavedMovies(savedMovies);
       setFilteredSavedMovies(savedMovies);
     } catch (err) {
-      console.log(err);
+      handleRequestError(err);
     }
   };
 
@@ -321,7 +345,7 @@ function App() {
       setSavedMovies(movies => [...movies, savedMovie])
       setFilteredSavedMovies(movies => [...movies, savedMovie]);
     } catch (err) {
-      console.log(err);
+      handleRequestError(err);
     }
   };
 
@@ -333,7 +357,7 @@ function App() {
       setSavedMovies(movies => [...movies.filter((mov) => mov.movieId !== id)]);
       setFilteredSavedMovies(movies => [...movies.filter((mov) => mov.movieId !== id)])
     } catch (err) {
-      console.log(err);
+      handleRequestError(err);
     }
   }
 
