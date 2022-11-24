@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from 'react';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import { EMAIL_PATTERN } from '../../utills/constants';
 import useFormWithValidation from '../../utills/hooks/useFormWithValidation';
 import FormInput from '../FormInput/FormInput';
 import './Profile.css'
@@ -60,6 +61,7 @@ const Profile = ({ onSubmit, onLogout, error, infoMessage, inLoading }) => {
               error={errors.email}
               onChange={onChange}
               variant='min'
+              pattern={EMAIL_PATTERN}
               required
             />
           </fieldset>
