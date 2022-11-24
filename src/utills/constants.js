@@ -13,3 +13,4 @@ export const SUCCESS_EDIT_PROFILE_TEXT = 'Данные профиля измен
 export const FIRST_SEARCH_TEXT = 'Введите запрос и добавьте понравившиеся фильмы';
 export const FIND_NOTHING_TEXT = 'По запросу ничего не найдено';
 export const NO_SAVED_FILMS_TEXT = 'Сейчас у вас нет сохраненных фильмов. Добавьте понравившиеся через форму поиска на странице "фильмы"'
+export const EMPTY_SEARCH_TEXT = 'Нужно ввести ключевое слово';

@@ -3,7 +3,7 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SearchForm from '../SearchForm/SearchForm';
 import Preloader from '../Preloader/Preloader';
 import './Movies.css';
-import { FIND_NOTHING_TEXT, FIRST_SEARCH_TEXT } from '../../utills/constants';
+import { EMPTY_SEARCH_TEXT, FIND_NOTHING_TEXT, FIRST_SEARCH_TEXT } from '../../utills/constants';
 
 const Movies = ({
   movies,
@@ -22,6 +22,7 @@ const Movies = ({
   const [shortFilmsToggle, setShortFilmsToggle] = useState(
     JSON.parse(localStorage.getItem('shortFilmsToggle')) || false
   );
+  const [validationMessage, setvalidationMessage] = useState('');
 
   const onChange = (e) => {
     setValue(e.target.value);
@@ -30,6 +31,21 @@ const Movies = ({
   const handleToggle = () => {
     setShortFilmsToggle(v => !v);
   }
+
+  // проверка на пустой запрос
+  const onSubmit = () => {
+    if (!value) {
+      setvalidationMessage(EMPTY_SEARCH_TEXT);
+    } else {
+      onSearch(value, shortFilmsToggle);
+    }
+  }
+  // ошибка валидации очищается при любом вводе. Следующая валидация сработает только при сабмите
+  useEffect(() => {
+    if (value && validationMessage) {
+      setvalidationMessage('');
+    }
+  }, [value, validationMessage])
 
   // фильтрация фильмов при изменении переключателя
   useEffect(() => {
@@ -57,12 +73,12 @@ const Movies = ({
   return (
     <main className='movies'>
       <SearchForm
-        onSearch={onSearch}
         value={value}
+        validationMessage={validationMessage}
         onChange={onChange}
         onToggle={handleToggle}
         isToggle={shortFilmsToggle}
-        minLength='2'
+        onSubmit={onSubmit}
         required
       />
       {preloader}

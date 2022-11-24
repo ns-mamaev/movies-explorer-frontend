@@ -3,19 +3,21 @@ import './SearchForm.css';
 function SearchForm({
   onSearch,
   value,
+  validationMessage,
   onChange,
   onToggle,
   isToggle,
+  onSubmit,
   ...restProps
 }) {
 
-  const onSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    onSearch(value, isToggle)
+    onSubmit();
   };
 
   return (
-    <form className='search-form' onSubmit={onSubmit}>
+    <form className='search-form' onSubmit={handleSubmit} novalidate='true'>
       <div className='search-form__inner'>
         <input
           type='text'
@@ -26,6 +28,7 @@ function SearchForm({
           onChange={onChange}
           {...restProps}
         />
+        <span className='search-form__error'>{validationMessage}</span>
         <button
           type='submit'
           className='search-form__button'
