@@ -175,6 +175,7 @@ function App() {
     let movies;
     if (moviesStore.length === 0) {
       movies = await getBeatfilmMovies();
+      sessionStorage.setItem('moviesStorage', JSON.stringify(movies));
     } else {
       movies = moviesStore;
     }
@@ -185,7 +186,7 @@ function App() {
     localStorage.setItem('findedMovies', JSON.stringify(filteredMovies));
   }
 
-  // восстановление данных последнего поиска при монтировании
+  // восстановление данных последнего поиска и при монтировании
 
   useEffect(() => {
     const savedSearch = localStorage.getItem('findedMovies');
@@ -194,6 +195,16 @@ function App() {
       setFindedMovies(parsedData);
     }
   }, []);
+
+  // хранение фильмов в sessionStorage для восстановления хранилища при релоаде страницы
+
+  useEffect(() => {
+    const initialStorage = sessionStorage.getItem('moviesStorage');
+    if (initialStorage) {
+      const parsedData = JSON.parse(initialStorage);
+      setMoviesStore(parsedData);
+    }
+  }, [])
 
   const handleRegister = async ({ name, email, password }) => {
     setInRequest(true);
