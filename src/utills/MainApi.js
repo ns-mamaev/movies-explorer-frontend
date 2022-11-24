@@ -62,7 +62,7 @@ class MainApi {
 }
 
 const mainApi = new MainApi({
-  baseUrl: 'http://localhost:3100',
+  baseUrl: 'https://api.moviessearch.nomoredomains.icu',
   headers: {
     'Content-Type': 'application/json',
   },
