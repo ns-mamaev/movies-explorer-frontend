@@ -18,6 +18,8 @@ import { debounce } from '../../utills/utills';
 import {
   headerPages,
   footerPages,
+  DESKTOP_SCREEN_BREAKPOINT,
+  TABLET_SCREEN_BREAKPOINT,
   DESKTOP_CARDS_QTY,
   TABLET_CARDS_QTY,
   MOBILE_CARDS_QTY,
@@ -67,11 +69,11 @@ function App() {
   // расчет кол-ва отображаемых и подгружаемых карточек на основании ширины страницы
   const calculateCardsQty = () => {
     const pageWidth = document.documentElement.clientWidth;
-    if (pageWidth > 1180) {
+    if (pageWidth > DESKTOP_SCREEN_BREAKPOINT) {
       setCardsQty(DESKTOP_CARDS_QTY);
       return
     }
-    if (pageWidth > 720) {
+    if (pageWidth > TABLET_SCREEN_BREAKPOINT) {
       setCardsQty(TABLET_CARDS_QTY);
       return
     }
