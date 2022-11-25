@@ -1,20 +1,36 @@
 import './FormInput.css';
 
-function FormInput({ title, name, variant, errorMessage, ...restProps }) {
+function FormInput({
+  title,
+  name,
+  variant,
+  error,
+  value = '',
+  ...restProps
+}) {
+  const formInputClasses = `
+    form-input__input
+    form-input__input_variant_${variant} 
+    ${error? `form-input__input_variant_${variant}-with-error` : ''}`
+
   return (
     <div className={`form-input form-input_variant_${variant}`}>
       <label
-        className={`form-input__title form-input__title_variant_${variant}`}
+        className={`form-input__title_variant_${variant}`}
         htmlFor={name}
-      >{title}</label>
+      >
+        {title}
+      </label>
       <input
-        className={`form-input__input form-input__input_variant_${variant}`}
+        className={formInputClasses}
         id={name}
+        name={name}
+        value={value}
         {...restProps}
       />
       <span
         className={`form-input__error-message form-input__error-message_variant_${variant}`}
-      >{errorMessage}</span>
+      >{error}</span>
     </div>
   )
 }

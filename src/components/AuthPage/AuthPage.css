@@ -28,6 +28,14 @@
   background: url(../../images/logo-min.svg) center / contain no-repeat;
 }
 
+.auth-page__logo:hover {
+  opacity: .7;
+}
+
+.auth-page__logo:active {
+  transform: scale(.9);
+}
+
 .auth-page__form{
   display: flex;
   flex-direction: column;
@@ -66,6 +74,22 @@
 
 .auth-page__link:hover {
   opacity: .7;
+}
+
+.auth-page__button-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-page__error-message {
+  color: var(--error-color);
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 20px;
 }
 
 @media screen and (max-width: 450px) {

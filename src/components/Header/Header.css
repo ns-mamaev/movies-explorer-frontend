@@ -46,7 +46,7 @@
 }
 
 .header__burger:active {
-  transform: scale(.6);
+  transform: scale(.9);
 }
 
 .header__burger:hover {

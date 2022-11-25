@@ -1,35 +1,34 @@
-import { useState } from 'react';
 import './SearchForm.css';
 
-function SearchForm() {
+function SearchForm({
+  onSearch,
+  value,
+  validationMessage,
+  onChange,
+  onToggle,
+  isToggle,
+  onSubmit,
+  ...restProps
+}) {
 
-  const [value, setValue] = useState('');
-  const [shortFilmsToggle, setShortFilmsToggle] = useState(false);
-
-  const onSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setValue('');
-    console.log('submit');
-  };
-
-  const onToggle = () => {
-    setShortFilmsToggle(v => !v)
+    onSubmit();
   };
 
   return (
-    <form className='search-form' onSubmit={onSubmit}>
+    <form className='search-form' onSubmit={handleSubmit} noValidate>
       <div className='search-form__inner'>
         <input
           type='text'
-          name='film-search'
+          name='filmSearch'
           placeholder='Фильм'
-          required
-          minLength='3'
-          maxLength='300'
           className='search-form__input'
           value={value}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={onChange}
+          {...restProps}
         />
+        <span className='search-form__error'>{validationMessage}</span>
         <button
           type='submit'
           className='search-form__button'
@@ -44,10 +43,10 @@ function SearchForm() {
             type='checkbox'
             name='short-films'
             id='short-films'
-            checked={shortFilmsToggle}
+            checked={isToggle}
             onChange={onToggle}
           />
-          <span className={`search-form__toggle-checkbox-visible ${shortFilmsToggle && 'search-form__toggle-checkbox-visible_checked' }`} />
+          <span className={`search-form__toggle-checkbox-visible ${isToggle && 'search-form__toggle-checkbox-visible_checked'}`} />
           Короткометражки
         </label>
       </div>

@@ -111,6 +111,17 @@
   left: 18px;
 }
 
+.search-form__error {
+  color: var(--error-color);
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 1;
+  text-align: center;
+  position: absolute;
+  bottom: 10px;
+  left: 26px
+}
+
 @media screen and (max-width: 800px) {
   .search-form {
     padding-bottom: 51px;
@@ -142,5 +153,11 @@
   .search-form__toggle-label {
     font-size: 11px;
     column-gap: 13px;
+  }
+
+  .search-form__error {
+    font-size: 10px;
+    bottom: 7px;
+    left: 15px
   }
 }
