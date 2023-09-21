@@ -1,10 +1,10 @@
 class MoviesApi {
-  constructor({ baseUrl }) {
+  constructor({ baseUrl, token }) {
     this._baseUrl = baseUrl;
   }
 
   _normalizeResponseData(movies) {
-    return movies.map(movie => ({
+    return movies.map((movie) => ({
       country: movie.country,
       director: movie.director,
       duration: movie.duration,
@@ -16,7 +16,7 @@ class MoviesApi {
       movieId: movie.id,
       nameRU: movie.nameRU,
       nameEN: movie.nameEN,
-    }))
+    }));
   }
 
   async _handleResponse(res) {
@@ -29,11 +29,14 @@ class MoviesApi {
   }
 
   async getFilms() {
-    const res = await fetch(`${this._baseUrl}/beatfilm-movies`);
+    const res = await fetch(`${this._baseUrl}/movies`);
     return this._handleResponse(res);
   }
 }
 
-const moviesApi = new MoviesApi({ baseUrl: 'https://api.nomoreparties.co' })
+const moviesApi = new MoviesApi({
+  baseUrl: "http://localhost:2222",
+  token: "k_8f1qhk7r",
+});
 
 export default moviesApi;

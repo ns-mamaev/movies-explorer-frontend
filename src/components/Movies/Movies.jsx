@@ -1,92 +1,31 @@
-import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import SearchForm from '../SearchForm/SearchForm';
-import Preloader from '../Preloader/Preloader';
+import { useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import mainApi from '../../utills/MainApi';
+import { setMovies } from '../../store/slices/movieSlice';
 import './Movies.css';
-import { EMPTY_SEARCH_TEXT, FIND_NOTHING_TEXT, FIRST_SEARCH_TEXT } from '../../utills/constants';
 
-const Movies = ({
-  movies,
-  onSaveMovie,
-  onRemoveMovie,
-  onSearch,
-  inRequest,
-  onLoadMore,
-  hasLoadMore,
-  onToggle,
-  isFirstSearch,
-}) => {
-  const [value, setValue] = useState(
-    localStorage.getItem('queryText') || ''
-  );
-  const [shortFilmsToggle, setShortFilmsToggle] = useState(
-    JSON.parse(localStorage.getItem('shortFilmsToggle')) || false
-  );
-  const [validationMessage, setvalidationMessage] = useState('');
+function Movies() {
+  const dispatch = useDispatch();
+  const [searchParams, setSearchParams] = useSearchParams()
 
-  const onChange = (e) => {
-    setValue(e.target.value);
-  }
-
-  const handleToggle = () => {
-    setShortFilmsToggle(v => !v);
-  }
-
-  // проверка на пустой запрос
-  const onSubmit = () => {
-    if (!value) {
-      setvalidationMessage(EMPTY_SEARCH_TEXT);
-    } else {
-      onSearch(value, shortFilmsToggle);
-    }
-  }
-  // ошибка валидации очищается при любом вводе. Следующая валидация сработает только при сабмите
   useEffect(() => {
-    if (value && validationMessage) {
-      setvalidationMessage('');
+    async function getMovies() {
+      const page = searchParams.get('page');
+      const limit = searchParams.get('limit');
+      const movies = await mainApi.getMovies({ page, limit });
+      dispatch(setMovies(movies.data));
     }
-  }, [value, validationMessage])
+    getMovies();
+  }, [])
 
-  // фильтрация фильмов при изменении переключателя
-  useEffect(() => {
-    localStorage.setItem('shortFilmsToggle', shortFilmsToggle)
-    onToggle(value, shortFilmsToggle);
-  }, [shortFilmsToggle])
-
-  const hasMovies = movies.length;
-  const preloader = inRequest ? <Preloader /> : null;
-  const moviesList = !inRequest && hasMovies ? (
-    <MoviesCardList
-      movies={movies}
-      onSaveMovie={onSaveMovie}
-      onRemoveMovie={onRemoveMovie}
-    />
-  ) : null;
-  const loadMoreBtn = !inRequest && hasMovies && !hasLoadMore ? (
-    <button type='button' onClick={onLoadMore} className='movies__load-btn'>Ещё</button>
-  ) : null;
-  const message = isFirstSearch ? FIRST_SEARCH_TEXT : FIND_NOTHING_TEXT;
-  const infoMessage = !inRequest && !hasMovies ? (
-    <p className='movies__info-message'>{message}</p>
-  ) : null;
-
+  const movies = useSelector((state) => state.movies.list);
   return (
     <main className='movies'>
-      <SearchForm
-        value={value}
-        validationMessage={validationMessage}
-        onChange={onChange}
-        onToggle={handleToggle}
-        isToggle={shortFilmsToggle}
-        onSubmit={onSubmit}
-        required
-      />
-      {preloader}
-      {moviesList}
-      {loadMoreBtn}
-      {infoMessage}
+      <MoviesCardList movies={movies}/>
     </main>
   );
-};
+}
 
 export default Movies;

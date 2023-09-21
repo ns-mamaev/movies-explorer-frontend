@@ -1,25 +1,19 @@
-import { EMAIL_PATTERN } from '../../utills/constants';
-import useFormWithValidation from '../../utills/hooks/useFormWithValidation';
+import { EMAIL_PATTERN } from "../../utills/constants";
+import useFormWithValidation from "../../utills/hooks/useFormWithValidation";
 
-import AuthPage from '../AuthPage/AuthPage';
-import FormInput from '../FormInput/FormInput';
+import AuthPage from "../AuthPage/AuthPage";
+import FormInput from "../FormInput/FormInput";
 
 function Register({ onSubmit, error, inLoading }) {
-
-  const {
-    values,
-    errors,
-    isValid,
-    onChange,
-  } = useFormWithValidation();
+  const { values, errors, isValid, onChange } = useFormWithValidation();
 
   // оборачиваю еще в 1 функцию чтобы передать values, которые недоступны в App
   const handleSubmit = () => onSubmit(values);
 
   return (
     <AuthPage
-      type='register'
-      heading='Добро пожаловать!'
+      type="register"
+      heading="Добро пожаловать!"
       isValid={isValid}
       onSubmit={handleSubmit}
       error={error}
@@ -29,21 +23,21 @@ function Register({ onSubmit, error, inLoading }) {
         value={values.name}
         error={errors.name}
         onChange={onChange}
-        variant='max'
-        name='name'
-        title='Имя'
-        type='text'
+        variant="max"
+        name="name"
+        title="Имя"
+        type="text"
         required
-        minLength='3'
+        minLength="3"
       />
       <FormInput
         value={values.email}
         error={errors.email}
         onChange={onChange}
-        variant='max'
-        name='email'
-        title='E-mail'
-        type='email'
+        variant="max"
+        name="email"
+        title="E-mail"
+        type="email"
         pattern={EMAIL_PATTERN}
         required
       />
@@ -51,11 +45,22 @@ function Register({ onSubmit, error, inLoading }) {
         value={values.password}
         error={errors.password}
         onChange={onChange}
-        variant='max'
-        name='password'
-        title='Пароль'
-        type='password'
-        minLength='6'
+        variant="max"
+        name="password"
+        title="Пароль"
+        type="password"
+        minLength="6"
+        required
+      />
+      <FormInput
+        value={values.passwordRepeat}
+        error={errors.passwordRepeat}
+        onChange={onChange}
+        variant="max"
+        name="passwordRepeat"
+        title="Пароль (ещё раз)"
+        type="password"
+        minLength="6"
         required
       />
     </AuthPage>
