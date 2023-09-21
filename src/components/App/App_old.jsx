@@ -5,7 +5,7 @@ import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import Login from "../Login/Login";
 import Landing from "../Landing/Landing";
-import Movies from "../Movies/Movies_old";
+import Movies from "../../pages/Movies/Movies_old";
 import PageNotFound from "../PageNotFound/PageNotFound";
 import Register from "../Register/Register";
 import SavedMovies from "../SavedMovies/SavedMovies";

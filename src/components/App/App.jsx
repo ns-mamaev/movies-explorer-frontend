@@ -1,8 +1,11 @@
 import { Route, Routes } from "react-router-dom";
-import Movies from "../Movies/Movies";
+import Movies from "../../pages/Movies/Movies";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import "./App.css";
+import Landing from "../Landing/Landing";
+import PageNotFound from "../../pages/PageNotFound/PageNotFound";
+import MoviePage from "../../pages/MoviePage/MoviePage";
 
 function App() {
   return (
@@ -10,6 +13,9 @@ function App() {
       <Header />
       <Routes>
         <Route path="/movies" element={<Movies />} />
+        <Route path="/movies/:id" element={<MoviePage />} />
+        <Route path="/about" element={<Landing />}/>
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
       <Footer />
     </div>

@@ -1,58 +1,61 @@
-import { useState } from 'react';
-import { useMemo } from 'react';
 import './MoviesCard.css';
+import { Link } from 'react-router-dom';
+import { getDurationString } from '../../utills/utills';
+import RatingPicker from '../RatingPicker/RatingPicker';
 
 const MoviesCard = ({
-  movieId,
-  title,
+  id,
+  nameRU,
+  nameEN,
   duration,
-  imageSource,
-  trailerLink,
-  onSaveMovie,
-  onRemoveMovie,
+  year,
+  image,
   type = 'default',
 }) => {
 
-  const normalizedDuration = useMemo(() => {
-    const minutes = duration % 60;
-    const hours = (duration - minutes) / 60;
-    return hours ? `${hours}ч ${minutes}м` : `${minutes}м`;
-  }, [duration]);
+  const descriptionString = `${nameEN ? nameEN + ', ': ''}${year},&nbsp;${getDurationString(duration)}`;
 
-  const handleSave = (id) => {
-    onSaveMovie(id)
-  }
+  // const handleSave = (id) => {
+  //   onSaveMovie(id)
+  // }
 
-  const handleRemove = (id) => {
-    onRemoveMovie(id)
-  }
+  // const handleRemove = (id) => {
+  //   onRemoveMovie(id)
+  // }
 
-  const onButtonClick = () => {
-    switch (type) {
-      case 'liked':
-      case 'remove':
-        handleRemove(movieId);
-        break;
-      case 'default':
-        handleSave(movieId);
-        break;
-      default:
-        throw new Error('Тип кнопки не задан')
-    }
-  }
+  // const onButtonClick = () => {
+  //   switch (type) {
+  //     case 'liked':
+  //     case 'remove':
+  //       handleRemove(movieId);
+  //       break;
+  //     case 'default':
+  //       handleSave(movieId);
+  //       break;
+  //     default:
+  //       throw new Error('Тип кнопки не задан')
+  //   }
+  // }
 
   return (
     <li className='movies-card'>
-      <h3 className='movies-card__title'>{title}</h3>
-      <span className='movies-card__duration'>{normalizedDuration}</span>
-      <button
-        type='button'
-        onClick={onButtonClick}
-        className={`movie-card__action-btn movie-card__action-btn_type_${type}`}
-      />
-      <a className='movies-card__poster-wrapper' href={trailerLink} target='_blank' rel='noreferrer'>
-        <img className='movies-card__poster' src={imageSource} alt={title} />
-      </a>
+      <Link className='movies-card__poster-wrapper' to={`/movies/${id}`}>
+        <img className='movies-card__poster' src={image} alt={nameRU} />
+        <span className="movies-card__rating">6.8</span>
+      </Link>
+      <div className="movies-card__info-wrapper">
+        <div className="movies-card__description">
+          <h3 className='movies-card__title'>{nameRU}</h3>
+          <p className='movies-card__subtitle'>{descriptionString.replace(/&nbsp;/g, "\u00A0")}</p>
+        </div>
+        <div className="movies-card__btn-wrapper">
+          <RatingPicker />
+          <button
+            type='button'
+            className={`movies-card__action-btn movies-card__action-btn_type_${type}`}
+          />
+        </div>
+      </div>
     </li>
   );
 };

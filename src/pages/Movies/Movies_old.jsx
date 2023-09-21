@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import SearchForm from '../SearchForm/SearchForm';
-import Preloader from '../Preloader/Preloader';
+import MoviesCardList from '../../components/MoviesCardList/MoviesCardList';
+import SearchForm from '../../components/SearchForm/SearchForm';
+import Preloader from '../../components/Preloader/Preloader';
 import './Movies.css';
 import { EMPTY_SEARCH_TEXT, FIND_NOTHING_TEXT, FIRST_SEARCH_TEXT } from '../../utills/constants';
 
