@@ -33,6 +33,9 @@ function SearchForm({
         <Button className='search-form__button'>
           Поиск
         </Button>
+        <ul className="search-form__filters">
+
+        </ul>
       </div>
     </form>
   );
