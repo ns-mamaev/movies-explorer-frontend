@@ -1,4 +1,5 @@
 import Button from '../Button/Button';
+import FilterPicker from '../FilterPicker/FilterPicker';
 import './SearchForm.css';
 
 function SearchForm({
@@ -33,10 +34,10 @@ function SearchForm({
         <Button className='search-form__button'>
           Поиск
         </Button>
-        <ul className="search-form__filters">
-
-        </ul>
       </div>
+      <ul className="search-form__filters">
+        <FilterPicker title="123"/>
+      </ul>
     </form>
   );
 };

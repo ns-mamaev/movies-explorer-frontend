@@ -4,6 +4,7 @@
 
 .search-form__inner {
   position: relative;
+  margin-bottom: 28px;
 }
 
 .search-form__input {
@@ -11,7 +12,7 @@
   width: 100%;
   padding: 25px;
   border: 1px solid var(--lines-color);
-  border-radius: 12px;
+  border-radius: var(--border-rad-l);
   padding-right: 135px;
   background-color: unset;
   color: var(--textcolor-main);
@@ -31,7 +32,7 @@
   margin: 10px;
   min-width: 100px;
   background: var(--action-gradient-bg);
-  border-radius: 8px;
+  border-radius: var(--border-rad-m);
   position: absolute;
   right: 0;
   top: 0;
@@ -48,6 +49,12 @@
   position: absolute;
   bottom: 10px;
   left: 26px
+}
+
+.search-form__filters {
+  display: flex;
+  column-gap: 16px;
+
 }
 
 @media screen and (max-width: 800px) {

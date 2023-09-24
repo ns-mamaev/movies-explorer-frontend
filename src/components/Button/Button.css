@@ -1,8 +1,26 @@
 .button {
   border: none;
-  background: grey;
   cursor: pointer;
   transition: opacity .3s ease;
+  font-size: 16px;
+  line-height: 20px;
+  padding: 0.5em 1em;
+  border-radius: var(--border-rad-m);
+}
+
+.button_color_default {
+  background-color: var(--accent-background);
+  color: var(--textcolor-main);
+}
+
+.button_color_primary {
+  background-color: var(--primary-action-color);
+  color: var(--textcolor-main); 
+}
+
+.button_color_secondary {
+  background-color: var(--secondary-action-color);
+  color: var(--textcolor-main);
 }
 
 @media (hover:hover) {
