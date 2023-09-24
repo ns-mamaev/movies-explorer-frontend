@@ -1,17 +1,34 @@
 @import url(./vendor/fonts/fonts.css);
 
+:root {
+  --bgcolor-main: #151515;
+  --bgcolor-light: #272727;
+  --bgcolor-action: #3DDC84;
+  --max-section-width: 1280px;
+  --bgcolor-buttons: #4285F4;
+  --error-color: #ee3465;
+  
+  /* 
+  выше устаревшее - заменить, для всех цветов - переменные ниже
+  */ 
+  --primary-action-color: #F54770;
+  --secondary-action-color: #5A5CE7;
+  --action-gradient-bg: linear-gradient(94deg, var(--secondary-action-color) 2.63%, var(--primary-action-color) 110.64%);
+  --lines-color: #333;
+  --textcolor-main: #fff;
+}
+
 body {
   margin: 0;
   padding: 0;
   -webkit-tap-highlight-color: transparent;
 }
 
-:root {
-  --bgcolor-main: #151515;
-  --bgcolor-light: #272727;
-  --textcolor-main: #fff;
-  --bgcolor-action: #3DDC84;
-  --max-section-width: 1280px;
-  --bgcolor-buttons: #4285F4;
-  --error-color: #ee3465;
+.content-width {
+  max-width: 1280px;
+  width: 100%;
+  padding-right: 40px;
+  padding-left: 40px;
+  margin: 0 auto;
+  box-sizing: border-box;
 }

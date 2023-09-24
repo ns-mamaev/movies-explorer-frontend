@@ -23,7 +23,7 @@ function Movies() {
 
   const movies = useSelector((state) => state.movies.list);
   return (
-    <main className='movies'>
+    <main className='movies content-width'>
       <SearchForm />
       <MoviesCardList movies={movies}/>
     </main>

@@ -5,7 +5,7 @@
 
 .movies-card__poster-wrapper {
   position: relative;
-  display: block;
+  cursor: pointer;
 }
 
 .movies-card__poster-wrapper:hover {

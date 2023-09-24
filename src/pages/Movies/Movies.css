@@ -1,9 +1,8 @@
 .movies {
-  max-width: var(--max-section-width);
-  width: 100%;
-  padding: 0 70px;
   box-sizing: border-box;
   flex-grow: 1;
+  padding-top: 40px;
+  padding-bottom: 60px;
 }
 
 .movies__info-message {

@@ -57,6 +57,10 @@ class MainApi {
     return this._request(`/movies?page=${page}&limit=${limit}`);
   }
 
+  async getRandomMovie() {
+    return this._request('/movies/random');
+  }
+
   async saveMovie(movie) {
     return this._request("/movies", "POST", JSON.stringify(movie));
   }

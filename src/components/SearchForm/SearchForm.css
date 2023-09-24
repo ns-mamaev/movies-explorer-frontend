@@ -1,7 +1,5 @@
 .search-form {
-  border-bottom: 1px solid rgba(170, 170, 170, .2);
-  padding: 70px 0 43px;
-  margin-bottom: 10px;
+  margin-bottom: 56px;
 }
 
 .search-form__inner {
@@ -12,8 +10,8 @@
   box-sizing: border-box;
   width: 100%;
   padding: 25px;
-  border: 1.5px solid rgba(170, 170, 170, .2);
-  border-radius: 8px;
+  border: 1px solid var(--lines-color);
+  border-radius: 12px;
   padding-right: 135px;
   background-color: unset;
   color: var(--textcolor-main);
@@ -28,87 +26,17 @@
 
 .search-form__button {
   color: var(--textcolor-main);
+  font-size: 16px;
   font-weight: 500;
-  font-size: 14px;
-  line-height: 18px;
-  text-align: center;
-  border: none;
   margin: 10px;
-  padding: 0;
-  border-radius: 5px;
   min-width: 100px;
-  background-color: var(--bgcolor-buttons);
-  cursor: pointer;
+  background: var(--action-gradient-bg);
+  border-radius: 8px;
   position: absolute;
   right: 0;
   top: 0;
   bottom: 0;
   z-index: 2;
-}
-
-.search-form__button:hover {
-  opacity: .7;
-}
-
-.search-form__button:active {
-  transform: scale(.98);
-}
-
-.search-form__toggle {
-  /* На случай, если будет больше чекбоксов */
-  margin-top: 26px;
-  display: flex;
-  justify-content: flex-start;
-}
-
-.search-form__toggle-label {
-  color: var(--textcolor-main);
-  font-weight: 400;
-  font-size: 13px;
-  line-height: 18px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  column-gap: 14px;
-}
-
-.search-form__toggle-checkbox-invisible {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-}
-
-.search-form__toggle-checkbox-visible {
-  display: block;
-  width: 36px;
-  height: 20px;
-  border-radius: 20px;
-  transition: background-color .2s ease;
-  background-color: #343434;
-  position: relative;
-}
-
-.search-form__toggle-checkbox-visible::after {
-  content: '';
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background-color: #A0A0A0;
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  transition: all .2s ease;
-}
-
-.search-form__toggle-checkbox-visible_checked {
-  background-color: var(--bgcolor-action);
-}
-
-.search-form__toggle-checkbox-visible_checked::after {
-  background-color: #fff;
-  left: 18px;
 }
 
 .search-form__error {
@@ -144,15 +72,6 @@
   .search-form__button {
     margin: 6px;
     min-width: 80px;
-  }
-
-  .search-form__toggle {
-    margin-top: 30px;
-  }
-
-  .search-form__toggle-label {
-    font-size: 11px;
-    column-gap: 13px;
   }
 
   .search-form__error {

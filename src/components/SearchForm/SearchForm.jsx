@@ -1,3 +1,4 @@
+import Button from '../Button/Button';
 import './SearchForm.css';
 
 function SearchForm({
@@ -22,33 +23,16 @@ function SearchForm({
         <input
           type='text'
           name='filmSearch'
-          placeholder='Фильм'
+          placeholder='Фильм или режиссёр'
           className='search-form__input'
           value={value}
           onChange={onChange}
           {...restProps}
         />
         <span className='search-form__error'>{validationMessage}</span>
-        <button
-          type='submit'
-          className='search-form__button'
-        >
+        <Button className='search-form__button'>
           Поиск
-        </button>
-      </div>
-      <div className='search-form__toggle'>
-        <label className='search-form__toggle-label' htmlFor='short-films'>
-          <input
-            className='search-form__toggle-checkbox-invisible'
-            type='checkbox'
-            name='short-films'
-            id='short-films'
-            checked={isToggle}
-            onChange={onToggle}
-          />
-          <span className={`search-form__toggle-checkbox-visible ${isToggle && 'search-form__toggle-checkbox-visible_checked'}`} />
-          Короткометражки
-        </label>
+        </Button>
       </div>
     </form>
   );

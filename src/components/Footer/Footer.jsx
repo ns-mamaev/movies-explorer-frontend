@@ -4,7 +4,7 @@ import './Footer.css';
 const Footer = () => {
   return (
     <footer className='footer'>
-      <div className='footer__columns'>
+      <div className='footer__inner content-width'>
         <p className='footer__column footer__column_content_copyright'>&#xa9; {new Date().getFullYear()} Никита Мамаев</p>
         <nav className='footer__column footer__column_content_nav-links'>
           <ul className='footer__links'>

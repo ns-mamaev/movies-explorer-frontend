@@ -17,19 +17,19 @@ const Navigation = ({ visible, onClose }) => {
     <div className={`navigation ${visible && 'navigation_visible'}`} onClick={handleCloseByOverlay} >
       <nav className={`navigation__inner ${visible && 'navigation__inner_visible'}`}>
         <ul className='navigation__links'>
-          <li className='navigation__links-item navigation__links-item_type_only-mobile'>
+          <li className='navigation__links-item'>
             <NavLink className={setLinkClass} to='/' onClick={onClose}>
-              Главная
+              Рулетка
             </NavLink>
           </li>
           <li className='navigation__links-item'>
             <NavLink className={setLinkClass} to='/movies' onClick={onClose}>
-              Фильмы
+              Все фильмы
             </NavLink>
           </li>
           <li className='navigation__links-item'>
             <NavLink className={setLinkClass} to='/saved-movies' onClick={onClose}>
-              Сохраненные фильмы
+              Избранное
             </NavLink>
           </li>
         </ul>
