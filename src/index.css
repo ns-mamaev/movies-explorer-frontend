@@ -22,6 +22,12 @@
 
   --border-rad-m: 8px;
   --border-rad-l: 12px;
+
+  --scrollbarBg: #00000033;
+  --scrollbarThumb: #ffffff77;
+  --scrollbarWidth: 10px;
+  --scrollbarBorder: 2px solid #000000aa;
+  --scrollbarBorderRadius: calc(var(--scrollbarWidth) / 2);
 }
 
 body {
@@ -43,4 +49,24 @@ ul, li {
   padding-left: 40px;
   margin: 0 auto;
   box-sizing: border-box;
+}
+
+.scrollbar-container {
+  scrollbar-width: var(--scrollbarWidth);
+  scrollbar-color: var(--scrollbarThumb) var(--scrollbarBg);
+}
+
+.scrollbar-container::-webkit-scrollbar {
+  width: var(--scrollbarWidth);
+}
+
+.scrollbar-container::-webkit-scrollbar-track {
+  background: var(--scrollbarBg);
+  border-radius: var(--scrollbarBorderRadius);
+}
+
+.scrollbar-container::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbarThumb);
+  border-radius: var(--scrollbarBorderRadius);
+  border: var(--scrollbarBorder);
 }

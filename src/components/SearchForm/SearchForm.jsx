@@ -1,5 +1,5 @@
 import Button from '../Button/Button';
-import FilterPicker from '../FilterPicker/FilterPicker';
+import FilterPicker, { FILTER_TYPE } from '../FilterPicker/FilterPicker';
 import './SearchForm.css';
 
 function SearchForm({
@@ -17,6 +17,28 @@ function SearchForm({
     e.preventDefault();
     onSubmit();
   };
+
+  const genres = [
+    { "id": "8", "name": "драма" },
+    { "id": "6", "name": "комедия" },
+    { "id": "22", "name": "биография" },
+    { "id": "16", "name": "криминал" },
+    { "id": "3", "name": "боевик" },
+    { "id": "4", "name": "триллер" },
+    { "id": "11", "name": "семейный" },
+    { "id": "2", "name": "фантастика" },
+    { "id": "10", "name": "приключения" },
+    { "id": "14", "name": "мультфильм" },
+    { "id": "17", "name": "детектив" },
+    { "id": "5", "name": "фэнтези" },
+    { "id": "7", "name": "мелодрама" },
+    { "id": "23", "name": "история" },
+    { "id": "19", "name": "военный" },
+    { "id": "13", "name": "вестерн" },
+    { "id": "21", "name": "музыка" },
+    { "id": "9", "name": "мюзикл" },
+    { "id": "24", "name": "спорт" }
+  ]
 
   return (
     <form className='search-form' onSubmit={handleSubmit} noValidate>
@@ -36,7 +58,7 @@ function SearchForm({
         </Button>
       </div>
       <ul className="search-form__filters">
-        <FilterPicker title="123"/>
+        <FilterPicker type={FILTER_TYPE.CHECK} title="123" filterOptions={genres.map(({name}) => name)} />
       </ul>
     </form>
   );
