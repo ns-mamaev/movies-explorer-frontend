@@ -1,19 +1,19 @@
-import { useState } from "react";
 import "./FilterOption.css";
 import { cn } from "../../utills/utills";
 
 function FilterOption(props) {
-  const { type = "checkbox", hideMarker, value, className } = props;
-  const [checked, setChecked] = useState(false);
+  const { type = "checkbox", hideMarker, value, className, onChange, checked } = props;
 
-  const onToggleCheck = () => setChecked((s) => !s);
+  const onToggleCheck = () => {
+    onChange(value);
+  }
 
   return (
     <label className={cn("filter-option", {}, [className])}>
       <input
         type={type}
         className="filter-option__hidden-marker"
-        onClick={onToggleCheck}
+        onChange={onToggleCheck}
         checked={checked}
       />
       {!hideMarker && (

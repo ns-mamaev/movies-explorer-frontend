@@ -58,6 +58,7 @@ function SearchForm({
         </Button>
       </div>
       <ul className="search-form__filters">
+        {/* <FilterPicker type={FILTER_TYPE.RADIO} filterOptions={['По рейтингу', 'По названию', 'По дате выхода']} /> */}
         <FilterPicker type={FILTER_TYPE.CHECK} title="123" filterOptions={genres.map(({name}) => name)} />
       </ul>
     </form>

@@ -1,20 +1,14 @@
-import { useState } from "react";
-import "./RatingPicker.css";
+import { forwardRef, useState } from "react";
 import { cn } from "../../utills/utills";
+import withPopup from "../../hocs/withPopup";
+import "./RatingPicker.css";
 
-function RatingPicker({ userRating }) {
-  const [isOpen, setIsOpen] = useState(false);
+const RatingPicker = forwardRef(function RatingPicker(props, ref) {
+  const { isOpen, onToggleOpen } = props;
   const [currentRating, setCurrentRating] = useState(null);
-
-  const onTogglePopup = () => {
-    setIsOpen((state) => !state);
-  };
 
   const onMouseEnter = (e) => setCurrentRating(e.currentTarget.dataset.rating);
   const onMouseLeave = () => setCurrentRating(null);
-  const onClickStar = () => {
-    setIsOpen(false);
-  }
 
   const starsElements = [...Array(10)].map((_, i) => (
     <button
@@ -23,7 +17,6 @@ function RatingPicker({ userRating }) {
       data-rating={i+1}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      onClick={onClickStar}
     ></button>
   ));
 
@@ -33,15 +26,15 @@ function RatingPicker({ userRating }) {
   });
 
   return (
-    <div className="rating-picker">
-      <button className={mainButtonClasses} onClick={onTogglePopup}>
-        {isOpen ? currentRating : userRating}
+    <div className="rating-picker" ref={ref}>
+      <button className={mainButtonClasses} onClick={onToggleOpen}>
+        {isOpen ? currentRating : null}
       </button>
       <div
         className={cn("rating-picker__panel", { 'rating-picker__panel_hidden': !isOpen})}
       >{starsElements}</div>
     </div>
   );
-}
+});
 
-export default RatingPicker;
+export default withPopup(RatingPicker);
