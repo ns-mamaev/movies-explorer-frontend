@@ -26,3 +26,11 @@ export const cn = (cls, mods = {}, additional = []) => {
       .map(([className]) => className),
   ].join(' ');
 }
+
+export const createQueryString = (queryArray) => {
+  const paramsString = queryArray
+    .filter(([_, value]) => value !== '' && value !== undefined)
+    .map(([key, value]) => `${key}=${value}`)
+    .join('&');
+  return '?' + paramsString;
+}

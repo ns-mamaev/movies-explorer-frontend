@@ -1,6 +1,24 @@
 .movies-card {
   background-color: #252525;
-  border-radius: 12px;
+  border-radius: var(--border-rad-l);
+}
+
+@keyframes pulse {
+  from {
+    opacity: 0.1;
+  }
+  to {
+    opacity: .3;
+  }
+}
+
+.movies-card__skeleton {
+  border-radius: var(--border-rad-l);
+  background-color: var(--textcolor-main);
+  opacity: 0.6;
+  width: 100%;
+  aspect-ratio: 0.69;
+  animation: pulse 0.8s ease-out alternate infinite;
 }
 
 .movies-card__poster-wrapper {

@@ -1,5 +1,6 @@
 .random-film-page {
   padding: 60px 0;
+  flex-grow: 1;
 }
 
 .start-page__movie-card {

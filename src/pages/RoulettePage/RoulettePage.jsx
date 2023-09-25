@@ -1,25 +1,24 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import MoviesCard from "../../components/MoviesCard/MoviesCard";
-import mainApi from "../../utills/MainApi";
 import HistoryWidget from "../../components/HistoryWidget/HistoryWidget";
 import Button, { BUTTON_COLOR } from "../../components/Button/Button";
 import { Link } from "react-router-dom";
 import MoodSwitcher from "../../components/MoodSwitcher/MoodSwitcher";
-import "./RoulettePage.css";
 import SearchChips from "../../components/SearchChips/SearchChips";
+import { useDispatch, useSelector } from "react-redux";
+import "./RoulettePage.css";
+import { fetchRandomMovie } from "../../store/slices/rouletteSlice";
 
 function RoulettePage() {
-  const [movie, setMovie] = useState(null);
-
-  const getMovie = async () => {
-    const response = await mainApi.getRandomMovie();
-    const { data: movie } = response;
-    setMovie({ ...movie, id: movie._id });
-  };
+  const movie = useSelector((state) => state.roulette.movie);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getMovie();
-  }, []);
+    // выполняется разово при первом входе на страницу
+    if (!movie) {
+      dispatch(fetchRandomMovie());
+    }
+  }, [])
 
   return (
     <main className="random-film-page content-width">
@@ -41,7 +40,7 @@ function RoulettePage() {
             color={BUTTON_COLOR.gradient}
             text="подобрать фильм"
             className="random-film__search-button"
-            onClick={getMovie}
+            onClick={() => dispatch(fetchRandomMovie())}
           />
           <p className="random-film__search_text">
             нужно больше?{" "}

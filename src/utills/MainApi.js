@@ -1,3 +1,5 @@
+import { createQueryString } from "./utills";
+
 class MainApi {
   constructor({ baseUrl, headers, credentials, unauthorizedCode }) {
     this._baseUrl = baseUrl;
@@ -57,8 +59,9 @@ class MainApi {
     return this._request(`/movies?page=${page}&limit=${limit}`);
   }
 
-  async getRandomMovie() {
-    return this._request('/movies/random');
+  async getRandomMovie(queryArr) {
+    const queryString = createQueryString(queryArr);
+    return this._request(`/movies/random${queryString}`);
   }
 
   async getGenres() {

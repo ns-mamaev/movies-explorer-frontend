@@ -9,7 +9,6 @@ function SearchChips() {
   const dispatch = useDispatch();
 
   const activeChips = Object.values(filters);
-  console.log(filters);
   const checkChipsActive = (name) => activeChips.includes(name);
 
   return (
