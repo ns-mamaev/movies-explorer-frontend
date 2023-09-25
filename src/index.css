@@ -19,6 +19,7 @@
   --textcolor-main: #fff;
   --accent-background: #2C2C2C;
   --secondary-accent-bg: #5c5c5c;
+  --links-color: #4285F4;
 
   --border-rad-m: 8px;
   --border-rad-l: 12px;
@@ -34,6 +35,7 @@ body {
   margin: 0;
   padding: 0;
   -webkit-tap-highlight-color: transparent;
+  color: var(--textcolor-main);
 }
 
 ul, li {

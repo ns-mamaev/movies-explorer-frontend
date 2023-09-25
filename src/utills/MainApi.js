@@ -61,6 +61,10 @@ class MainApi {
     return this._request('/movies/random');
   }
 
+  async getGenres() {
+    return this._request('/genres');
+  }
+
   async saveMovie(movie) {
     return this._request("/movies", "POST", JSON.stringify(movie));
   }

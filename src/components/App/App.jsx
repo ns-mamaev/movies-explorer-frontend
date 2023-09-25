@@ -5,7 +5,7 @@ import Footer from "../Footer/Footer";
 import Register from "../Register/Register";
 import PageNotFound from "../../pages/PageNotFound/PageNotFound";
 import MoviePage from "../../pages/MoviePage/MoviePage";
-import StartPage from "../../pages/StartPage/StartPage";
+import RoulettePage from "../../pages/RoulettePage/RoulettePage";
 import "./App.css";
 
 function App() {
@@ -16,7 +16,7 @@ function App() {
         <Route path="/movies" element={<Movies />} />
         <Route path="/movies/:id" element={<MoviePage />} />
         <Route path="/register" element={<Register />}/>
-        <Route path="/" element={<StartPage />} />
+        <Route path="/" element={<RoulettePage />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       <Footer />

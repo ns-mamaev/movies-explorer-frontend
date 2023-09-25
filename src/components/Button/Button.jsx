@@ -5,6 +5,7 @@ export const BUTTON_COLOR = {
   default: "default",
   primary: "primary",
   secondary: "secondary",
+  gradient: "gradient",
 };
 
 function Button(props) {

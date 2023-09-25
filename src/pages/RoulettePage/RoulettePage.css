@@ -1,0 +1,58 @@
+.random-film-page {
+  padding: 60px 0;
+}
+
+.start-page__movie-card {
+  width: 350px;
+  margin-right: 48px;
+}
+
+.random-film {
+  display: flex;
+}
+
+.random-film__form-title {
+  margin: 0 0 40px;
+  color: var(--textcolor-main);
+  font-weight: 500;
+  font-size: 32px;
+}
+
+.random-film__mood-buttons {
+  display: flex;
+  column-gap: 10px;
+  margin-bottom: 36px;
+}
+
+.random-film__search-button {
+  min-width: 226px;
+  font-size: 16px;
+  line-height: 20px;
+  padding: 12px 24px;
+}
+
+.random-film__search_text {
+  font-size: 12px;
+  margin: 12px 0 0;
+}
+
+.random-film__search_link {
+  color: var(--links-color);
+  text-decoration: none;
+}
+
+.random-film__search_link:hover {
+  opacity: 0.8;
+}
+
+.random-film__filters {
+  max-width: 460px;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 56px;
+  gap: 8px;
+}
+
+.random-film__chip {
+  border-radius: 20px;
+}

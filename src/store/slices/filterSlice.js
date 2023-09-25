@@ -1,4 +1,13 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import mainApi from '../../utills/MainApi';
+
+const fetchGenres = createAsyncThunk(
+  'filter/fetchGenres',
+  async () => {
+    const response = await mainApi.getGenres();
+    return response.data;
+  }
+);
 
 const initialState = {
   searchValue: '',
@@ -19,6 +28,17 @@ export const filterSlice = createSlice({
       
     }
   },
+  extraReducers: {
+    [fetchGenres.pending]: (state, action) => {
+      console.log('Отправка');
+    },
+    [fetchGenres.fulfilled]: (state, action) => {
+      console.log(state);
+    },
+    [fetchGenres.rejected]: (state, action) => {
+      console.log('Ошибка');
+    },
+  }
 });
 
 export const {

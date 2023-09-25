@@ -1,4 +1,4 @@
-import Button from '../Button/Button';
+import Button, { BUTTON_COLOR } from '../Button/Button';
 import FilterPicker, { FILTER_TYPE } from '../FilterPicker/FilterPicker';
 import './SearchForm.css';
 
@@ -40,9 +40,21 @@ function SearchForm({
     { "id": "24", "name": "спорт" }
   ]
 
+  const sortOptions = [
+    { name: 'по названию', type: 'title' },
+    { name: 'по рейтингу', type: 'rating' },
+    { name: 'по дате выхода', type: 'year' },
+  ]
+
+  const ratingOptions = [
+    { name: 'рейтинг от 8', type: 'gt8' },
+    { name: 'рейтинг от 7', type: 'gt7' },
+    { name: 'рейтинг от 6', type: 'gt6' },
+  ]
+
   return (
-    <form className='search-form' onSubmit={handleSubmit} noValidate>
-      <div className='search-form__inner'>
+    <div className='search-form' onSubmit={handleSubmit} noValidate>
+      <form className='search-form__inner'>
         <input
           type='text'
           name='filmSearch'
@@ -53,15 +65,13 @@ function SearchForm({
           {...restProps}
         />
         <span className='search-form__error'>{validationMessage}</span>
-        <Button className='search-form__button'>
-          Поиск
-        </Button>
-      </div>
+        <Button className='search-form__button' color={BUTTON_COLOR.gradient} text="Поиск" />
+      </form>
       <ul className="search-form__filters">
-        {/* <FilterPicker type={FILTER_TYPE.RADIO} filterOptions={['По рейтингу', 'По названию', 'По дате выхода']} /> */}
+        {/* <FilterSelect type={FILTER_TYPE.RADIO} filterOptions={sortOptions} /> */}
         <FilterPicker type={FILTER_TYPE.CHECK} title="123" filterOptions={genres.map(({name}) => name)} />
       </ul>
-    </form>
+    </div>
   );
 };
 

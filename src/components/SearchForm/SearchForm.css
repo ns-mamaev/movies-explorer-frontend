@@ -26,12 +26,10 @@
 }
 
 .search-form__button {
-  color: var(--textcolor-main);
   font-size: 16px;
   font-weight: 500;
   margin: 10px;
   min-width: 100px;
-  background: var(--action-gradient-bg);
   border-radius: var(--border-rad-m);
   position: absolute;
   right: 0;

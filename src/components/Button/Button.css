@@ -23,6 +23,12 @@
   color: var(--textcolor-main);
 }
 
+.button_color_gradient {
+  background: var(--action-gradient-bg);
+  background-color: var(--primary-action-color);
+  color: var(--textcolor-main);
+} 
+
 @media (hover:hover) {
   .button:hover {
     opacity: 0.8;

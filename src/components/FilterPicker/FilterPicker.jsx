@@ -4,6 +4,7 @@ import Button, { BUTTON_COLOR } from "../Button/Button";
 import FilterOption from "../FilterOption/FilterOption";
 import { cn } from "../../utills/utills";
 import xIcon from "../../images/x.svg";
+import vIcon from "../../images/v.svg";
 import { setGenres } from "../../store/slices/filterSlice";
 import withPopup from "../../hocs/withPopup";
 import "./FilterPicker.css";
@@ -40,12 +41,12 @@ const FilterPicker = forwardRef(function FilterPicker(props, ref) {
     dispatch(setGenres(selectedOptions));
   };
 
-  const onReset = () => {
+  const onReset = (e) => {
+    e.stopPropagation();
     setSelectedOptions([]);
+    setIsOpen(false);
     dispatch(setGenres([]));
   }
-
-  console.log(selectedOptions)
 
   const getCaption = () => {
     const length = storedGenres.length;
@@ -68,12 +69,14 @@ const FilterPicker = forwardRef(function FilterPicker(props, ref) {
         color={storedGenres.length ? BUTTON_COLOR.primary : BUTTON_COLOR.default}
       >
         {caption}
-        {storedGenres.length ? <img
-          className="filter-picker__main-btn-icon"
-          src={xIcon}
+        <img
+          className={cn("filter-picker__main-btn-icon", {
+            "filter-picker__main-btn-icon_opened": isOpen,
+          })}
+          src={storedGenres.length ? xIcon : vIcon }
           alt="action-icon"
           onClick={onReset}
-        />: null}
+        />
       </Button>
       <div
         className={cn("filter-picker__popup", {
