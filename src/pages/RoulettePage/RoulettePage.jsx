@@ -6,6 +6,7 @@ import Button, { BUTTON_COLOR } from "../../components/Button/Button";
 import { Link } from "react-router-dom";
 import MoodSwitcher from "../../components/MoodSwitcher/MoodSwitcher";
 import "./RoulettePage.css";
+import SearchChips from "../../components/SearchChips/SearchChips";
 
 function RoulettePage() {
   const [movie, setMovie] = useState(null);
@@ -20,8 +21,6 @@ function RoulettePage() {
     getMovie();
   }, []);
 
-  const chips = ['новые', 'высокий рейтинг', 'топ 250', 'ну такое', 'на раз 2 3', 'еще на раз'];
-
   return (
     <main className="random-film-page content-width">
       <div className="random-film">
@@ -35,13 +34,9 @@ function RoulettePage() {
           <div className="random-film__mood-buttons">
             <MoodSwitcher />
           </div>
-          <ul className="random-film__filters">
-            {chips.map((text) => (
-              <Button key={text} className="random-film__chip" type='button'>
-                {text}
-              </Button>
-            ))}
-          </ul>
+          <div className="random-film__filters">
+            <SearchChips />
+          </div>
           <Button
             color={BUTTON_COLOR.gradient}
             text="подобрать фильм"

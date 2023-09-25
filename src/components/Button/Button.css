@@ -6,6 +6,7 @@
   line-height: 20px;
   padding: 0.5em 1em;
   border-radius: var(--border-rad-m);
+  transition: background 0.2s ease;
 }
 
 .button_color_default {
