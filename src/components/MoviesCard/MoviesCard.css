@@ -62,34 +62,27 @@
   justify-content: space-between;
 }
 
-.movies-card__action-btn {
+.movies-card__like {
   width: 30px;
   height: 30px;
   justify-self: flex-end;
   border: none;
-  background: center / contain no-repeat;
+  background: url(../../images/bookmark.svg) center / 50% no-repeat;
+  background-color: var(--lines-color);
+  border-radius: 50%;
   cursor: pointer;
   padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.movies-card__like_liked {
+  background-image: url(../../images/bookmark-fill.svg);
 }
 
 .movies-card__action-btn:hover {
   opacity: .7;
-}
-
-.movies-card__action-btn:active {
-  transform: scale(.9);
-}
-
-.movies-card__action-btn_type_liked {
-  background-image: url(../../images/action-btn-liked.svg);
-}
-
-.movies-card__action-btn_type_default {
-  background-image: url(../../images/action-btn-default.svg);
-}
-
-.movies-card__action-btn_type_remove {
-  background-image: url(../../images/action-btn-remove.svg);
 }
 
 .movies-card__subtitle {

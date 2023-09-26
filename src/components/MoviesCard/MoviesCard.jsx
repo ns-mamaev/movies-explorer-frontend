@@ -4,8 +4,10 @@ import { cn, getDurationString } from "../../utills/utills";
 import RatingPicker from "../RatingPicker/RatingPicker";
 import "./MoviesCard.css";
 import { addToHistory } from "../../store/slices/historySlice";
+import { useState } from "react";
 
 const MoviesCard = ({ movie, className, isLoading = false }) => {
+  const [liked, setLiked] = useState(false);
   const {
     _id: id,
     nameRU,
@@ -24,7 +26,7 @@ const MoviesCard = ({ movie, className, isLoading = false }) => {
   const dispatch = useDispatch();
 
   const onOpenFilm = () => {
-    const historyObject = { id, nameRU, image };
+    const historyObject = { id, nameRU, image, thumbnail };
     dispatch(addToHistory(historyObject));
     navigate(`/movies/${id}`);
   };
@@ -50,7 +52,10 @@ const MoviesCard = ({ movie, className, isLoading = false }) => {
               <RatingPicker />
               <button
                 type="button"
-                className={`movies-card__action-btn movies-card__action-btn_type_${type}`}
+                className={`movies-card__like ${
+                  liked ? "movies-card__like_liked" : ""
+                }`}
+                onClick={() => setLiked(!liked)}
               />
             </div>
           </div>

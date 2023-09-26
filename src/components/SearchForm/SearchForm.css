@@ -2,53 +2,6 @@
   margin-bottom: 56px;
 }
 
-.search-form__inner {
-  position: relative;
-  margin-bottom: 28px;
-}
-
-.search-form__input {
-  box-sizing: border-box;
-  width: 100%;
-  padding: 25px;
-  border: 1px solid var(--lines-color);
-  border-radius: var(--border-rad-l);
-  padding-right: 135px;
-  background-color: unset;
-  color: var(--textcolor-main);
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 20px;
-}
-
-.search-form__input:focus {
-  outline: 1px solid #8b8b8b;
-}
-
-.search-form__button {
-  font-size: 16px;
-  font-weight: 500;
-  margin: 10px;
-  min-width: 100px;
-  border-radius: var(--border-rad-m);
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  z-index: 2;
-}
-
-.search-form__error {
-  color: var(--error-color);
-  font-weight: 400;
-  font-size: 11px;
-  line-height: 1;
-  text-align: center;
-  position: absolute;
-  bottom: 10px;
-  left: 26px
-}
-
 .search-form__filters {
   display: flex;
   column-gap: 16px;

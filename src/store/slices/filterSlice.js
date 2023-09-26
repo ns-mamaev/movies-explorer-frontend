@@ -12,7 +12,15 @@ const fetchGenres = createAsyncThunk(
 const initialState = {
   searchValue: '',
   genres: [],
+  years: [],
+  rating: null,
+  sortType: "по умолчанию",
+  filtersActive: false,
 };
+
+const checkFiltersActive = ({ genres, years, rating }) => {
+  return Boolean(genres.length || years.length || rating);
+}
 
 export const filterSlice = createSlice({
   name: 'filter',
@@ -23,27 +31,40 @@ export const filterSlice = createSlice({
     },
     setGenres(state, { payload }) {
       state.genres = payload;
+      state.filtersActive = checkFiltersActive(state);
     },
-    setFilters(state, { payload }) {
-      
+    setRating(state, { payload }) {
+      state.rating = payload;
+      state.filtersActive = checkFiltersActive(state);
+    },
+    setYears(state, { payload }) {
+      state.years = payload;
+      state.filtersActive = checkFiltersActive(state);
+    },
+    setSortType(state, { payload }) {
+      state.sortType = payload;
+    },
+    resetFilters(state) {
+      state.years = [];
+      state.genres = [];
+      state.rating = null;
+      state.filtersActive = false;
     }
   },
   extraReducers: {
-    [fetchGenres.pending]: (state, action) => {
-      console.log('Отправка');
-    },
     [fetchGenres.fulfilled]: (state, action) => {
       console.log(state);
-    },
-    [fetchGenres.rejected]: (state, action) => {
-      console.log('Ошибка');
     },
   }
 });
 
 export const {
-  setMovies,
+  setSearchValue,
+  setRating,
   setGenres,
+  setSortType,
+  setYears,
+  resetFilters,
 } = filterSlice.actions;
 
 export default filterSlice.reducer;

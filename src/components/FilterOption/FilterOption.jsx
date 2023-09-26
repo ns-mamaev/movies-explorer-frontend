@@ -2,11 +2,18 @@ import "./FilterOption.css";
 import { cn } from "../../utills/utills";
 
 function FilterOption(props) {
-  const { type = "checkbox", hideMarker, value, className, onChange, checked } = props;
+  const {
+    type = "checkbox",
+    hideMarker,
+    value,
+    className,
+    onChange,
+    checked,
+  } = props;
 
   const onToggleCheck = () => {
     onChange(value);
-  }
+  };
 
   return (
     <label className={cn("filter-option", {}, [className])}>
