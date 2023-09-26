@@ -24,7 +24,7 @@ const MoviesCard = ({ movie, className, isLoading = false }) => {
   const dispatch = useDispatch();
 
   const onOpenFilm = () => {
-    const historyObject = { id, nameRU, thumbnail };
+    const historyObject = { id, nameRU, image };
     dispatch(addToHistory(historyObject));
     navigate(`/movies/${id}`);
   };

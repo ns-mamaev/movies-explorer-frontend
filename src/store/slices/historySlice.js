@@ -10,16 +10,17 @@ export const historySlice = createSlice({
   initialState,
   reducers: {
     addToHistory(state, { payload }) {
-      const isAlreadyInList = state.list.find(({ id }) => id === payload.id);
-      if (isAlreadyInList) {
+      const { list } = state;
+      const inListIndex = list.findIndex(({ id }) => id === payload.id);
+      console.log(inListIndex)
+      if (inListIndex !== -1) {
+        state.list = [list[inListIndex], ...list.slice(0, inListIndex), ...list.slice(inListIndex + 1)];
         return;
       }
-      let updatedList = [...state.list];
-      if (state.length >= LIST_LIMIT) {
-        updatedList = updatedList.slice(1);
+      if (list.length >= LIST_LIMIT) {
+        state.list = list.slice(0, 1);
       }
-      updatedList.push(payload);
-      state.list = updatedList;
+      state.list.unshift(payload);
     },
   },
 });
