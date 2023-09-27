@@ -18,7 +18,7 @@ function HistoryWidget() {
   }
 
   return (
-    <div className="history-widget">
+    <aside className="history-widget">
       <h3 className="history-widget__caption">Вы недавно смотрели</h3>
       <ul className="history-widget__list">
         {historyList.map((movie) => (
@@ -30,7 +30,7 @@ function HistoryWidget() {
           />
         ))}
       </ul>
-    </div>
+    </aside>
   );
 }
 

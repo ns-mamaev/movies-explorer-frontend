@@ -59,6 +59,10 @@ class MainApi {
     return this._request(`/movies?page=${page}&limit=${limit}`);
   }
 
+  async getMovieData(id) {
+    return this._request(`/movies/${id}`);
+  } 
+
   async getRandomMovie(queryArr) {
     const queryString = createQueryString(queryArr);
     return this._request(`/movies/random${queryString}`);

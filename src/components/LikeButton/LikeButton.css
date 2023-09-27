@@ -1,0 +1,18 @@
+.like-btn {
+  width: 30px;
+  height: 30px;
+  justify-self: flex-end;
+  border: none;
+  background: url(../../images/bookmark.svg) center / 50% no-repeat;
+  background-color: var(--lines-color);
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.like-btn_liked {
+  background-image: url(../../images/bookmark-fill.svg);
+}

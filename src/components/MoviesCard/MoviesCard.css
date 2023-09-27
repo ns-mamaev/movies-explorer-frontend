@@ -62,29 +62,6 @@
   justify-content: space-between;
 }
 
-.movies-card__like {
-  width: 30px;
-  height: 30px;
-  justify-self: flex-end;
-  border: none;
-  background: url(../../images/bookmark.svg) center / 50% no-repeat;
-  background-color: var(--lines-color);
-  border-radius: 50%;
-  cursor: pointer;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.movies-card__like_liked {
-  background-image: url(../../images/bookmark-fill.svg);
-}
-
-.movies-card__action-btn:hover {
-  opacity: .7;
-}
-
 .movies-card__subtitle {
   grid-area: duration;
   color: #8b8b8b;

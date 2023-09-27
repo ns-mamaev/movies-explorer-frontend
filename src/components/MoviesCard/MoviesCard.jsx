@@ -2,9 +2,10 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { cn, getDurationString } from "../../utills/utills";
 import RatingPicker from "../RatingPicker/RatingPicker";
-import "./MoviesCard.css";
 import { addToHistory } from "../../store/slices/historySlice";
 import { useState } from "react";
+import LikeButton from "../LikeButton/LikeButton";
+import "./MoviesCard.css";
 
 const MoviesCard = ({ movie, className, isLoading = false }) => {
   const [liked, setLiked] = useState(false);
@@ -50,13 +51,7 @@ const MoviesCard = ({ movie, className, isLoading = false }) => {
             </div>
             <div className="movies-card__btn-wrapper">
               <RatingPicker />
-              <button
-                type="button"
-                className={`movies-card__like ${
-                  liked ? "movies-card__like_liked" : ""
-                }`}
-                onClick={() => setLiked(!liked)}
-              />
+              <LikeButton />
             </div>
           </div>
         </>
