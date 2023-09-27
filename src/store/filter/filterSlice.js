@@ -14,7 +14,7 @@ const initialState = {
   genres: [],
   years: [],
   rating: null,
-  sortType: "по умолчанию",
+  sortType: "default",
   filtersActive: false,
 };
 

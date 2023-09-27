@@ -50,8 +50,8 @@ const MoviesCard = ({ movie, className, isLoading = false }) => {
               </p>
             </div>
             <div className="movies-card__btn-wrapper">
-              <RatingPicker />
               <LikeButton />
+              <RatingPicker />
             </div>
           </div>
         </>

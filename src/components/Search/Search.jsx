@@ -1,12 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
-import { setSearchValue } from "../../store/slices/filterSlice";
+import { setSearchValue } from "../../store/filter/filterSlice";
 import Button, { BUTTON_COLOR } from "../Button/Button";
+import { searchSelector } from "../../store/filter/filterSelectors";
 import "./Search.css";
 
 function Search(props) {
   const { ...restProps } = props;
   const dispatch = useDispatch();
-  const value = useSelector((state) => state.filter.searchValue);
+  const value = useSelector(searchSelector);
   const onChange = (e) => dispatch(setSearchValue(e.target.value));
   const onReset = () => dispatch(setSearchValue(''));
 

@@ -2,11 +2,11 @@ import { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMovieData } from "../../store/slices/movieSlice";
 import { useParams } from "react-router-dom";
-import "./MoviePage.css";
 import { getDurationString } from "../../utills/utills";
 import HistoryWidget from "../../components/HistoryWidget/HistoryWidget";
 import RatingPicker from "../../components/RatingPicker/RatingPicker";
 import LikeButton from "../../components/LikeButton/LikeButton";
+import "./MoviePage.css";
 
 function MoviePage() {
   const dispatch = useDispatch();
@@ -30,7 +30,7 @@ function MoviePage() {
     dispatch(fetchMovieData(id));
   }, [dispatch, id]);
 
-  if (!movie) {
+  if (!movie.nameRU) {
     return <p>ЗАГРУЗКА...</p>;
   }
 
@@ -60,8 +60,8 @@ function MoviePage() {
             <div className="movie-page__rating-icons">
               <div className="movie-page__rating">{ratingKP.toFixed(1)}</div>
               <div className="movie-page__rating-buttons">
-                <RatingPicker />
                 <LikeButton />
+                <RatingPicker />
               </div>
             </div>
           </header>

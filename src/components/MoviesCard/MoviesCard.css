@@ -52,7 +52,7 @@
 .movies-card__btn-wrapper {
   grid-area: buttons;
   display: flex;
-  column-gap: 8px;
+  column-gap: 4px;
 }
 
 .movies-card__info-wrapper {

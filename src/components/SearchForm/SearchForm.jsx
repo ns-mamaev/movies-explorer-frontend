@@ -5,11 +5,12 @@ import {
   setRating,
   setSortType,
   setYears,
-} from "../../store/slices/filterSlice";
+} from "../../store/filter/filterSlice";
 import Button from "../Button/Button";
 import FilterPicker from "../FilterPicker";
 import Search from "../Search/Search";
 import "./SearchForm.css";
+import { genresSelector, ratingSelector, sortTypeSelector, yearsSelector } from "../../store/filter/filterSelectors";
 
 function SearchForm({
   onSearch,
@@ -27,25 +28,25 @@ function SearchForm({
   };
 
   const genres = [
-    { id: "8", name: "драма" },
-    { id: "6", name: "комедия" },
-    { id: "22", name: "биография" },
-    { id: "16", name: "криминал" },
-    { id: "3", name: "боевик" },
-    { id: "4", name: "триллер" },
-    { id: "11", name: "семейный" },
-    { id: "2", name: "фантастика" },
-    { id: "10", name: "приключения" },
-    { id: "14", name: "мультфильм" },
-    { id: "17", name: "детектив" },
-    { id: "5", name: "фэнтези" },
-    { id: "7", name: "мелодрама" },
-    { id: "23", name: "история" },
-    { id: "19", name: "военный" },
-    { id: "13", name: "вестерн" },
-    { id: "21", name: "музыка" },
-    { id: "9", name: "мюзикл" },
-    { id: "24", name: "спорт" },
+    { type: "8", name: "драма" },
+    { type: "6", name: "комедия" },
+    { type: "22", name: "биография" },
+    { type: "16", name: "криминал" },
+    { type: "3", name: "боевик" },
+    { type: "4", name: "триллер" },
+    { type: "11", name: "семейный" },
+    { type: "2", name: "фантастика" },
+    { type: "10", name: "приключения" },
+    { type: "14", name: "мультфильм" },
+    { type: "17", name: "детектив" },
+    { type: "5", name: "фэнтези" },
+    { type: "7", name: "мелодрама" },
+    { type: "23", name: "история" },
+    { type: "19", name: "военный" },
+    { type: "13", name: "вестерн" },
+    { type: "21", name: "музыка" },
+    { type: "9", name: "мюзикл" },
+    { type: "24", name: "спорт" },
   ];
 
   const sortOptions = [
@@ -56,7 +57,7 @@ function SearchForm({
   ];
 
   const ratingOptions = [
-    { name: "топ 250", type: "gt6" },
+    { name: "топ 250", type: "top250" },
     { name: "рейтинг от 8", type: "gt8" },
     { name: "рейтинг от 7", type: "gt7" },
     { name: "рейтинг от 6", type: "gt6" },
@@ -84,26 +85,26 @@ function SearchForm({
           hideMarker
           hideReset
           storeAction={setSortType}
-          optionsSelector={(state) => state.filter.sortType}
+          optionsSelector={sortTypeSelector}
           options={sortOptions}
         />
         <FilterPicker.Checkbox
           storeAction={setGenres}
-          optionsSelector={(state) => state.filter.genres}
+          optionsSelector={genresSelector}
           title="жанры"
           options={genres}
         />
         <FilterPicker.Radio
           title="рейтинг"
           hideMarker
-          optionsSelector={(state) => state.filter.rating}
+          optionsSelector={ratingSelector}
           options={ratingOptions}
           storeAction={setRating}
         />
         <FilterPicker.Checkbox
           title="дата выхода"
           storeAction={setYears}
-          optionsSelector={(state) => state.filter.years}
+          optionsSelector={yearsSelector}
           options={yearOptions}
         />
         {filtersActive && <Button type="button" text="сбросить всё" onClick={onClearFilters} />}
