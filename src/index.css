@@ -13,7 +13,7 @@
   */ 
   --primary-action-color: #F54770;
   --secondary-action-color: #5A5CE7;
-  --action-gradient-bg: linear-gradient(94deg, var(--secondary-action-color) 2.63%, var(--primary-action-color) 110.64%);
+  --action-gradient-bg: linear-gradient(94deg, var(--secondary-action-color)00 2.63%, var(--primary-action-color) 110.64%);
   --lines-color: #333;
   --lists-hover: #474747;
   --textcolor-main: #fff;

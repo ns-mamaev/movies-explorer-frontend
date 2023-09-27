@@ -1,26 +1,37 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setSearchValue } from "../../store/filter/filterSlice";
-import Button, { BUTTON_COLOR } from "../Button/Button";
-import { searchSelector } from "../../store/filter/filterSelectors";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import useDebouncedFunction from "../../utills/hooks/useDebouncedFunction";
 import "./SearchInput.css";
 
 function SearchInput(props) {
   const [value, setValue] = useState('');
   const dispatch = useDispatch();
-  const searchValue = useSelector(searchSelector);
-  
-  const onSubmit = (e) => {
-    e.preventDefault();
-    dispatch(setSearchValue(value))
-  };
 
-  const onReset = () => setValue('');
+  const mountRef = useRef(false);
+
+  const debouncedDispatch = useDebouncedFunction(() => {
+    dispatch(setSearchValue(value));
+  }, 700, true);
+  
+  useEffect(() => {
+    if (!mountRef.current) {
+      mountRef.current = true;
+      return;
+    }
+    debouncedDispatch();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[value])
+
+  const onReset = () => {
+    setValue('');
+    dispatch(setSearchValue(''));
+  };
 
   const onChange = (e) => setValue(e.target.value);
 
   return (
-    <form className="search-field" onSubmit={onSubmit} noValidate>
+    <div className="search-field">
       <input
         type="text"
         name="filmSearch"
@@ -30,17 +41,9 @@ function SearchInput(props) {
         onChange={onChange}
         {...props}
       />
-      <span className="search-field__error">error message example</span>
-      <div className="search-field__buttons">
-        {value && <button type="button" className="search-field__reset" onClick={onReset}></button>}
-        <Button
-          type="submit"
-          className="search-field__button"
-          color={BUTTON_COLOR.gradient}
-          text="Поиск"
-        />
-      </div>
-    </form>
+      <div className="search-field__outline"></div>
+      {value && <button type="button" className="search-field__reset" onClick={onReset}></button>}
+    </div>
   );
 }
 
