@@ -55,8 +55,12 @@ class MainApi {
     return this._request("/users/me", "PATCH", userInfo);
   }
 
-  async getMovies({ page, limit }) {
-    return this._request(`/movies?page=${page}&limit=${limit}`);
+  async getMovies(queryArr) {
+    let queryString = '';
+    if (queryArr) {
+      queryString = createQueryString(queryArr)
+    }
+    return this._request(`/movies/${queryString}`);
   }
 
   async getMovieData(id) {

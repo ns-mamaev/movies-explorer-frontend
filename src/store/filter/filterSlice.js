@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import mainApi from '../../utills/MainApi';
+import { SORT_OPTIONS } from './contants';
 
 const fetchGenres = createAsyncThunk(
   'filter/fetchGenres',
@@ -11,10 +12,12 @@ const fetchGenres = createAsyncThunk(
 
 const initialState = {
   searchValue: '',
-  genres: [],
-  years: [],
-  rating: null,
-  sortType: "default",
+  filters: {
+    genres: [],
+    years: [],
+    rating: null,
+    sortType: SORT_OPTIONS[0].type,
+  },
   filtersActive: false,
 };
 
@@ -30,24 +33,24 @@ export const filterSlice = createSlice({
       state.searchValue = payload;
     },
     setGenres(state, { payload }) {
-      state.genres = payload;
-      state.filtersActive = checkFiltersActive(state);
+      state.filters.genres = payload;
+      state.filtersActive = checkFiltersActive(state.filters);
     },
     setRating(state, { payload }) {
-      state.rating = payload;
-      state.filtersActive = checkFiltersActive(state);
+      state.filters.rating = payload;
+      state.filtersActive = checkFiltersActive(state.filters);
     },
     setYears(state, { payload }) {
-      state.years = payload;
-      state.filtersActive = checkFiltersActive(state);
+      state.filters.years = payload;
+      state.filtersActive = checkFiltersActive(state.filters);
     },
     setSortType(state, { payload }) {
-      state.sortType = payload;
+      state.filters.sortType = payload;
     },
     resetFilters(state) {
-      state.years = [];
-      state.genres = [];
-      state.rating = null;
+      state.filters.years = [];
+      state.filters.genres = [];
+      state.filters.rating = null;
       state.filtersActive = false;
     }
   },

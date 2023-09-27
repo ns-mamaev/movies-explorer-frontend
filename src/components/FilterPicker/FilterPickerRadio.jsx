@@ -19,7 +19,7 @@ function FilterPickerRadio(props) {
   }
 
   const getCaption = () => {
-    return storedOption ? storedOption : title;
+    return storedOption ? options.find(({ type }) => type === storedOption).name : title;
   }
 
   return (
@@ -28,7 +28,7 @@ function FilterPickerRadio(props) {
       type={FILTER_TYPE.RADIO}
       buttonCaption={getCaption()}
       onReset={onReset}
-      filterOptions={options.map(({name}) => name)}
+      filterOptions={options}
       onCheckOption={(option) => dispatch(storeAction(option))}
       selectedOptions={[storedOption]}
       hasReset={!hideReset && Boolean(storedOption)}

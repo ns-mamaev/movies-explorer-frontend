@@ -15,10 +15,12 @@ function Button(props) {
     children,
     text,
     color = BUTTON_COLOR.default,
+    type = 'button',
     ...buttonProps
   } = props;
   return (
     <button
+      type={type}
       onClick={onClick}
       className={cn("button", {}, [className, `button_color_${color}`])}
       {...buttonProps}

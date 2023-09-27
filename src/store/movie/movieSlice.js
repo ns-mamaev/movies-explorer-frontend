@@ -14,6 +14,14 @@ export const fetchMovieData = createAsyncThunk(
   }
 )
 
+export const fetchMovies = createAsyncThunk(
+  'movies/fetchMovies',
+  async (queryObj) => {
+  const response = await mainApi.getMovies(queryObj);
+  return response.data;
+  }
+)
+
 export const moviesSlice = createSlice({
   name: 'movies',
   initialState,
@@ -26,12 +34,18 @@ export const moviesSlice = createSlice({
     }
   },
   extraReducers: {
-    [fetchMovieData.pending](state, action) {
-
-    },
     [fetchMovieData.fulfilled](state, { payload }) {
       state.moviePageData = payload;
     },
+    [fetchMovies.pending](state, action) {
+      console.log(action);
+    },
+    [fetchMovies.fulfilled](state, { payload }) {
+      state.list = payload;
+    },
+    [fetchMovies.rejected](state, action) {
+      console.log(action.error)
+    }
   }
 });
 

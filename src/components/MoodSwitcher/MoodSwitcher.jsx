@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
-import { MOOD_TYPES, setMood } from "../../store/slices/rouletteSlice";
-import "./MoodSwitcher.css";
+import { setMood } from "../../store/roulette/rouletteSlice";
 import { cn } from "../../utills/utills";
+import { MOOD_TYPES } from "../../store/roulette/constants";
+import "./MoodSwitcher.css";
 
 function MoodSwitcher() {
   const dispatch = useDispatch();

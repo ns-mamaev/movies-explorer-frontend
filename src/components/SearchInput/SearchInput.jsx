@@ -2,17 +2,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { setSearchValue } from "../../store/filter/filterSlice";
 import Button, { BUTTON_COLOR } from "../Button/Button";
 import { searchSelector } from "../../store/filter/filterSelectors";
-import "./Search.css";
+import { useState } from "react";
+import "./SearchInput.css";
 
-function Search(props) {
-  const { ...restProps } = props;
+function SearchInput(props) {
+  const [value, setValue] = useState('');
   const dispatch = useDispatch();
-  const value = useSelector(searchSelector);
-  const onChange = (e) => dispatch(setSearchValue(e.target.value));
-  const onReset = () => dispatch(setSearchValue(''));
+  const searchValue = useSelector(searchSelector);
+  
+  const onSubmit = (e) => {
+    e.preventDefault();
+    dispatch(setSearchValue(value))
+  };
+
+  const onReset = () => setValue('');
+
+  const onChange = (e) => setValue(e.target.value);
 
   return (
-    <form className="search-field">
+    <form className="search-field" onSubmit={onSubmit} noValidate>
       <input
         type="text"
         name="filmSearch"
@@ -20,12 +28,13 @@ function Search(props) {
         className="search-field__input"
         value={value}
         onChange={onChange}
-        {...restProps}
+        {...props}
       />
       <span className="search-field__error">error message example</span>
       <div className="search-field__buttons">
-        {value && <button className="search-field__reset" onClick={onReset}></button>}
+        {value && <button type="button" className="search-field__reset" onClick={onReset}></button>}
         <Button
+          type="submit"
           className="search-field__button"
           color={BUTTON_COLOR.gradient}
           text="Поиск"
@@ -35,4 +44,4 @@ function Search(props) {
   );
 }
 
-export default Search;
+export default SearchInput;

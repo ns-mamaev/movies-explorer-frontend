@@ -5,22 +5,18 @@ function FilterOption(props) {
   const {
     type = "checkbox",
     hideMarker,
-    value,
     className,
     onChange,
     checked,
+    caption,
   } = props;
-
-  const onToggleCheck = () => {
-    onChange(value);
-  };
 
   return (
     <label className={cn("filter-option", {}, [className])}>
       <input
         type={type}
         className="filter-option__hidden-marker"
-        onChange={onToggleCheck}
+        onChange={onChange}
         checked={checked}
       />
       {!hideMarker && (
@@ -31,7 +27,7 @@ function FilterOption(props) {
           })}
         />
       )}
-      <div className="filter-option__caption">{value}</div>
+      <div className="filter-option__caption">{caption}</div>
     </label>
   );
 }

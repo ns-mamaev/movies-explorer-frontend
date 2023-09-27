@@ -27,10 +27,20 @@ export const cn = (cls, mods = {}, additional = []) => {
   ].join(' ');
 }
 
-export const createQueryString = (queryArray) => {
-  const paramsString = queryArray
-    .filter(([_, value]) => value !== '' && value !== undefined)
-    .map(([key, value]) => `${key}=${value}`)
-    .join('&');
+export const createQueryString = (queryObj) => {
+  const paramsString = Object.entries(queryObj)
+  .filter(([_, value]) => {
+    if (Array.isArray(value)) {
+      return value.length > 0;
+    }
+    return Boolean(value);
+  })
+  .map(([key, value]) => {
+    if (Array.isArray(value)) {
+      return `${key}=${value.join('+')}`
+    }
+    return `${key}=${value}`
+  })
+  .join('&');
   return '?' + paramsString;
 }

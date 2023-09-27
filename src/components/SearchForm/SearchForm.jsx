@@ -8,76 +8,18 @@ import {
 } from "../../store/filter/filterSlice";
 import Button from "../Button/Button";
 import FilterPicker from "../FilterPicker";
-import Search from "../Search/Search";
+import Search from "../SearchInput/SearchInput";
 import "./SearchForm.css";
-import { genresSelector, ratingSelector, sortTypeSelector, yearsSelector } from "../../store/filter/filterSelectors";
+import { filtersActiveSelector, genresSelector, ratingSelector, sortTypeSelector, yearsSelector } from "../../store/filter/filterSelectors";
+import { GENRES_OPTIONS, RAITING_OPTIONS, SORT_OPTIONS, YEAR_OPTIONS } from "../../store/filter/contants";
 
-function SearchForm({
-  onSearch,
-  value,
-  validationMessage,
-  onChange,
-  onToggle,
-  isToggle,
-  onSubmit,
-  ...restProps
-}) {
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("submit");
-  };
-
-  const genres = [
-    { type: "8", name: "драма" },
-    { type: "6", name: "комедия" },
-    { type: "22", name: "биография" },
-    { type: "16", name: "криминал" },
-    { type: "3", name: "боевик" },
-    { type: "4", name: "триллер" },
-    { type: "11", name: "семейный" },
-    { type: "2", name: "фантастика" },
-    { type: "10", name: "приключения" },
-    { type: "14", name: "мультфильм" },
-    { type: "17", name: "детектив" },
-    { type: "5", name: "фэнтези" },
-    { type: "7", name: "мелодрама" },
-    { type: "23", name: "история" },
-    { type: "19", name: "военный" },
-    { type: "13", name: "вестерн" },
-    { type: "21", name: "музыка" },
-    { type: "9", name: "мюзикл" },
-    { type: "24", name: "спорт" },
-  ];
-
-  const sortOptions = [
-    { name: "по умолчанию", type: "default" },
-    { name: "по названию", type: "title" },
-    { name: "по рейтингу", type: "rating" },
-    { name: "по дате выхода", type: "year" },
-  ];
-
-  const ratingOptions = [
-    { name: "топ 250", type: "top250" },
-    { name: "рейтинг от 8", type: "gt8" },
-    { name: "рейтинг от 7", type: "gt7" },
-    { name: "рейтинг от 6", type: "gt6" },
-  ];
-
-  const yearOptions = [
-    { name: new Date().getFullYear().toString(), type: "6" },
-    { name: (new Date().getFullYear() - 1).toString(), type: "5" },
-    { name: `2020 - ${new Date().getFullYear() - 2}`, type: "4" },
-    { name: "2010 - 2019", type: "3" },
-    { name: "2000 - 2009", type: "2" },
-    { name: "до 2000", type: "1" },
-  ];
-
+function SearchForm() {
   const dispatch = useDispatch();
   const onClearFilters = () => dispatch(resetFilters());
-  const filtersActive = useSelector((state) => state.filter.filtersActive)
+  const filtersActive = useSelector(filtersActiveSelector);
 
   return (
-    <div className="search-form" onSubmit={handleSubmit} noValidate>
+    <div className="search-form">
       <Search />
       <ul className="search-form__filters">
         <FilterPicker.Radio
@@ -86,26 +28,26 @@ function SearchForm({
           hideReset
           storeAction={setSortType}
           optionsSelector={sortTypeSelector}
-          options={sortOptions}
+          options={SORT_OPTIONS}
         />
         <FilterPicker.Checkbox
           storeAction={setGenres}
           optionsSelector={genresSelector}
           title="жанры"
-          options={genres}
+          options={GENRES_OPTIONS}
         />
         <FilterPicker.Radio
           title="рейтинг"
           hideMarker
           optionsSelector={ratingSelector}
-          options={ratingOptions}
+          options={RAITING_OPTIONS}
           storeAction={setRating}
         />
         <FilterPicker.Checkbox
           title="дата выхода"
           storeAction={setYears}
           optionsSelector={yearsSelector}
-          options={yearOptions}
+          options={YEAR_OPTIONS}
         />
         {filtersActive && <Button type="button" text="сбросить всё" onClick={onClearFilters} />}
       </ul>

@@ -1,6 +1,6 @@
 import { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMovieData } from "../../store/slices/movieSlice";
+import { fetchMovieData } from "../../store/movie/movieSlice";
 import { useParams } from "react-router-dom";
 import { getDurationString } from "../../utills/utills";
 import HistoryWidget from "../../components/HistoryWidget/HistoryWidget";

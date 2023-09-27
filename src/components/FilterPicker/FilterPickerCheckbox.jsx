@@ -35,10 +35,11 @@ function FilterPickerCheckbox(props) {
     if (!length) {
       return title;
     }
+    const { name } = options.find(({ type }) => storedOptions[0] === type);
     if (length > 1) {
-      return `${storedOptions[0]} и ещё ${length - 1}`;
+      return `${name} и ещё ${length - 1}`;
     }
-    return storedOptions[0];
+    return name;
   };
 
   // clear checkboxes when reset store
@@ -54,7 +55,7 @@ function FilterPickerCheckbox(props) {
       buttonCaption={getCaption()}
       onReset={onReset}
       onConfirm={onConfirm}
-      filterOptions={options.map(({name}) => name)}
+      filterOptions={options}
       onCheckOption={onCheckOption}
       selectedOptions={selectedOptions}
       hasReset={Boolean(storedOptions.length)}

@@ -1,11 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
 import Button, { BUTTON_COLOR } from "../Button/Button";
-import { ROULETTE_FILTERS, setFilters } from "../../store/slices/rouletteSlice";
+import { setFilters } from "../../store/roulette/rouletteSlice";
 import xImg from '../../images/x.svg';
+import { ROULETTE_FILTERS } from "../../store/roulette/constants";
+import { rouletteSelector } from "../../store/roulette/rouletteSelectors";
 import "./SearchChips.css";
 
 function SearchChips() {
-  const filters = useSelector((state) => state.roulette.filters);
+  const filters = useSelector(rouletteSelector);
   const dispatch = useDispatch();
 
   const activeChips = Object.values(filters);

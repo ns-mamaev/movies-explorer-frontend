@@ -1,16 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import mainApi from '../../utills/MainApi';
-
-export const MOOD_TYPES = ["funny", "basic", "sad", "amazed", "tense"];
-
-export const ROULETTE_FILTERS = [
-  { name: 'last5', caption: "не старше 5 лет", type: "year" },
-  { name: 'new', caption: "новые", type: "year" },
-  { name: 'hight', caption: "высокий рейтинг", type: "rating" },
-  { name: 'top250', caption: "топ 250", type: "rating" },
-  { name: 'russian', caption: "российские", type: "country" },
-  { name: 'foreign', caption: "зарубежные", type: "country" },
-];
+import { MOOD_TYPES, ROULETTE_FILTERS } from './constants';
 
 const initialState = {
   mood: MOOD_TYPES[0],
@@ -22,9 +12,7 @@ export const fetchRandomMovie = createAsyncThunk(
   'roulette/fetchRandomMovie',
   async (_, thunkAPI) => {
     const { mood, filters } = thunkAPI.getState().roulette;
-    const queryParams = Object.entries(filters);
-    queryParams.push([ 'mood', mood ]);
-
+    const queryParams = { ...filters, mood }
     const response = await mainApi.getRandomMovie(queryParams);
     return response.data;
   }

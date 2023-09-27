@@ -7,7 +7,7 @@ import MoodSwitcher from "../../components/MoodSwitcher/MoodSwitcher";
 import SearchChips from "../../components/SearchChips/SearchChips";
 import { useDispatch, useSelector } from "react-redux";
 import "./RoulettePage.css";
-import { fetchRandomMovie } from "../../store/slices/rouletteSlice";
+import { fetchRandomMovie } from "../../store/roulette/rouletteSlice";
 
 function RoulettePage() {
   const movie = useSelector((state) => state.roulette.movie);

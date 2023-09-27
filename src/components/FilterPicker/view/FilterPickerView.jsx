@@ -68,14 +68,14 @@ const FilterPickerView = forwardRef(function FilterPickerView(props, ref) {
       >
         <ul className="filter-picker__options scrollbar-container">
           {filterOptions.map((option) => (
-            <li key={option}>
+            <li key={option.type}>
               <FilterOption
-                onChange={onChange}
+                onChange={() => onChange(option.type)}
                 className="filter-picker__option"
+                caption={option.name}
                 type={type}
-                value={option}
                 hideMarker={hideMarker}
-                checked={selectedOptions.includes(option)}
+                checked={selectedOptions.includes(option.type)}
               />
             </li>
           ))}
