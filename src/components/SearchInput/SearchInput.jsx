@@ -1,11 +1,13 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setSearchValue } from "../../store/filter/filterSlice";
 import { useEffect, useRef, useState } from "react";
 import useDebouncedFunction from "../../utills/hooks/useDebouncedFunction";
+import { searchSelector } from "../../store/filter/filterSelectors";
 import "./SearchInput.css";
 
 function SearchInput(props) {
-  const [value, setValue] = useState('');
+  const savedSearch = useSelector(searchSelector);
+  const [value, setValue] = useState(savedSearch);
   const dispatch = useDispatch();
 
   const mountRef = useRef(false);

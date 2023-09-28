@@ -5,6 +5,7 @@ const initialState = {
   allMovies: {
     movies: [],
     totalCount: 0,
+    offset: 0,
   },
   moviePageData: {},
 };
@@ -17,13 +18,28 @@ export const fetchMovieData = createAsyncThunk(
   }
 )
 
+const fetchMoviesPayloadCreator = async (queryObj, { getState }) => {
+  const state = getState();
+  const { offset } = state.movies.allMovies;
+  const response = await mainApi.getMovies({ ...queryObj, offset });
+  return response.data;
+};
+
 export const fetchMovies = createAsyncThunk(
   'movies/fetchMovies',
-  async (queryObj) => {
-  const response = await mainApi.getMovies(queryObj);
-  return response.data;
-  }
+  fetchMoviesPayloadCreator,
 )
+
+export const fetchMoreMovies = createAsyncThunk(
+  'movies/fetchMoreMovies',
+  fetchMoviesPayloadCreator,
+)
+
+const clearAllMovies = (state) => {
+  state.allMovies.totalCount = 0;
+  state.allMovies.movies = [];
+  state.offset = 0;
+}
 
 export const moviesSlice = createSlice({
   name: 'movies',
@@ -31,6 +47,9 @@ export const moviesSlice = createSlice({
   reducers: {
     setAllMovies(state, { payload }) {
       state.allMovies.movies = payload;
+    },
+    setOffset(state, { payload }) {
+      state.allMovies.offset = payload;
     },
     setMoviePageData(state, { payload }) {
       state.moviePageData = payload;
@@ -40,18 +59,28 @@ export const moviesSlice = createSlice({
     [fetchMovieData.fulfilled](state, { payload }) {
       state.moviePageData = payload;
     },
-    [fetchMovies.fulfilled](state, { payload: { totalCount, movies } }) {
-      if (!totalCount) {
-        state.allMovies.movies = [];
-        state.allMovies.totalCount = 0;
-        return;
+    [fetchMovies.fulfilled](state, { payload }) {
+      if (!payload) {
+        clearAllMovies(state);
+      } else {
+        const { totalCount, offset, movies } = payload;
+        state.allMovies.totalCount = totalCount;
+        state.allMovies.movies = movies;
+        state.allMovies.offset = offset;
       }
-      state.allMovies.movies = movies;
+    },
+    [fetchMoreMovies.fulfilled](state, { payload }) {
+      if (!payload) {
+        clearAllMovies(state);
+      }
+      const { totalCount, offset, movies } = payload;
       state.allMovies.totalCount = totalCount;
+      state.allMovies.offset = offset;
+      state.allMovies.movies = [...state.allMovies.movies, ...movies];
     },
   }
 });
 
-export const { setMovies, setMoviePageData } = moviesSlice.actions;
+export const { setMovies, setMoviePageData, setOffset } = moviesSlice.actions;
 
 export default moviesSlice.reducer;

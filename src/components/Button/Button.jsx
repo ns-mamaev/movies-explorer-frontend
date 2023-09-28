@@ -10,7 +10,6 @@ export const BUTTON_COLOR = {
 
 function Button(props) {
   const {
-    onClick,
     className,
     children,
     text,
@@ -21,7 +20,6 @@ function Button(props) {
   return (
     <button
       type={type}
-      onClick={onClick}
       className={cn("button", {}, [className, `button_color_${color}`])}
       {...buttonProps}
     >
