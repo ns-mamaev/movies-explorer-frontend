@@ -21,6 +21,7 @@
 
 .filter-picker__popup {
   min-width: 200px;
+  width: max-content;
   background-color: var(--lines-color);
   position: absolute;
   left: 0;

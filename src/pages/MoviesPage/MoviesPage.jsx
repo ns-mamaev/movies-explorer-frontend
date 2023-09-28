@@ -6,17 +6,18 @@ import MoviesCard from "../../components/MoviesCard/MoviesCard";
 import { filtersSelector, searchSelector } from "../../store/filter/filterSelectors";
 import { moviesSelector } from "../../store/movie/movieSelector";
 import "./MoviesPage.css";
+import Button, { BUTTON_COLOR } from "../../components/Button/Button";
 
 function MoviesPage() {
   const dispatch = useDispatch();
   const filters = useSelector(filtersSelector);
   const search = useSelector(searchSelector);
+  const { movies, totalCount } = useSelector(moviesSelector);
 
   useEffect(() => {
     dispatch(fetchMovies({ ...filters, search }));
   }, [filters, search, dispatch]);
 
-  const movies = useSelector(moviesSelector);
 
   return (
     <main className="movies content-width">
@@ -26,6 +27,7 @@ function MoviesPage() {
           <MoviesCard key={_id} movie={{ _id, ...restProps }} />
         ))}
       </ul>
+      <Button className="movies__more-btn" color={BUTTON_COLOR.gradient} text='загрузить ещё'/>
     </main>
   );
 }

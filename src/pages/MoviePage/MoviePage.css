@@ -1,6 +1,6 @@
 .movie-page {
   flex-grow: 1;
-  padding: 60px 0;
+  padding: 24px 0 60px;
 }
 
 .movie-page__main-content {
@@ -93,4 +93,30 @@
   background-color: var(--accent-background);
   border-radius: var(--border-rad-m);
   padding: 10px;
+}
+
+.movie-page__back-btn {
+  display: flex;
+  align-items: center;
+  background: transparent;
+  color: inherit;
+  font-size: 18px;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 24px;
+}
+
+.movie-page__back-btn:hover {
+  opacity: 0.8;
+}
+
+.movie-page__back-btn::before {
+  margin-right: 5px;
+  content: '';
+  display: block;
+  width: 20px;
+  height: 20px;
+  transform: rotate(90deg);
+  background: url(../../images/v.svg) center / contain no-repeat;
 }

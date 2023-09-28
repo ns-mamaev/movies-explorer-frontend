@@ -1,7 +1,7 @@
 import { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMovieData } from "../../store/movie/movieSlice";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getDurationString } from "../../utills/utills";
 import HistoryWidget from "../../components/HistoryWidget/HistoryWidget";
 import RatingPicker from "../../components/RatingPicker/RatingPicker";
@@ -10,6 +10,7 @@ import "./MoviePage.css";
 
 function MoviePage() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { id } = useParams();
   const movie = useSelector((state) => state.movies.moviePageData);
   const {
@@ -48,6 +49,9 @@ function MoviePage() {
 
   return (
     <main className="movie-page content-width">
+      <button className="movie-page__back-btn" type="button" onClick={() => navigate(-1)}>
+        назад
+      </button>
       <section className="movie-page__main-content">
         <div className="movie-page__info-wrapper">
           <header className="movie-page__header">

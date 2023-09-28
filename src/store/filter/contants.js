@@ -21,24 +21,26 @@ export const GENRES_OPTIONS = [
 ];
 
 export const SORT_OPTIONS = [
-  { name: "по умолчанию", type: "default" },
-  { name: "по названию", type: "title" },
-  { name: "по рейтингу", type: "rating" },
-  { name: "по дате выхода", type: "year" },
+  { name: "сначала новые", type: "yearDesk" },
+  { name: "сначала старые", type: "yearAsk" },
+  { name: "от А до Я", type: "titleAsk" },
+  { name: "от Я до А", type: "titleDesk" },
+  { name: "сначала высокий рейтинг", type: "ratingDesk" },
+  { name: "сначала низкий рейтинг", type: "ratingAsk" },
 ];
 
 export const RAITING_OPTIONS = [
   { name: "топ 250", type: "top250" },
-  { name: "рейтинг от 8", type: "gt8" },
-  { name: "рейтинг от 7", type: "gt7" },
-  { name: "рейтинг от 6", type: "gt6" },
+  { name: "рейтинг от 8", type: "gte8" },
+  { name: "рейтинг от 7", type: "gte7" },
+  { name: "рейтинг от 6", type: "gte6" },
 ];
 
 export const YEAR_OPTIONS = [
-  { name: new Date().getFullYear().toString(), type: 6 },
-  { name: (new Date().getFullYear() - 1).toString(), type: 5 },
-  { name: `2020 - ${new Date().getFullYear() - 2}`, type: 4 },
-  { name: "2010 - 2019", type: 3 },
-  { name: "2000 - 2009", type: 2 },
-  { name: "до 2000", type: 1 },
+  { name: new Date().getFullYear().toString(), type: 'current' },
+  { name: (new Date().getFullYear() - 1).toString(), type: 'last' },
+  { name: `2020 - ${new Date().getFullYear() - 2}`, type: 'from2020' },
+  { name: "2010 - 2019", type: 'from2010' },
+  { name: "2000 - 2009", type: 'from2000' },
+  { name: "до 2000", type: 'less2000' },
 ];

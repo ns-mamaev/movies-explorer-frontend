@@ -2,7 +2,10 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import mainApi from '../../utills/MainApi';
 
 const initialState = {
-  list: [],
+  allMovies: {
+    movies: [],
+    totalCount: 0,
+  },
   moviePageData: {},
 };
 
@@ -26,8 +29,8 @@ export const moviesSlice = createSlice({
   name: 'movies',
   initialState,
   reducers: {
-    setMovies(state, { payload }) {
-      state.list = payload;
+    setAllMovies(state, { payload }) {
+      state.allMovies.movies = payload;
     },
     setMoviePageData(state, { payload }) {
       state.moviePageData = payload;
@@ -37,15 +40,15 @@ export const moviesSlice = createSlice({
     [fetchMovieData.fulfilled](state, { payload }) {
       state.moviePageData = payload;
     },
-    [fetchMovies.pending](state, action) {
-      console.log(action);
+    [fetchMovies.fulfilled](state, { payload: { totalCount, movies } }) {
+      if (!totalCount) {
+        state.allMovies.movies = [];
+        state.allMovies.totalCount = 0;
+        return;
+      }
+      state.allMovies.movies = movies;
+      state.allMovies.totalCount = totalCount;
     },
-    [fetchMovies.fulfilled](state, { payload }) {
-      state.list = payload;
-    },
-    [fetchMovies.rejected](state, action) {
-      console.log(action.error)
-    }
   }
 });
 

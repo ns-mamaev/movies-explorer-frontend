@@ -25,7 +25,7 @@ export const createQueryString = (queryObj) => {
   })
   .map(([key, value]) => {
     if (Array.isArray(value)) {
-      return `${key}=${value.join('+')}`
+      return `${key}=${value.join(';')}`
     }
     return `${key}=${value}`
   })

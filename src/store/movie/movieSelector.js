@@ -1,1 +1,1 @@
-export const moviesSelector = (state) => state.movies.list;
+export const moviesSelector = (state) => state.movies.allMovies;
