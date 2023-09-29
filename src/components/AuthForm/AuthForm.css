@@ -3,12 +3,10 @@
   justify-content: center;
   align-items: center;
   flex-grow: 1;
-  width: 100%;
 }
 
 .auth-page__inner {
   max-width: 396px;
-  min-height: 560px;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -81,6 +79,11 @@
   flex-direction: column;
 }
 
+/* TODO убрать important, сейчас без него стили .button перезаписывают .auth-page__button */
+.auth-page__button {
+  padding: 12px !important; 
+}
+
 .auth-page__error-message {
   color: var(--error-color);
   font-weight: 400;
@@ -101,12 +104,6 @@
   .auth-page__inner {
     margin: 56px 30px 30px;
     align-items: center;
-  }
-
-  .auth-page__button {
-    font-size: 12px;
-    line-height: 15px;
-    padding: 15px;
   }
 
   .auth-page__heading {

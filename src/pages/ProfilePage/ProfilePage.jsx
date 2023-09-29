@@ -1,13 +1,12 @@
-import { useState, useContext, useEffect } from 'react';
-import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import { useState, useEffect } from 'react';
 import { EMAIL_PATTERN } from '../../utills/constants';
 import useFormWithValidation from '../../utills/hooks/useFormWithValidation';
-import FormInput from '../FormInput/FormInput';
-import './Profile.css'
+import './ProfilePage.css'
+import FormInput from '../../components/FormInput/FormInput';
 
-const Profile = ({ onSubmit, onLogout, error, infoMessage, inLoading }) => {
+const ProfilePage = ({ onSubmit, onLogout, error, infoMessage, inLoading }) => {
   const [isUserInfoChanged, setIsUserInfoChanged] = useState(false);
-  const currentUser = useContext(CurrentUserContext);
+  const currentUser = { name: 'USER', email: 'mail@mail.ru' }
 
   const {
     values,
@@ -32,9 +31,9 @@ const Profile = ({ onSubmit, onLogout, error, infoMessage, inLoading }) => {
   }, [values?.name, values?.email]);
 
   // подстановка данных профиля при монтировании
-  useEffect(() => {
-    resetForm({ name: currentUser?.name, email: currentUser?.email });
-  }, [currentUser])
+  // useEffect(() => {
+  //   resetForm({ name: currentUser?.name, email: currentUser?.email });
+  // }, [currentUser])
 
   return (
     <main className='profile'>
@@ -84,4 +83,4 @@ const Profile = ({ onSubmit, onLogout, error, infoMessage, inLoading }) => {
   )
 };
 
-export default Profile;
+export default ProfilePage;

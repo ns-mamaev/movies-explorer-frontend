@@ -1,7 +1,10 @@
 import { NavLink, Link } from 'react-router-dom';
 import './Navigation.css';
+import { useSelector } from 'react-redux';
+import { userSelector } from '../../store/user/userSelectors';
 
 const Navigation = ({ visible, onClose }) => {
+  const user = useSelector(userSelector);
 
   const setLinkClass = (navData) => navData.isActive
     ? 'navigation__link navigation__link_active'
@@ -28,13 +31,13 @@ const Navigation = ({ visible, onClose }) => {
             </NavLink>
           </li>
           <li className='navigation__links-item'>
-            <NavLink className={setLinkClass} to='/saved-movies' onClick={onClose}>
+            <NavLink className={setLinkClass} to='/saved' onClick={onClose}>
               Избранное
             </NavLink>
           </li>
         </ul>
         <Link className='navigation__link navigation__link_type_with-icon' to='/profile' onClick={onClose}>
-          Аккаунт
+          {user && user.name}
           <div className='navigation__link-icon navigation__link-icon_content_profile' />
         </Link>
       </nav>

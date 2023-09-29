@@ -40,7 +40,7 @@ class MainApi {
   }
 
   async login(userData) {
-    return this._request("/signin", "POST", userData);
+    return this._request("/signin", "POST", JSON.stringify(userData));
   }
 
   async logout() {

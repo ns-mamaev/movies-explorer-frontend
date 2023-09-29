@@ -1,17 +1,16 @@
+import AuthForm from "../../components/AuthForm/AuthForm";
+import FormInput from "../../components/FormInput/FormInput";
 import { EMAIL_PATTERN } from "../../utills/constants";
 import useFormWithValidation from "../../utills/hooks/useFormWithValidation";
 
-import AuthPage from "../AuthPage/AuthPage";
-import FormInput from "../FormInput/FormInput";
-
-function Register({ onSubmit, error, inLoading }) {
+function RegisterPage({ onSubmit, error, inLoading }) {
   const { values, errors, isValid, onChange } = useFormWithValidation();
 
   // оборачиваю еще в 1 функцию чтобы передать values, которые недоступны в App
   const handleSubmit = () => onSubmit(values);
 
   return (
-    <AuthPage
+    <AuthForm
       type="register"
       heading="Добро пожаловать!"
       isValid={isValid}
@@ -63,8 +62,8 @@ function Register({ onSubmit, error, inLoading }) {
         minLength="6"
         required
       />
-    </AuthPage>
+    </AuthForm>
   );
 }
 
-export default Register;
+export default RegisterPage;

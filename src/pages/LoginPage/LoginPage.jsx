@@ -1,10 +1,11 @@
+import { useDispatch } from 'react-redux';
 import { EMAIL_PATTERN } from '../../utills/constants';
 import useFormWithValidation from '../../utills/hooks/useFormWithValidation';
-import AuthPage from '../AuthPage/AuthPage';
-import FormInput from '../FormInput/FormInput';
+import AuthPage from '../../components/AuthForm/AuthForm';
+import FormInput from '../../components/FormInput/FormInput';
+import { fetchUserLogin } from '../../store/user/userSlice';
 
-function Login({ onSubmit, error, inLoading }) {
-
+function LoginPage() {
   const {
     values,
     errors,
@@ -12,8 +13,13 @@ function Login({ onSubmit, error, inLoading }) {
     onChange,
   } = useFormWithValidation();
 
-  // оборачиваю еще в 1 функцию чтобы передать values, которые недоступны в App
-  const handleSubmit = () => onSubmit(values);
+  const dispatch = useDispatch();
+
+  const handleSubmit = () => {
+    if (isValid) {
+      dispatch(fetchUserLogin(values));
+    }
+  };
 
   return (
     <AuthPage
@@ -21,8 +27,8 @@ function Login({ onSubmit, error, inLoading }) {
       heading='Рады видеть!'
       onSubmit={handleSubmit}
       isValid={isValid}
-      error={error}
-      inLoading={inLoading}
+      error={''}
+      inLoading={false}
     >
       <FormInput
         value={values.email}
@@ -50,4 +56,4 @@ function Login({ onSubmit, error, inLoading }) {
   );
 }
 
-export default Login;
+export default LoginPage;
