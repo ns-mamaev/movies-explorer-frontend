@@ -19,3 +19,9 @@ export const TOKEN_MISSMATCH_TEXT = 'Ошибка при выполнении д
 export const UNAUTHORIZED_ERROR_CODE = 401;
 
 export const EMAIL_PATTERN = '[A-z0-9_.-]{1,}@[A-z0-9_.-]{1,}[.][A-z]{2,6}';
+
+export const FETCH_STATUS = {
+  pending: 'pending',
+  fulfilled: 'fulfilled',
+  rejected: 'rejected',
+}

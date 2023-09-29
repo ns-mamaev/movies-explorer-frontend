@@ -1,22 +1,49 @@
+import { useDispatch, useSelector } from "react-redux";
 import AuthForm from "../../components/AuthForm/AuthForm";
 import FormInput from "../../components/FormInput/FormInput";
-import { EMAIL_PATTERN } from "../../utills/constants";
+import { LOGIN_PAGE, MAIN_PAGE } from "../../providers/router/routes";
+import { EMAIL_PATTERN, FETCH_STATUS } from "../../utills/constants";
 import useFormWithValidation from "../../utills/hooks/useFormWithValidation";
+import { clearFetchRegisterStatus, fetchUserRegister } from "../../store/user/userSlice";
+import { userFetchRegisterSelector } from "../../store/user/userSelectors";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
-function RegisterPage({ onSubmit, error, inLoading }) {
-  const { values, errors, isValid, onChange } = useFormWithValidation();
+function RegisterPage() {
+  const { values, errors, isValid, onChange, resetForm } = useFormWithValidation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { status, error } = useSelector(userFetchRegisterSelector);
 
-  // оборачиваю еще в 1 функцию чтобы передать values, которые недоступны в App
-  const handleSubmit = () => onSubmit(values);
+  const handleSubmit = () => {
+    if (!isValid) {
+      return
+    }
+    if (values.password !== values.passwordRepeat) {
+      return resetForm(values, { passwordRepeat: 'пароли не совпадают' });
+    }
+    dispatch(fetchUserRegister({ name: values.name, email: values.email, password: values.password }));
+  };
+
+  useEffect(() => {
+    if (status === FETCH_STATUS.fulfilled) {
+      navigate(MAIN_PAGE);
+      dispatch(clearFetchRegisterStatus())
+    }
+  }, [navigate, status, dispatch])
 
   return (
     <AuthForm
       type="register"
       heading="Добро пожаловать!"
+      buttonText='Зарегистрироваться'
+      formCaption='Уже есть аккаунт?'
+      linkText='Войти'
+      linkPath={LOGIN_PAGE}
       isValid={isValid}
       onSubmit={handleSubmit}
       error={error}
-      inLoading={inLoading}
+      inLoading={status === FETCH_STATUS.pending}
     >
       <FormInput
         value={values.name}

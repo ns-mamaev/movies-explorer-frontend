@@ -36,7 +36,7 @@ class MainApi {
   }
 
   async register(userData) {
-    return this._request("/signup", "POST", userData); // исправить
+    return this._request("/signup", "POST", JSON.stringify(userData)); // исправить ??
   }
 
   async login(userData) {

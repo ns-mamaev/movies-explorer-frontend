@@ -1,9 +1,13 @@
-import { useDispatch } from 'react-redux';
-import { EMAIL_PATTERN } from '../../utills/constants';
+import { useDispatch, useSelector } from 'react-redux';
+import { EMAIL_PATTERN, FETCH_STATUS } from '../../utills/constants';
 import useFormWithValidation from '../../utills/hooks/useFormWithValidation';
 import AuthPage from '../../components/AuthForm/AuthForm';
 import FormInput from '../../components/FormInput/FormInput';
-import { fetchUserLogin } from '../../store/user/userSlice';
+import { clearFetchLoginStatus, fetchUserLogin } from '../../store/user/userSlice';
+import { useNavigate } from 'react-router-dom';
+import { MAIN_PAGE, REGISTER_PAGE } from '../../providers/router/routes';
+import { userFetchLoginSelector } from '../../store/user/userSelectors';
+import { useEffect } from 'react';
 
 function LoginPage() {
   const {
@@ -14,6 +18,8 @@ function LoginPage() {
   } = useFormWithValidation();
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { status, error } = useSelector(userFetchLoginSelector);
 
   const handleSubmit = () => {
     if (isValid) {
@@ -21,14 +27,24 @@ function LoginPage() {
     }
   };
 
+  useEffect(() => {
+    if (status === FETCH_STATUS.fulfilled) {
+      navigate(MAIN_PAGE);
+      dispatch(clearFetchLoginStatus());
+    }
+  }, [status, navigate, dispatch])
+
   return (
     <AuthPage
-      type='login'
       heading='Рады видеть!'
+      buttonText='Войти'
+      formCaption='Ещё не зарегистрированы?'
+      linkText='Регистрация'
+      linkPath={REGISTER_PAGE}
       onSubmit={handleSubmit}
       isValid={isValid}
-      error={''}
-      inLoading={false}
+      error={error}
+      inLoading={status === FETCH_STATUS.pending}
     >
       <FormInput
         value={values.email}

@@ -9,6 +9,15 @@
   transition: background 0.2s ease;
 }
 
+.button:active {
+  transform: scale(.98);
+}
+
+.button_with_disable:disabled {
+  cursor: unset;
+  filter: grayscale(1);
+}
+
 .button_color_default {
   background-color: var(--accent-background);
   color: var(--textcolor-main);
@@ -34,9 +43,5 @@
   .button:hover {
     opacity: 0.8;
   }
-}
-
-.button:active {
-  transform: scale(.98);
 }
 

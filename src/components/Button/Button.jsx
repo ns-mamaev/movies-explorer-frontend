@@ -11,16 +11,20 @@ export const BUTTON_COLOR = {
 function Button(props) {
   const {
     className,
+    withDisable,
     children,
     text,
     color = BUTTON_COLOR.default,
-    type = 'button',
+    type = "button",
     ...buttonProps
   } = props;
   return (
     <button
       type={type}
-      className={cn("button", {}, [className, `button_color_${color}`])}
+      className={cn("button", { button_with_disable: withDisable }, [
+        className,
+        `button_color_${color}`,
+      ])}
       {...buttonProps}
     >
       {text || children}

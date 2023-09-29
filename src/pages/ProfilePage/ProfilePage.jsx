@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { EMAIL_PATTERN } from '../../utills/constants';
 import useFormWithValidation from '../../utills/hooks/useFormWithValidation';
-import './ProfilePage.css'
 import FormInput from '../../components/FormInput/FormInput';
+import { userSelector } from '../../store/user/userSelectors';
+import './ProfilePage.css'
+import { useSelector } from 'react-redux';
 
 const ProfilePage = ({ onSubmit, onLogout, error, infoMessage, inLoading }) => {
   const [isUserInfoChanged, setIsUserInfoChanged] = useState(false);
-  const currentUser = { name: 'USER', email: 'mail@mail.ru' }
+  const currentUser = useSelector(userSelector) || {};
 
   const {
     values,
