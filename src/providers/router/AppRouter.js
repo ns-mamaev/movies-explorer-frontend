@@ -16,7 +16,7 @@ function AppRouter() {
           condition ? (
             <Component />
           ) : (
-            <Navigate to={redirectTo} replace={true} />
+            <Navigate to={redirectTo} />
           )
         }
       />

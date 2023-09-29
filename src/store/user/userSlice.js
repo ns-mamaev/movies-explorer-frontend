@@ -27,14 +27,22 @@ export const fetchUserRegister = createAsyncThunk(
   'user/fetchRegister',
   async (userData) => {
     const response = await mainApi.register(userData);
-    return response;
+    return response.data;
   }
 );
 
-const setUserByPayload = (state, payload) => {
-  const { email, name, _id } = payload;
-  state.user = { email, name, _id };
-}
+export const fetchUser = createAsyncThunk(
+  'user/fetchUser',
+  async () => {
+    const response = await mainApi.getOwnProfile();
+    return response.data;
+  }
+);
+
+export const fetchLogout = createAsyncThunk(
+  'user/fetchLogout',
+  async () => await mainApi.logout(),
+);
 
 export const userSlice = createSlice({
   name: 'user',
@@ -55,7 +63,7 @@ export const userSlice = createSlice({
       state.fetchLoginState.status = FETCH_STATUS.pending;
     },
     [fetchUserLogin.fulfilled](state, { payload }) {
-      setUserByPayload(state, payload);
+      state.user = payload;
       state.fetchLoginState.status = FETCH_STATUS.fulfilled;
     },
     [fetchUserLogin.rejected](state, { error }) {
@@ -66,13 +74,23 @@ export const userSlice = createSlice({
       state.fetchRegisterState.status = FETCH_STATUS.pending;
     },
     [fetchUserRegister.fulfilled](state, { payload }) {
-      setUserByPayload(state, payload);
+      state.user = payload;
       state.fetchRegisterState.status = FETCH_STATUS.fulfilled;
     },
     [fetchUserRegister.rejected](state, { error }) {
       state.fetchRegisterState.status = FETCH_STATUS.rejected;
       state.fetchRegisterState.error = error.message;
     },
+    [fetchUser.fulfilled](state, { payload }) {
+      console.log(payload)
+      state.user = payload;
+    },
+    [fetchUser.rejected](state, action) {
+      console.log(action);
+    },
+    [fetchLogout.fulfilled](state) {
+      state.user = null;
+    }
   }
 });
 

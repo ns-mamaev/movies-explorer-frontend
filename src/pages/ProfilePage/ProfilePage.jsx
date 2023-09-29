@@ -4,11 +4,13 @@ import useFormWithValidation from '../../utills/hooks/useFormWithValidation';
 import FormInput from '../../components/FormInput/FormInput';
 import { userSelector } from '../../store/user/userSelectors';
 import './ProfilePage.css'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchLogout } from '../../store/user/userSlice';
 
-const ProfilePage = ({ onSubmit, onLogout, error, infoMessage, inLoading }) => {
+const ProfilePage = ({ onSubmit, error, infoMessage, inLoading }) => {
   const [isUserInfoChanged, setIsUserInfoChanged] = useState(false);
   const currentUser = useSelector(userSelector) || {};
+  const dispatch = useDispatch();
 
   const {
     values,
@@ -36,6 +38,8 @@ const ProfilePage = ({ onSubmit, onLogout, error, infoMessage, inLoading }) => {
   // useEffect(() => {
   //   resetForm({ name: currentUser?.name, email: currentUser?.email });
   // }, [currentUser])
+
+  const onLogout = () => dispatch(fetchLogout());
 
   return (
     <main className='profile'>

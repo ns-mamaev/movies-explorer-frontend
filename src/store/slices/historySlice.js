@@ -13,7 +13,6 @@ export const historySlice = createSlice({
       console.log(payload);
       const { list } = state;
       const inListIndex = list.findIndex(({ id }) => id === payload.id);
-      console.log(inListIndex)
       if (inListIndex !== -1) {
         state.list = [list[inListIndex], ...list.slice(0, inListIndex), ...list.slice(inListIndex + 1)];
         return;
