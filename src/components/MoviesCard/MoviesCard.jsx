@@ -3,12 +3,11 @@ import { useDispatch } from "react-redux";
 import { cn, getDurationString } from "../../utills/utills";
 import RatingPicker from "../RatingPicker/RatingPicker";
 import { addToHistory } from "../../store/slices/historySlice";
-import { useState } from "react";
 import LikeButton from "../LikeButton/LikeButton";
 import "./MoviesCard.css";
+import { fetchRemove, fetchSave } from "../../store/savedMovies/savedMoviesSlice";
 
 const MoviesCard = ({ movie, className, isLoading = false }) => {
-  const [liked, setLiked] = useState(false);
   const {
     _id: id,
     nameRU,
@@ -18,8 +17,9 @@ const MoviesCard = ({ movie, className, isLoading = false }) => {
     image,
     thumbnail,
     ratingKP,
-    type = "default",
+    isLiked = false,
   } = movie;
+
   const descriptionString = `${
     nameEN ? nameEN + ", " : ""
   }${year},&nbsp;${getDurationString(duration)}`;
@@ -31,6 +31,14 @@ const MoviesCard = ({ movie, className, isLoading = false }) => {
     dispatch(addToHistory(historyObject));
     navigate(`/movies/${id}`);
   };
+
+  const onLike = () => {
+    if (isLiked) {
+      dispatch(fetchRemove(id));
+    } else {
+      dispatch(fetchSave(id))
+    }
+  }
 
   return (
     <div className={cn("movies-card", {}, [className])}>
@@ -50,7 +58,7 @@ const MoviesCard = ({ movie, className, isLoading = false }) => {
               </p>
             </div>
             <div className="movies-card__btn-wrapper">
-              <LikeButton />
+              <LikeButton isLiked={isLiked} onClick={onLike} />
               <RatingPicker />
             </div>
           </div>

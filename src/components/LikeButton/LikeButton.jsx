@@ -1,10 +1,11 @@
 import "./LikeButton.css";
 
-function LikeButton({ liked = true }) {
+function LikeButton({ isLiked = false, ...restProps }) {
   return (
     <button
       type="button"
-      className={`like-btn ${liked ? "like-btn_liked" : ""}`}
+      className={`like-btn ${isLiked ? "like-btn_liked" : ""}`}
+      {...restProps}
     />
   );
 }

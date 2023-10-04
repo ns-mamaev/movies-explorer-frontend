@@ -5,6 +5,7 @@ import ProfilePage from "../../pages/ProfilePage/ProfilePage";
 import RegisterPage from "../../pages/RegisterPage/RegisterPage";
 import RoulettePage from "../../pages/RoulettePage/RoulettePage";
 import SavedPage from "../../pages/SavedPage/SavedPage";
+import PageNotFound from "../../pages/PageNotFound/PageNotFound";
 import {
   LOGIN_PAGE,
   MAIN_PAGE,
@@ -52,6 +53,44 @@ export const publicRoutes = [
   },
   {
     path: "*",
-    Component: RoulettePage,
+    Component: PageNotFound,
   },
 ];
+
+
+function result(A, B) {
+  if (A.length !== B.length) {
+    return 0;
+  }
+  const AMap = {},
+        BMap = {};
+
+  for (let i = 0; i < A.length; i += 1) {
+    if (A[i] in AMap) {
+      A[i] += 1;
+    } else {
+      A[i] = 1;
+    }
+    if (B[i] in BMap) {
+      B[i] += 1;
+    } else {
+      B[i] = 1;
+    }
+  }
+
+  console.log(AMap, BMap)
+
+  for (let key in AMap) {
+    if (AMap[key] !== BMap[key]) {
+      return 0;
+    }
+  }
+
+  return 1;
+}
+
+
+/*
+
+*/
+

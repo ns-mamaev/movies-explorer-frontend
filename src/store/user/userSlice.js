@@ -13,6 +13,9 @@ const initialState = {
     status: null,
     error: null,
   },
+  fetchUserState: {
+    status: FETCH_STATUS.pending,
+  }
 };
 
 export const fetchUserLogin = createAsyncThunk(
@@ -82,11 +85,11 @@ export const userSlice = createSlice({
       state.fetchRegisterState.error = error.message;
     },
     [fetchUser.fulfilled](state, { payload }) {
-      console.log(payload)
       state.user = payload;
+      state.fetchUserState.status = FETCH_STATUS.fulfilled;
     },
     [fetchUser.rejected](state, action) {
-      console.log(action);
+      state.fetchUserState.status = FETCH_STATUS.rejected;
     },
     [fetchLogout.fulfilled](state) {
       state.user = null;

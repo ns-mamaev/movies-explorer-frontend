@@ -7,6 +7,7 @@ const initialState = {
     totalCount: 0,
     offset: 0,
   },
+  wasFetched: false,
   moviePageData: {},
 };
 

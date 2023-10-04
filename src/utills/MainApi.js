@@ -76,8 +76,12 @@ class MainApi {
     return this._request('/genres');
   }
 
-  async saveMovie(movie) {
-    return this._request("/movies", "POST", JSON.stringify(movie));
+  async getSavedMovied() {
+    return this._request('/movies/saved')
+  }
+
+  async saveMovie(movieId) {
+    return this._request(`/movies/${movieId}/likes`, "POST");
   }
 
   async removeMovie(movieId) {
