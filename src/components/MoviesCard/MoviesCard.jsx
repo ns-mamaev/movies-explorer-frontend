@@ -4,8 +4,8 @@ import { cn, getDurationString } from "../../utills/utills";
 import RatingPicker from "../RatingPicker/RatingPicker";
 import { addToHistory } from "../../store/slices/historySlice";
 import LikeButton from "../LikeButton/LikeButton";
+import { fetchRemove, fetchSave } from "../../store/movie/movieSlice";
 import "./MoviesCard.css";
-import { fetchRemove, fetchSave } from "../../store/savedMovies/savedMoviesSlice";
 
 const MoviesCard = ({ movie, className, isLoading = false }) => {
   const {
@@ -17,7 +17,7 @@ const MoviesCard = ({ movie, className, isLoading = false }) => {
     image,
     thumbnail,
     ratingKP,
-    isLiked = false,
+    isLiked,
   } = movie;
 
   const descriptionString = `${

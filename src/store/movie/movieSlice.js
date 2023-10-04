@@ -9,6 +9,7 @@ const initialState = {
   },
   wasFetched: false,
   moviePageData: {},
+  savedMovies: [],
 };
 
 export const fetchMovieData = createAsyncThunk(
@@ -35,6 +36,30 @@ export const fetchMoreMovies = createAsyncThunk(
   'movies/fetchMoreMovies',
   fetchMoviesPayloadCreator,
 )
+
+export const fetchSavedMovies = createAsyncThunk(
+  'movies/fetchSavedMovies',
+  async () => {
+    const response = await mainApi.getSavedMovied();
+    return response.data;
+  }
+);
+
+export const fetchSave = createAsyncThunk(
+  'movies/fetchSave',
+  async (id) => {
+    await mainApi.saveMovie(id);
+    return id;
+  }
+);
+
+export const fetchRemove = createAsyncThunk(
+  'movies/fetchRemove',
+  async (id) => {
+    await mainApi.removeMovie(id);
+    return id;
+  }
+);
 
 const clearAllMovies = (state) => {
   state.allMovies.totalCount = 0;
@@ -79,6 +104,22 @@ export const moviesSlice = createSlice({
       state.allMovies.offset = offset;
       state.allMovies.movies = [...state.allMovies.movies, ...movies];
     },
+    [fetchSavedMovies.fulfilled](state, { payload }) {
+      state.savedMovies = payload;
+    },
+    [fetchSave.fulfilled] (state, { payload }) {
+      const movieIndex = state.allMovies.movies.findIndex(({ _id }) => _id === payload);
+      if (movieIndex !== -1) {
+        state.allMovies.movies[movieIndex].isLiked = true;
+      }
+    },
+    [fetchRemove.fulfilled] (state, { payload }) {
+      state.savedMovies = state.savedMovies.filter(({ movieId }) => movieId !== payload);
+      const movieIndex = state.allMovies.movies.findIndex(({ _id }) => _id === payload);
+      if (movieIndex !== -1) {
+        state.allMovies.movies[movieIndex].isLiked = false;
+      }
+    }
   }
 });
 
