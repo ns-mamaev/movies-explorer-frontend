@@ -10,7 +10,6 @@ export const historySlice = createSlice({
   initialState,
   reducers: {
     addToHistory(state, { payload }) {
-      console.log(payload);
       const { list } = state;
       const inListIndex = list.findIndex(({ id }) => id === payload.id);
       if (inListIndex !== -1) {

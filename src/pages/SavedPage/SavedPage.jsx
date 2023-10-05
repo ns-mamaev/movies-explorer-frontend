@@ -2,8 +2,9 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { savedMoviesSelector } from "../../store/movie/movieSelectors";
 import { fetchSavedMovies } from "../../store/movie/movieSlice";
-import './SavedPage.css'
 import MoviesList from "../../components/MoviesList/MoviesList";
+import { EMPTY_SAVED_PAGE_TEXT } from "../../utills/constants";
+import './SavedPage.css'
 
 function SavedPage() {
   const dispatch = useDispatch();
@@ -13,13 +14,9 @@ function SavedPage() {
     dispatch(fetchSavedMovies());
   }, [dispatch]);
 
-  if (!movies) {
-    return <p>Тут ничего нет</p>
-  }
-
   return (
     <main className="saved-page content-width">
-        <MoviesList movies={movies} />
+        <MoviesList emptyListText={EMPTY_SAVED_PAGE_TEXT} movies={movies} />
     </main>
   )
 }

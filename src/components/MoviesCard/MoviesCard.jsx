@@ -5,7 +5,7 @@ import { addToHistory } from "../../store/history/historySlice";
 import LikeButton from "../LikeButton/LikeButton";
 import "./MoviesCard.css";
 
-const MoviesCard = ({ movie, className, isLoading = false, onLike }) => {
+const MoviesCard = ({ movie, className, onLike }) => {
   const {
     _id: id,
     nameRU,
@@ -32,33 +32,23 @@ const MoviesCard = ({ movie, className, isLoading = false, onLike }) => {
 
   return (
     <div className={cn("movies-card", {}, [className])}>
-      {isLoading ? (
-        <Skeleton />
-      ) : (
-        <>
-          <div className="movies-card__poster-wrapper" onClick={onOpenFilm}>
-            <img className="movies-card__poster" src={image} alt={nameRU} />
-            <span className="movies-card__rating">{ratingKP.toFixed(1)}</span>
-          </div>
-          <div className="movies-card__info-wrapper">
-            <div className="movies-card__description">
-              <h3 className="movies-card__title">{nameRU}</h3>
-              <p className="movies-card__subtitle">
-                {descriptionString.replace(/&nbsp;/g, "\u00A0")}
-              </p>
-            </div>
-            <div className="movies-card__btn-wrapper">
-              <LikeButton isLiked={isLiked} onClick={() => onLike(isLiked, id)} />
-            </div>
-          </div>
-        </>
-      )}
+      <div className="movies-card__poster-wrapper" onClick={onOpenFilm}>
+        <img className="movies-card__poster" src={image} alt={nameRU} />
+        <span className="movies-card__rating">{ratingKP.toFixed(1)}</span>
+      </div>
+      <div className="movies-card__info-wrapper">
+        <div className="movies-card__description">
+          <h3 className="movies-card__title">{nameRU}</h3>
+          <p className="movies-card__subtitle">
+            {descriptionString.replace(/&nbsp;/g, "\u00A0")}
+          </p>
+        </div>
+        <div className="movies-card__btn-wrapper">
+          <LikeButton isLiked={isLiked} onClick={() => onLike(isLiked, id)} />
+        </div>
+      </div>
     </div>
   );
-};
-
-const Skeleton = () => {
-  return <div className="movies-card__skeleton"></div>;
 };
 
 export default MoviesCard;

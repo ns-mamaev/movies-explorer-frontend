@@ -6,6 +6,7 @@ import { getDurationString } from "../../utills/utills";
 import HistoryWidget from "../../components/HistoryWidget/HistoryWidget";
 import LikeButton from "../../components/LikeButton/LikeButton";
 import "./MoviePage.css";
+import Preloader from "../../components/Preloader/Preloader";
 
 function MoviePage() {
   const dispatch = useDispatch();
@@ -18,7 +19,7 @@ function MoviePage() {
   }, [dispatch, id]);
 
   if (!movie) {
-    return <p>ЗАГРУЗКА...</p>;
+    return <Preloader />;
   }
 
   const {

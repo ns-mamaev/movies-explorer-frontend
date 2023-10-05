@@ -9,7 +9,9 @@ const initialState = {
   },
   moviePageData: null,
   randomMovie: null,
+  randomFirstFetch: true,
   savedMovies: null,
+  
 };
 
 export const fetchMovieData = createAsyncThunk(
@@ -89,6 +91,9 @@ export const moviesSlice = createSlice({
     },
     setMoviePageData(state, { payload }) {
       state.moviePageData = payload;
+    },
+    setRandomFirstFetch(state) {
+      state.randomFirstFetch = false;
     }
   },
   extraReducers: {
@@ -150,10 +155,13 @@ export const moviesSlice = createSlice({
     },
     [fetchRandomMovie.fulfilled]: (state, { payload }) => {
       state.randomMovie = payload;
+      if (state.randomFirstFetch) {
+        state.randomFirstFetch = false;
+      }
     }
   }
 });
 
-export const { setMovies, setMoviePageData, setOffset } = moviesSlice.actions;
+export const { setMovies, setMoviePageData, setOffset, setRandomFirstFetch } = moviesSlice.actions;
 
 export default moviesSlice.reducer;

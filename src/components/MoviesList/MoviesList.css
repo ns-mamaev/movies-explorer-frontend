@@ -8,3 +8,23 @@
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 24px;
 }
+
+.list-empty {
+  max-width: 700px;
+  margin: 0 auto;
+  margin-top: 40px;
+}
+
+.list-empty__caption {
+  font-size: 20px;
+  line-height: 28px;
+  text-align: center;
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.list-empty__pic {
+  display: block;
+  width: 200px;
+  margin: 0 auto 32px;
+}

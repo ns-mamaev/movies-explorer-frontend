@@ -7,12 +7,15 @@ import MoodSwitcher from "../../components/MoodSwitcher/MoodSwitcher";
 import SearchChips from "../../components/SearchChips/SearchChips";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchRandomMovie, fetchRemove, fetchSave } from "../../store/movie/movieSlice";
-import { randomMovieSelector } from "../../store/movie/movieSelectors";
+import { randomFirstFetchSelector, randomMovieSelector } from "../../store/movie/movieSelectors";
+import MovieCardSkeleton from "../../components/MovieCardSkeleton/MovieCardSkeleton";
+import { EMPTY_SEARCH_PAGE_TEXT } from "../../utills/constants";
 import "./RoulettePage.css";
 
 function RoulettePage() {
   const movie = useSelector(randomMovieSelector);
   const dispatch = useDispatch();
+  const isFirstFetch = useSelector(randomFirstFetchSelector);
 
   useEffect(() => {
     // выполняется разово при первом входе на страницу
@@ -29,14 +32,16 @@ function RoulettePage() {
     }
   }
 
+  const skeletonEl = isFirstFetch && <MovieCardSkeleton className="start-page__movie-card" />;
+  const movieEl = movie && <MoviesCard isLoading onLike={onLike} className="start-page__movie-card" movie={movie} />;
+  const notFoundEl = !(movie || isFirstFetch) && <div className="start-page__not-found start-page__movie-card">{EMPTY_SEARCH_PAGE_TEXT}</div>
+
   return (
     <main className="random-film-page content-width">
       <div className="random-film">
-        {movie ? (
-          <MoviesCard onLike={onLike} className="start-page__movie-card" movie={movie} />
-        ) : (
-          <p style={{ color: "#fff" }}>ЗАГРУЗКА</p>
-        )}
+        {skeletonEl}
+        {movieEl}
+        {notFoundEl}
         <div className="random-film__form">
           <h1 className="random-film__form-title">Фильм по настроению</h1>
           <div className="random-film__mood-buttons">

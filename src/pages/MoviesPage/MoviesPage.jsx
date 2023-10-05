@@ -14,6 +14,7 @@ import { moviesSelector } from "../../store/movie/movieSelectors";
 import Button, { BUTTON_COLOR } from "../../components/Button/Button";
 import MoviesList from "../../components/MoviesList/MoviesList";
 import "./MoviesPage.css";
+import { EMPTY_SEARCH_PAGE_TEXT } from "../../utills/constants";
 
 function MoviesPage() {
   const dispatch = useDispatch();
@@ -37,14 +38,7 @@ function MoviesPage() {
   return (
     <main className="movies content-width">
       <SearchForm />
-      {movies ? (
-        <MoviesList movies={movies} />
-      ) : (
-        <p className="movies__empty-search">``
-          По выбранным фильмам ничего не найдено. Можете подождать, пока снимут
-          что-то подходящее под ваш запрос или просто отключить часть фильтров
-        </p>
-      )}
+      <MoviesList emptyListText={EMPTY_SEARCH_PAGE_TEXT} movies={movies} />
       {totalCount > offset && (
         <Button
           onClick={getMoreMovies}

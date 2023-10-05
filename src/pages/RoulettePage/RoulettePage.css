@@ -53,3 +53,8 @@
   margin-bottom: 56px;
   gap: 8px;
 }
+
+.start-page__not-found {
+  display: flex;
+  
+}
