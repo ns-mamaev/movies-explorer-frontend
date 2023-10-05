@@ -1,13 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { cn, getDurationString } from "../../utills/utills";
-import RatingPicker from "../RatingPicker/RatingPicker";
-import { addToHistory } from "../../store/slices/historySlice";
+import { addToHistory } from "../../store/history/historySlice";
 import LikeButton from "../LikeButton/LikeButton";
-import { fetchRemove, fetchSave } from "../../store/movie/movieSlice";
 import "./MoviesCard.css";
 
-const MoviesCard = ({ movie, className, isLoading = false }) => {
+const MoviesCard = ({ movie, className, isLoading = false, onLike }) => {
   const {
     _id: id,
     nameRU,
@@ -32,14 +30,6 @@ const MoviesCard = ({ movie, className, isLoading = false }) => {
     navigate(`/movies/${id}`);
   };
 
-  const onLike = () => {
-    if (isLiked) {
-      dispatch(fetchRemove(id));
-    } else {
-      dispatch(fetchSave(id))
-    }
-  }
-
   return (
     <div className={cn("movies-card", {}, [className])}>
       {isLoading ? (
@@ -58,8 +48,7 @@ const MoviesCard = ({ movie, className, isLoading = false }) => {
               </p>
             </div>
             <div className="movies-card__btn-wrapper">
-              <LikeButton isLiked={isLiked} onClick={onLike} />
-              <RatingPicker />
+              <LikeButton isLiked={isLiked} onClick={() => onLike(isLiked, id)} />
             </div>
           </div>
         </>

@@ -85,7 +85,7 @@ class MainApi {
   }
 
   async removeMovie(movieId) {
-    return this._request(`/movies/${movieId}`, "DELETE");
+    return this._request(`/movies/${movieId}/likes`, "DELETE");
   }
 }
 

@@ -6,11 +6,12 @@ import { Link } from "react-router-dom";
 import MoodSwitcher from "../../components/MoodSwitcher/MoodSwitcher";
 import SearchChips from "../../components/SearchChips/SearchChips";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchRandomMovie, fetchRemove, fetchSave } from "../../store/movie/movieSlice";
+import { randomMovieSelector } from "../../store/movie/movieSelectors";
 import "./RoulettePage.css";
-import { fetchRandomMovie } from "../../store/roulette/rouletteSlice";
 
 function RoulettePage() {
-  const movie = useSelector((state) => state.roulette.movie);
+  const movie = useSelector(randomMovieSelector);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -18,13 +19,21 @@ function RoulettePage() {
     if (!movie) {
       dispatch(fetchRandomMovie());
     }
-  }, [])
+  }, [dispatch, movie])
+
+  const onLike = () => {
+    if (movie.isLiked) {
+      dispatch(fetchRemove(movie._id));
+    } else {
+      dispatch(fetchSave(movie._id));
+    }
+  }
 
   return (
     <main className="random-film-page content-width">
       <div className="random-film">
         {movie ? (
-          <MoviesCard className="start-page__movie-card" movie={movie} />
+          <MoviesCard onLike={onLike} className="start-page__movie-card" movie={movie} />
         ) : (
           <p style={{ color: "#fff" }}>ЗАГРУЗКА</p>
         )}

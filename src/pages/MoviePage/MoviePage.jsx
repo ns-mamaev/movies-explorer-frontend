@@ -1,10 +1,9 @@
 import { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMovieData } from "../../store/movie/movieSlice";
+import { fetchMovieData, fetchRemove, fetchSave } from "../../store/movie/movieSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import { getDurationString } from "../../utills/utills";
 import HistoryWidget from "../../components/HistoryWidget/HistoryWidget";
-import RatingPicker from "../../components/RatingPicker/RatingPicker";
 import LikeButton from "../../components/LikeButton/LikeButton";
 import "./MoviePage.css";
 
@@ -13,6 +12,15 @@ function MoviePage() {
   const navigate = useNavigate();
   const { id } = useParams();
   const movie = useSelector((state) => state.movies.moviePageData);
+
+  useEffect(() => {
+    dispatch(fetchMovieData(id));
+  }, [dispatch, id]);
+
+  if (!movie) {
+    return <p>ЗАГРУЗКА...</p>;
+  }
+
   const {
     image,
     nameRU,
@@ -24,16 +32,9 @@ function MoviePage() {
     genres = [],
     director,
     actors = [],
-    ratingKP
+    ratingKP,
+    isLiked,
   } = movie;
-
-  useEffect(() => {
-    dispatch(fetchMovieData(id));
-  }, [dispatch, id]);
-
-  if (!movie.nameRU) {
-    return <p>ЗАГРУЗКА...</p>;
-  }
 
   const title = `${nameRU} (${year})`;
   const subtitle = nameEN
@@ -46,6 +47,14 @@ function MoviePage() {
     ["Режиссёр", director],
     ["В ролях", actors.join(", ")],
   ];
+
+  const onToggleLike = () => {
+    if (isLiked) {
+      dispatch(fetchRemove(id));
+    } else {
+      dispatch(fetchSave(id));
+    }
+  }
 
   return (
     <main className="movie-page content-width">
@@ -64,8 +73,7 @@ function MoviePage() {
             <div className="movie-page__rating-icons">
               <div className="movie-page__rating">{ratingKP.toFixed(1)}</div>
               <div className="movie-page__rating-buttons">
-                <LikeButton />
-                <RatingPicker />
+                <LikeButton isLiked={isLiked} onClick={onToggleLike} />
               </div>
             </div>
           </header>

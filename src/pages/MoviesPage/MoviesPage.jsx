@@ -6,13 +6,13 @@ import {
   setOffset,
 } from "../../store/movie/movieSlice";
 import SearchForm from "../../components/SearchForm/SearchForm";
-import MoviesCard from "../../components/MoviesCard/MoviesCard";
 import {
   filtersSelector,
   searchSelector,
 } from "../../store/filter/filterSelectors";
-import { moviesSelector } from "../../store/movie/movieSelector";
+import { moviesSelector } from "../../store/movie/movieSelectors";
 import Button, { BUTTON_COLOR } from "../../components/Button/Button";
+import MoviesList from "../../components/MoviesList/MoviesList";
 import "./MoviesPage.css";
 
 function MoviesPage() {
@@ -27,7 +27,7 @@ function MoviesPage() {
   };
 
   useEffect(() => {
-    // сброс отступа пагинации при изменении поискового запроса
+    // сброс отступа пагинации при изменении поиска или фильтров
     if (offset !== 0) {
       dispatch(setOffset(0));
     }
@@ -37,14 +37,10 @@ function MoviesPage() {
   return (
     <main className="movies content-width">
       <SearchForm />
-      {movies.length ? (
-        <ul className="movies__list">
-          {movies.map(({ _id, ...restProps }) => (
-            <MoviesCard key={_id} movie={{ _id, ...restProps }} />
-          ))}
-        </ul>
+      {movies ? (
+        <MoviesList movies={movies} />
       ) : (
-        <p className="movies__empty-search">
+        <p className="movies__empty-search">``
           По выбранным фильмам ничего не найдено. Можете подождать, пока снимут
           что-то подходящее под ваш запрос или просто отключить часть фильтров
         </p>

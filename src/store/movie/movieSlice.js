@@ -3,13 +3,13 @@ import mainApi from '../../utills/MainApi';
 
 const initialState = {
   allMovies: {
-    movies: [],
+    movies: null,
     totalCount: 0,
     offset: 0,
   },
-  wasFetched: false,
-  moviePageData: {},
-  savedMovies: [],
+  moviePageData: null,
+  randomMovie: null,
+  savedMovies: null,
 };
 
 export const fetchMovieData = createAsyncThunk(
@@ -19,6 +19,16 @@ export const fetchMovieData = createAsyncThunk(
     return response.data;
   }
 )
+
+export const fetchRandomMovie = createAsyncThunk(
+  'roulette/fetchRandomMovie',
+  async (_, thunkAPI) => {
+    const { mood, filters } = thunkAPI.getState().roulette;
+    const queryParams = { ...filters, mood }
+    const response = await mainApi.getRandomMovie(queryParams);
+    return response.data;
+  }
+);
 
 const fetchMoviesPayloadCreator = async (queryObj, { getState }) => {
   const state = getState();
@@ -108,17 +118,38 @@ export const moviesSlice = createSlice({
       state.savedMovies = payload;
     },
     [fetchSave.fulfilled] (state, { payload }) {
-      const movieIndex = state.allMovies.movies.findIndex(({ _id }) => _id === payload);
-      if (movieIndex !== -1) {
-        state.allMovies.movies[movieIndex].isLiked = true;
+      if (state.savedMovies) {
+        const movieIndex = state.allMovies.movies.findIndex(({ _id }) => _id === payload);
+        if (movieIndex !== -1) {
+          state.allMovies.movies[movieIndex].isLiked = true;
+        }
+      }
+      if (state.moviePageData && state.moviePageData._id === payload) {
+        state.moviePageData.isLiked = true;
+      }
+      if (state.randomMovie && state.randomMovie._id === payload) {
+        state.randomMovie.isLiked = true;
       }
     },
     [fetchRemove.fulfilled] (state, { payload }) {
-      state.savedMovies = state.savedMovies.filter(({ movieId }) => movieId !== payload);
-      const movieIndex = state.allMovies.movies.findIndex(({ _id }) => _id === payload);
-      if (movieIndex !== -1) {
-        state.allMovies.movies[movieIndex].isLiked = false;
+      if (state.savedMovies) {
+        state.savedMovies = state.savedMovies.filter(({ _id }) => _id !== payload);
       }
+      if (state.allMovies.movies) {
+        const movieIndex = state.allMovies.movies.findIndex(({ _id }) => _id === payload);
+        if (movieIndex !== -1) {
+          state.allMovies.movies[movieIndex].isLiked = false;
+        }
+      }
+      if (state.moviePageData && state.moviePageData._id === payload) {
+        state.moviePageData.isLiked = false;
+      }
+      if (state.randomMovie && state.randomMovie._id === payload) {
+        state.randomMovie.isLiked = false;
+      }
+    },
+    [fetchRandomMovie.fulfilled]: (state, { payload }) => {
+      state.randomMovie = payload;
     }
   }
 });

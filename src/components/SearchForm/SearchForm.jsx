@@ -12,6 +12,7 @@ import Search from "../SearchInput/SearchInput";
 import "./SearchForm.css";
 import { filtersActiveSelector, genresSelector, ratingSelector, sortTypeSelector, yearsSelector } from "../../store/filter/filterSelectors";
 import { GENRES_OPTIONS, RAITING_OPTIONS, SORT_OPTIONS, YEAR_OPTIONS } from "../../store/filter/contants";
+import { memo } from "react";
 
 function SearchForm() {
   const dispatch = useDispatch();
@@ -55,4 +56,4 @@ function SearchForm() {
   );
 }
 
-export default SearchForm;
+export default memo(SearchForm);

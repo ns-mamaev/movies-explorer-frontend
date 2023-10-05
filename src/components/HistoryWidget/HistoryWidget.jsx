@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { addToHistory } from "../../store/slices/historySlice";
+import { addToHistory } from "../../store/history/historySlice";
 import './HistoryWidget.css';
 
 function HistoryWidget() {
