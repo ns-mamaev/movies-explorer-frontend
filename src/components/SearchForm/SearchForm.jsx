@@ -1,57 +1,59 @@
-import './SearchForm.css';
+import { useDispatch, useSelector } from "react-redux";
+import {
+  resetFilters,
+  setGenres,
+  setRating,
+  setSortType,
+  setYears,
+} from "../../store/filter/filterSlice";
+import Button from "../Button/Button";
+import FilterPicker from "../FilterPicker";
+import Search from "../SearchInput/SearchInput";
+import "./SearchForm.css";
+import { filtersActiveSelector, genresSelector, ratingSelector, sortTypeSelector, yearsSelector } from "../../store/filter/filterSelectors";
+import { GENRES_OPTIONS, RAITING_OPTIONS, SORT_OPTIONS, YEAR_OPTIONS } from "../../store/filter/contants";
+import { memo } from "react";
 
-function SearchForm({
-  onSearch,
-  value,
-  validationMessage,
-  onChange,
-  onToggle,
-  isToggle,
-  onSubmit,
-  ...restProps
-}) {
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit();
-  };
+function SearchForm() {
+  const dispatch = useDispatch();
+  const onClearFilters = () => dispatch(resetFilters());
+  const filtersActive = useSelector(filtersActiveSelector);
 
   return (
-    <form className='search-form' onSubmit={handleSubmit} noValidate>
-      <div className='search-form__inner'>
-        <input
-          type='text'
-          name='filmSearch'
-          placeholder='Фильм'
-          className='search-form__input'
-          value={value}
-          onChange={onChange}
-          {...restProps}
+    <div className="search-form">
+      <Search />
+      <ul className="search-form__filters">
+        <FilterPicker.Radio
+          title="сортировка"
+          hideMarker
+          hideReset
+          storeAction={setSortType}
+          optionsSelector={sortTypeSelector}
+          options={SORT_OPTIONS}
         />
-        <span className='search-form__error'>{validationMessage}</span>
-        <button
-          type='submit'
-          className='search-form__button'
-        >
-          Поиск
-        </button>
-      </div>
-      <div className='search-form__toggle'>
-        <label className='search-form__toggle-label' htmlFor='short-films'>
-          <input
-            className='search-form__toggle-checkbox-invisible'
-            type='checkbox'
-            name='short-films'
-            id='short-films'
-            checked={isToggle}
-            onChange={onToggle}
-          />
-          <span className={`search-form__toggle-checkbox-visible ${isToggle && 'search-form__toggle-checkbox-visible_checked'}`} />
-          Короткометражки
-        </label>
-      </div>
-    </form>
+        <FilterPicker.Checkbox
+          storeAction={setGenres}
+          optionsSelector={genresSelector}
+          title="жанры"
+          options={GENRES_OPTIONS}
+        />
+        <FilterPicker.Radio
+          title="рейтинг"
+          hideMarker
+          optionsSelector={ratingSelector}
+          options={RAITING_OPTIONS}
+          storeAction={setRating}
+        />
+        <FilterPicker.Checkbox
+          title="дата выхода"
+          storeAction={setYears}
+          optionsSelector={yearsSelector}
+          options={YEAR_OPTIONS}
+        />
+        {filtersActive && <Button type="button" text="сбросить всё" onClick={onClearFilters} />}
+      </ul>
+    </div>
   );
-};
+}
 
-export default SearchForm;
+export default memo(SearchForm);

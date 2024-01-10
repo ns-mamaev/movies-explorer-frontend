@@ -1,59 +1,53 @@
-import { useState } from 'react';
-import { useMemo } from 'react';
-import './MoviesCard.css';
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { cn, getDurationString } from "../../utills/utills";
+import { addToHistory } from "../../store/history/historySlice";
+import LikeButton from "../LikeButton/LikeButton";
+import "./MoviesCard.css";
 
-const MoviesCard = ({
-  movieId,
-  title,
-  duration,
-  imageSource,
-  trailerLink,
-  onSaveMovie,
-  onRemoveMovie,
-  type = 'default',
-}) => {
+const MoviesCard = ({ movie, className, onLike }) => {
+  const {
+    _id: id,
+    nameRU,
+    nameEN,
+    duration,
+    year,
+    image,
+    thumbnail,
+    ratingKP,
+    isLiked,
+  } = movie;
 
-  const normalizedDuration = useMemo(() => {
-    const minutes = duration % 60;
-    const hours = (duration - minutes) / 60;
-    return hours ? `${hours}ч ${minutes}м` : `${minutes}м`;
-  }, [duration]);
+  const descriptionString = `${
+    nameEN ? nameEN + ", " : ""
+  }${year},&nbsp;${getDurationString(duration)}`;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const handleSave = (id) => {
-    onSaveMovie(id)
-  }
-
-  const handleRemove = (id) => {
-    onRemoveMovie(id)
-  }
-
-  const onButtonClick = () => {
-    switch (type) {
-      case 'liked':
-      case 'remove':
-        handleRemove(movieId);
-        break;
-      case 'default':
-        handleSave(movieId);
-        break;
-      default:
-        throw new Error('Тип кнопки не задан')
-    }
-  }
+  const onOpenFilm = () => {
+    const historyObject = { id, nameRU, image, thumbnail };
+    dispatch(addToHistory(historyObject));
+    navigate(`/movies/${id}`);
+  };
 
   return (
-    <li className='movies-card'>
-      <h3 className='movies-card__title'>{title}</h3>
-      <span className='movies-card__duration'>{normalizedDuration}</span>
-      <button
-        type='button'
-        onClick={onButtonClick}
-        className={`movie-card__action-btn movie-card__action-btn_type_${type}`}
-      />
-      <a className='movies-card__poster-wrapper' href={trailerLink} target='_blank' rel='noreferrer'>
-        <img className='movies-card__poster' src={imageSource} alt={title} />
-      </a>
-    </li>
+    <div className={cn("movies-card", {}, [className])}>
+      <div className="movies-card__poster-wrapper" onClick={onOpenFilm}>
+        <img className="movies-card__poster" src={image} alt={nameRU} />
+        <span className="movies-card__rating">{ratingKP.toFixed(1)}</span>
+      </div>
+      <div className="movies-card__info-wrapper">
+        <div className="movies-card__description">
+          <h3 className="movies-card__title">{nameRU}</h3>
+          <p className="movies-card__subtitle">
+            {descriptionString.replace(/&nbsp;/g, "\u00A0")}
+          </p>
+        </div>
+        <div className="movies-card__btn-wrapper">
+          <LikeButton isLiked={isLiked} onClick={() => onLike(isLiked, id)} />
+        </div>
+      </div>
+    </div>
   );
 };
 

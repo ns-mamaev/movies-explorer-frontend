@@ -1,17 +1,75 @@
 @import url(./vendor/fonts/fonts.css);
 
-body {
-  margin: 0;
-  padding: 0;
-  -webkit-tap-highlight-color: transparent;
-}
-
 :root {
-  --bgcolor-main: #202020;
+  --bgcolor-main: #151515;
   --bgcolor-light: #272727;
-  --textcolor-main: #fff;
   --bgcolor-action: #3DDC84;
   --max-section-width: 1280px;
   --bgcolor-buttons: #4285F4;
   --error-color: #ee3465;
+  
+  /* 
+  выше устаревшее - заменить, для всех цветов - переменные ниже
+  */ 
+  --primary-action-color: #F54770;
+  --secondary-action-color: #5A5CE7;
+  --action-gradient-bg: linear-gradient(94deg, var(--secondary-action-color)00 2.63%, var(--primary-action-color) 110.64%);
+  --lines-color: #333;
+  --lists-hover: #474747;
+  --textcolor-main: #fff;
+  --texcolor-secondary: #a1a1a1;
+  --accent-background: #2C2C2C;
+  --secondary-accent-bg: #5c5c5c;
+  --links-color: #4285F4;
+
+  --border-rad-m: 8px;
+  --border-rad-l: 12px;
+  
+  --scrollbarBg: #00000033;
+  --scrollbarThumb: #ffffff77;
+  --scrollbarWidth: 10px;
+  --scrollbarBorder: 2px solid #000000aa;
+  --scrollbarBorderRadius: calc(var(--scrollbarWidth) / 2);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  color: var(--textcolor-main);
+}
+
+ul, li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.content-width {
+  max-width: 1280px;
+  width: 100%;
+  padding-right: 40px;
+  padding-left: 40px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.scrollbar-container {
+  scrollbar-width: var(--scrollbarWidth);
+  scrollbar-color: var(--scrollbarThumb) var(--scrollbarBg);
+}
+
+.scrollbar-container::-webkit-scrollbar {
+  width: var(--scrollbarWidth);
+}
+
+.scrollbar-container::-webkit-scrollbar-track {
+  background: var(--scrollbarBg);
+  border-radius: var(--scrollbarBorderRadius);
+}
+
+.scrollbar-container::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbarThumb);
+  border-radius: var(--scrollbarBorderRadius);
+  border: var(--scrollbarBorder);
 }

@@ -1,0 +1,27 @@
+.history-widget {
+  margin-top: 80px;
+}
+
+.history-widget__caption {
+  margin: 0;
+  margin-bottom: 16px;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.history-widget__list {
+  display: flex;
+  column-gap: 15px;
+}
+
+.history-widget__img {
+  height: 159px;
+  width: 106px;
+  object-fit: cover;
+  object-position: center;
+  cursor: pointer;
+}
+
+.history-widget__img:hover {
+  opacity: 0.8;
+}

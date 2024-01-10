@@ -1,16 +1,11 @@
 .movies-card {
-  background-color: #222;
-  display: grid;
-  grid-template-columns: auto 50px;
-  grid-template-areas:
-    'title button'
-    'duration button'
-    'image image';
-  padding-top: 13px;
+  background-color: #252525;
+  border-radius: var(--border-rad-l);
 }
 
 .movies-card__poster-wrapper {
-  grid-area: image;
+  position: relative;
+  cursor: pointer;
 }
 
 .movies-card__poster-wrapper:hover {
@@ -19,56 +14,51 @@
 
 .movies-card__poster {
   width: 100%;
-  aspect-ratio: 1.79;
+  aspect-ratio: 0.7;
   object-fit: cover;
-  object-position: 50% 50%;
+  border-radius: 12px 12px 0 0;
 }
 
-.movie-card__action-btn {
-  grid-area: button;
-  width: 30px;
-  height: 30px;
-  justify-self: flex-end;
-  margin: 5px 14px 0 0;
-  border: none;
-  background: center / contain no-repeat;
-  cursor: pointer;
+.movies-card__rating {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  color: #fff;
+  background-color: #252525;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 6px 10px;
+  border-radius: 4px;
 }
 
-.movie-card__action-btn:hover {
-  opacity: .7;
+.movies-card__btn-wrapper {
+  grid-area: buttons;
+  display: flex;
+  column-gap: 4px;
 }
 
-.movie-card__action-btn:active {
-  transform: scale(.9);
+.movies-card__info-wrapper {
+  padding: 14px;
+  display: flex;
+  column-gap: 10px;
+  justify-content: space-between;
 }
 
-.movie-card__action-btn_type_liked {
-  background-image: url(../../images/action-btn-liked.svg);
-}
-
-.movie-card__action-btn_type_default {
-  background-image: url(../../images/action-btn-default.svg);
-}
-
-.movie-card__action-btn_type_remove {
-  background-image: url(../../images/action-btn-remove.svg);
-}
-
-.movies-card__duration {
+.movies-card__subtitle {
   grid-area: duration;
   color: #8b8b8b;
   font-weight: 400;
   font-size: 11px;
   line-height: 13px;
-  margin: 0 0 14px 14px;
+  margin: 0;
 }
 
 .movies-card__title {
   grid-area: title;
   color: var(--textcolor-main);
   font-weight: 500;
-  font-size: 15px;
-  line-height: 18px;
-  margin: 0 0 9px 14px;
+  font-size: 18px;
+  line-height: 20px;
+  margin: 0;
+  margin-bottom: 8px;
 }

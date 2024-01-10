@@ -16,7 +16,7 @@
   padding: 0;
   list-style: none;
   display: flex;
-  column-gap: 16px;
+  column-gap: 32px;
   flex-grow: 1;
   justify-content: center;
   margin-left: 59px;
@@ -30,7 +30,7 @@
   color: var(--textcolor-main);
   text-decoration: none;
   font-weight: 400;
-  font-size: 13px;
+  font-size: 16px;
   line-height: 18px;
 }
 
@@ -47,8 +47,8 @@
   align-items: center;
   column-gap: 13px;
   font-weight: 500;
-  font-size: 14px;
-  line-height: 16px;
+  font-size: 16px;
+  line-height: 20px;
 }
 
 .navigation__link-icon {
@@ -135,8 +135,8 @@
 
   .navigation__link_type_with-icon {
     font-weight: 500;
-    font-size: 14px;
-    line-height: 16px;
+    font-size: 16px;
+    line-height: 20px;
   }
 }
 

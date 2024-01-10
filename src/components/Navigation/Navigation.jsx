@@ -1,7 +1,10 @@
 import { NavLink, Link } from 'react-router-dom';
 import './Navigation.css';
+import { useSelector } from 'react-redux';
+import { userSelector } from '../../store/user/userSelectors';
 
 const Navigation = ({ visible, onClose }) => {
+  const user = useSelector(userSelector);
 
   const setLinkClass = (navData) => navData.isActive
     ? 'navigation__link navigation__link_active'
@@ -17,24 +20,24 @@ const Navigation = ({ visible, onClose }) => {
     <div className={`navigation ${visible && 'navigation_visible'}`} onClick={handleCloseByOverlay} >
       <nav className={`navigation__inner ${visible && 'navigation__inner_visible'}`}>
         <ul className='navigation__links'>
-          <li className='navigation__links-item navigation__links-item_type_only-mobile'>
+          <li className='navigation__links-item'>
             <NavLink className={setLinkClass} to='/' onClick={onClose}>
-              Главная
+              Рулетка
             </NavLink>
           </li>
           <li className='navigation__links-item'>
             <NavLink className={setLinkClass} to='/movies' onClick={onClose}>
-              Фильмы
+              Все фильмы
             </NavLink>
           </li>
           <li className='navigation__links-item'>
-            <NavLink className={setLinkClass} to='/saved-movies' onClick={onClose}>
-              Сохраненные фильмы
+            <NavLink className={setLinkClass} to='/saved' onClick={onClose}>
+              Избранное
             </NavLink>
           </li>
         </ul>
         <Link className='navigation__link navigation__link_type_with-icon' to='/profile' onClick={onClose}>
-          Аккаунт
+          {user && user.name}
           <div className='navigation__link-icon navigation__link-icon_content_profile' />
         </Link>
       </nav>

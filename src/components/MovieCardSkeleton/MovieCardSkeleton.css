@@ -1,0 +1,16 @@
+@keyframes pulse {
+  from {
+    opacity: 0.1;
+  }
+  to {
+    opacity: .3;
+  }
+}
+
+.card-skeleton {
+  border-radius: var(--border-rad-l);
+  background-color: var(--textcolor-main);
+  opacity: 0.6;
+  aspect-ratio: 0.69;
+  animation: pulse 0.8s ease-out alternate infinite;
+}

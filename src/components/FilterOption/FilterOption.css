@@ -1,0 +1,50 @@
+.filter-option {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.filter-option__hidden-marker {
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  position: absolute;
+}
+
+.filter-option__caption {
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.filter-option__visible-marker {
+  content: '';
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--textcolor-main);
+  box-sizing: border-box;
+  margin-right: 10px;
+}
+
+.filter-option__visible-marker_type_checkbox {
+  border-radius: 4px;
+}
+
+.filter-option__visible-marker_type_radio {
+  border-radius: 50%;
+}
+
+.filter-option__hidden-marker:checked + .filter-option__visible-marker {
+  background: center / 70% no-repeat;
+  background-color: var(--primary-action-color);
+  border-color: var(--primary-action-color);
+}
+
+.filter-option__hidden-marker:checked + .filter-option__visible-marker_type_radio {
+  background-size: 50%;
+  background-image: url('../../images/ellipse.svg');
+}
+
+.filter-option__hidden-marker:checked + .filter-option__visible-marker_type_checkbox {
+  background-image: url('../../images/check.svg');
+}
